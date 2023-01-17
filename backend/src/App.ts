@@ -1,12 +1,9 @@
 import express from "express";
-import CharacterEntity from "./models/CharacterEntity";
+import {router as CharactersRoute} from "./routes/Characters";
+
 
 const app = express()
 
-app.get("/", async (req, res) => {
-    const characters = await CharacterEntity.find().exec()
-    res.status(200).json(characters)
-
-});
+app.use(CharactersRoute)
 
 export default app;
