@@ -8,6 +8,7 @@ const app = express()
 
 app.use(morgan("dev"))
 
+app.use("/api/v1/characters", CharactersRoute)
 app.use((req, res, next) => {
     next(createHttpError("Endpoint not found"));
 });
