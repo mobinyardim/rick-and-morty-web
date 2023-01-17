@@ -128,3 +128,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 Footer
+.idea/
+/.idea/workspace.xml
