@@ -2,14 +2,14 @@ import {Result} from "../models/Result";
 import {Character} from "../models/Character";
 import {CharacterBody} from "../bodyModels/CharacterBody";
 
-export interface CharacterService {
-    getCharacters(limit: string, offset: string): Result<Array<Character>>
+export abstract class CharacterService {
+    abstract getCharacters(limit: number, offset: number): Promise<Result<Array<Character>>>
 
-    getCharacter(id: string): Result<Character>
+    abstract getCharacter(id: string): Promise<Result<Character>>
 
-    createCharacter(characterBody: CharacterBody): Result<Character>
+    abstract createCharacter(characterBody: CharacterBody): Promise<Result<Character>>
 
-    updateCharacter(characterBody: CharacterBody): Result<unknown>
+    abstract updateCharacter(characterBody: CharacterBody): Promise<Result<unknown>>
 
-    deleteCharacter(characterBody: CharacterBody): Result<unknown>
+    abstract deleteCharacter(characterBody: CharacterBody): Promise<Result<unknown>>
 }
