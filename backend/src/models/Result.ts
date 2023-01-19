@@ -34,4 +34,4 @@ export class Fail {
 
 }
 
-export type Result = Success<any> | Fail;
+export type Result<T> = Success<T> | Fail;
