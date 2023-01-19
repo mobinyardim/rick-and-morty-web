@@ -6,6 +6,7 @@ export type Gender = "Female" | "Male" | "Genderless" | "unknown"
 
 
 export class Character {
+    id: string
     name: string
     status: Status;
     species: string
@@ -18,6 +19,7 @@ export class Character {
     url: string
 
     constructor(
+        id:string,
         name: string,
         status: Status,
         species: string,
@@ -29,6 +31,7 @@ export class Character {
         episode: string[],
         url: string
     ) {
+        this.id = id
         this.name = name;
         this.status = status;
         this.species = species;
