@@ -1,11 +1,13 @@
 import {CharacterEntity} from "../persistence/CharacterEntity";
+import CharacterDao from "../persistence/CharacterEntity";
 import {Character, Gender, Status} from "../models/Character";
 import {Converter} from "./Converter";
 import {originConverters} from "./OriginConverter";
 import {locationConverter} from "./LocationConverter";
 import {Document} from "mongoose";
+import {CharacterBody} from "../bodyModels/CharacterBody";
 
-export const characterConverter: Converter<Document & CharacterEntity, Character> = {
+export const characterConverter: Converter<Document & CharacterEntity, CharacterBody, Character> = {
 
     toDomain(entity: Document & CharacterEntity): Character {
         return new Character(
@@ -23,8 +25,24 @@ export const characterConverter: Converter<Document & CharacterEntity, Character
         )
     },
 
-    toEntity(domain: Character): Document & CharacterEntity{
+    toEntity(domain: Character): Document & CharacterEntity {
         throw new Error("not implemented")
+    },
+
+    bodyToEntity(transfer: CharacterBody): Document & CharacterEntity {
+        const dao = new CharacterDao()
+
+        dao.name = transfer.name;
+        dao.status = transfer.status ?? "Unknown";
+        dao.species = transfer.species;
+        dao.type = transfer.type
+        dao.gender = transfer.gender ?? "Unknown";
+        dao.origin = transfer.origin ?? [];
+        dao.location = transfer.location
+        dao.image = transfer.image
+        dao.episode = transfer.episode ?? [];
+
+        return dao
     }
 }
 
