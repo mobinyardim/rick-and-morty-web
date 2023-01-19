@@ -19,6 +19,10 @@ export const characterConverter: Converter<CharacterEntity, Character> = {
             entity.episode,
             entity.url
         )
+    },
+
+    toEntity(domain: Character): CharacterEntity {
+        throw new Error("not implemented")
     }
 }
 
