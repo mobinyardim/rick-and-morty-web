@@ -3,11 +3,13 @@ import {Character, Gender, Status} from "../models/Character";
 import {Converter} from "./Converter";
 import {originConverters} from "./OriginConverter";
 import {locationConverter} from "./LocationConverter";
+import {Document} from "mongoose";
 
-export const characterConverter: Converter<CharacterEntity, Character> = {
+export const characterConverter: Converter<Document & CharacterEntity, Character> = {
 
-    toDomain(entity: CharacterEntity): Character {
+    toDomain(entity: Document & CharacterEntity): Character {
         return new Character(
+            entity._id,
             entity.name,
             toStatus(entity.status),
             entity.species,
@@ -21,7 +23,7 @@ export const characterConverter: Converter<CharacterEntity, Character> = {
         )
     },
 
-    toEntity(domain: Character): CharacterEntity {
+    toEntity(domain: Character): Document & CharacterEntity{
         throw new Error("not implemented")
     }
 }
