@@ -15,6 +15,7 @@ export class CharacterServiceImpl implements CharacterService {
             const message = e.message ?? "Unknown Error"
             return new Fail(
                 message,
+                500,
                 "READ_ERROR"
             )
         }
