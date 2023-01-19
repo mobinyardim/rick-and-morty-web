@@ -2,7 +2,7 @@ import {Location} from "./Location";
 import {Origin} from "./Origin"
 
 export type Status = "Alive" | "Dead" | "Unknown"
-export type Gender = "Female" | "Male" | "Genderless" | "unknown"
+export type Gender = "Female" | "Male" | "Genderless" | "Unknown"
 
 
 export class Character {
