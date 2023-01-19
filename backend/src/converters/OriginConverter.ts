@@ -1,5 +1,5 @@
 import {Converter} from "./Converter";
-import {Origin} from "../models/Location";
+import {Origin} from "../models/Origin";
 import {OriginEntity} from "../persistence/OriginEntity";
 
 export const originConverters: Converter<OriginEntity, Origin> = {
