@@ -25,11 +25,19 @@ export class Pagination {
     totalCount: number
 }
 
+export type ErrorType = "NOT_AUTHORIZED" | "READ_ERROR"
+
 export class Fail {
     message: string
 
-    constructor(message: string) {
+    type: ErrorType
+
+    constructor(
+        message: string,
+        type: ErrorType
+    ) {
         this.message = message
+        this.type = type
     }
 
 }
