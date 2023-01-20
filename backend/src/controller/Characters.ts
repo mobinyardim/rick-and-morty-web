@@ -18,3 +18,14 @@ export const getCharacters: RequestHandler<unknown, unknown, unknown, Pagination
         handleFailResult(res, result)
     }
 }
+
+export const createCharacter: RequestHandler<unknown, unknown, CharacterBody, unknown> = async (req, res) => {
+
+    const result = await services.characterService.createCharacter(characterConverter.bodyToEntity(req.body))
+
+    if (result instanceof Success) {
+        res.status(200).json(result)
+    } else {
+        handleFailResult(res, result)
+    }
+}
