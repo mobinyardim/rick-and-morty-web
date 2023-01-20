@@ -15,13 +15,13 @@ export const characterConverter: Converter<Document & CharacterEntity, Character
             entity.name,
             toStatus(entity.status),
             entity.species,
-            entity.type,
             toGender(entity.gender),
             originConverters.toDomain(entity.origin),
             locationConverter.toDomain(entity.location),
             entity.image,
             entity.episode,
-            entity.url
+            entity.url,
+            entity.type
         )
     },
 

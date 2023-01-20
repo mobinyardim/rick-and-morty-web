@@ -10,7 +10,7 @@ export class Character {
     name: string
     status: Status;
     species: string
-    type: string
+    type?: string
     gender: Gender
     origin: Origin
     location: Location
@@ -23,13 +23,13 @@ export class Character {
         name: string,
         status: Status,
         species: string,
-        type: string,
         gender: Gender,
         origin: Origin,
         location: Location,
         image: string,
         episode: string[],
-        url: string
+        url: string,
+        type?: string
     ) {
         this.id = id
         this.name = name;

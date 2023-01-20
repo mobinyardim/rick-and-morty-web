@@ -6,8 +6,8 @@ export interface CharacterBody {
     name: string
     status?: Status;
     species: string
-    type: string
-    gender?: Gender
+    type?: string
+    gender: Gender
     origin: Origin
     location: Location
     image: string

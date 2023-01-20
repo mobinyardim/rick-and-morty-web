@@ -9,7 +9,7 @@ const characterEntitySchema = new Schema({
         "name": {type: String, required: true},
         "status": {type: String, enum: ["Alive", "Dead", "Unknown"], required: true},
         "species": {type: String, required: true},
-        "type": {type: String, required: true},
+        "type": {type: String, required: false},
         "gender": {type: String,enum:["Female", "Male", "Genderless" , "Unknown"], required: true},
         "origin": {type: originSchema, required: true},
         "location": {type: locationSchema, required: true},
