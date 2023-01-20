@@ -4,3 +4,5 @@ import * as CharactersController from "../controller/Characters"
 export const router = express.Router();
 
 router.get("/", CharactersController.getCharacters);
+
+router.post("/", CharactersController.createCharacter)
