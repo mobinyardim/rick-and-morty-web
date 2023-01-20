@@ -6,6 +6,7 @@ import {originConverters} from "./OriginConverter";
 import {locationConverter} from "./LocationConverter";
 import {Document} from "mongoose";
 import {CharacterBody} from "../bodyModels/CharacterBody";
+import {characters_slug, domain} from "../Urls";
 
 export const characterConverter: Converter<Document & CharacterEntity, CharacterBody, Character> = {
 
@@ -41,6 +42,7 @@ export const characterConverter: Converter<Document & CharacterEntity, Character
         dao.location = transfer.location
         dao.image = transfer.image
         dao.episode = transfer.episode ?? [];
+        dao.url = domain + "/" + characters_slug + "/" + dao.id
 
         return dao
     }
