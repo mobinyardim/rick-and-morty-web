@@ -1,6 +1,6 @@
 import {CharacterService} from "./CharacterService";
 import {CharacterBody} from "../bodyModels/CharacterBody";
-import {Fail, Pagination, Result, Success, ErrorType} from "../models/Result";
+import {Fail, Pagination, Result, Success} from "../models/Result";
 import {Character} from "../models/Character";
 import CharacterDao, {CharacterEntity} from "../persistence/CharacterEntity";
 import {Document} from "mongoose";
@@ -39,8 +39,24 @@ export class CharacterServiceImpl implements CharacterService {
         throw new Error()
     }
 
-    createCharacter(characterBody: CharacterBody): Promise<Result<Character>> {
-        throw new Error()
+    async createCharacter(characterBody: CharacterBody): Promise<Result<Character>> {
+        const body = characterConverter.bodyToEntity(characterBody)
+        try {
+            const character = await body.save()
+
+            return new Success(
+                "Successful",
+                characterConverter.toDomain(character)
+            )
+        } catch (e: any) {
+            const message = e.message ?? "Unknown Error"
+            return new Fail(
+                message,
+                500,
+                "READ_ERROR"
+            )
+        }
+
     }
 
     deleteCharacter(characterBody: CharacterBody): Promise<Result<unknown>> {
