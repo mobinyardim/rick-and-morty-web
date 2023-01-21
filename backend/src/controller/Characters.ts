@@ -19,6 +19,21 @@ export const getCharacters: RequestHandler<unknown, unknown, unknown, Pagination
     }
 }
 
+interface GetCharacterParams {
+    id: string
+}
+
+export const getCharacter: RequestHandler<GetCharacterParams, unknown, unknown, unknown> = async (req, res) => {
+    const id = req.params.id
+    const result = await services.characterService.getCharacter(id)
+
+    if (result instanceof Success) {
+        res.status(200).json(result)
+    } else {
+        handleFailResult(res, result)
+    }
+}
+
 export const createCharacter: RequestHandler<unknown, unknown, CharacterBody, unknown> = async (req, res) => {
 
     const result = await services.characterService.createCharacter(characterConverter.bodyToEntity(req.body))
