@@ -5,6 +5,7 @@ import {Character} from "../models/Character";
 import CharacterDao, {CharacterEntity} from "../persistence/CharacterEntity";
 import {Document} from "mongoose";
 import {characterConverter} from "../converters/CharacterConverter";
+import {Error as ValidatorError} from "mongoose";
 
 export class CharacterServiceImpl implements CharacterService {
     async getCharacters(limit: number, offset: number): Promise<Result<Array<Character>>> {
@@ -50,6 +51,14 @@ export class CharacterServiceImpl implements CharacterService {
             )
         } catch (e: any) {
             const message = e.message ?? "Unknown Error"
+
+            if(e instanceof ValidatorError){
+                return new Fail(
+                    message,
+                    401,
+                    "NOT_VALID_INPUT"
+                )
+            }
             return new Fail(
                 message,
                 500,
