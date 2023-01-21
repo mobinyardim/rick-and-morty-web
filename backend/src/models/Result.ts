@@ -25,7 +25,7 @@ export class Pagination {
     totalCount: number
 }
 
-export type ErrorType = "NOT_AUTHORIZED" | "NOT_VALID_INPUT" | "READ_ERROR" | "UNKNOWN"
+export type ErrorType = "NOT_AUTHORIZED" | "NOT_VALID_INPUT" | "READ_ERROR" | "NOT_FOUND" | "UNKNOWN"
 
 export class Fail {
     message: string
