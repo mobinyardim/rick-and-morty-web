@@ -3,7 +3,7 @@ import {CharacterBody} from "../bodyModels/CharacterBody";
 import {Fail, Pagination, Result, Success} from "../models/Result";
 import {Character} from "../models/Character";
 import CharacterDao, {CharacterEntity} from "../persistence/CharacterEntity";
-import {Document} from "mongoose";
+import {Document, isValidObjectId} from "mongoose";
 import {characterConverter} from "../converters/CharacterConverter";
 import {Error as ValidatorError} from "mongoose";
 
@@ -36,8 +36,35 @@ export class CharacterServiceImpl implements CharacterService {
         )
     }
 
-    getCharacter(id: string): Promise<Result<Character>> {
-        throw new Error()
+    async getCharacter(id: string): Promise<Result<Character>> {
+        if (!isValidObjectId(id)) {
+            return new Fail(
+                "Id is not valid!",
+                401,
+                "NOT_VALID_INPUT"
+            )
+        }
+        try {
+            const character = await CharacterDao.findById(id).exec()
+            if (character) {
+                return new Success(
+                    "Successful",
+                    characterConverter.toDomain(character)
+                )
+            } else {
+                return new Fail(
+                    "Character with this id not found!",
+                    404,
+                    "NOT_FOUND"
+                )
+            }
+        } catch (e: any) {
+            return new Fail(
+                e.message,
+                500,
+                "READ_ERROR"
+            )
+        }
     }
 
     async createCharacter(characterBody: CharacterBody): Promise<Result<Character>> {
@@ -52,7 +79,7 @@ export class CharacterServiceImpl implements CharacterService {
         } catch (e: any) {
             const message = e.message ?? "Unknown Error"
 
-            if(e instanceof ValidatorError){
+            if (e instanceof ValidatorError) {
                 return new Fail(
                     message,
                     401,
