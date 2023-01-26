@@ -1,6 +1,10 @@
+import AuthBannerComponent from "../componenets/AuthBannerComponent";
+
 function LoginScreen() {
     return (
-        <div/>
+
+        <AuthBannerComponent className={"w-[30rem] lg-max:hidden"}/>
+
     )
 }
 
