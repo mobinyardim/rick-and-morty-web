@@ -1,3 +1,17 @@
+@font-face {
+  src: url("https://cdn.dribbble.com/assets/neue-haas-grotesk/NeueHaasGrotTextRound-75Bold-Web-f2ff2f34217e3fdab82c30ef689f5be3fb86a8e4218a1906a9399d0354a95d45.woff2") format("woff2");
+  font-family: "Haas Grot Text R Web";
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  src: url("https://cdn.dribbble.com/assets/neue-haas-grotesk/NeueHaasGrotTextRound-55Roman-Web-9e7322596eec47d8e79e2453d75a77fb58045ae944ec818e4fc1ba05559121a4.woff2") format("woff2");
+  font-family: "Haas Grot Text R Web";
+  font-style: normal;
+  font-weight: 100;
+}
+
 .App {
   text-align: center;
 }
