@@ -1,9 +1,13 @@
 export interface AuthBannerComponentProps {
   className?: string;
+  banner?: string;
 }
 
 function AuthBannerComponent(props: AuthBannerComponentProps) {
-  const { className } = props;
+  let { className, banner } = props;
+  if (!banner) {
+    banner = "assets/rick-and-morty-banner.png";
+  }
   return (
     <div
       className={`inline-flex h-screen w-full flex-col justify-evenly bg-primary/80 ${className}`}
@@ -15,15 +19,17 @@ function AuthBannerComponent(props: AuthBannerComponentProps) {
 
         <img
           className="mx-12"
-          src={"assets/rick-and-morty-banner.png"}
+          src={banner}
           alt="The Rick and morty wallpaper"
         />
       </div>
 
       <div className="mb-5 ml-10 flex flex-row">
-        <span className="font-sans font-thin text-sm text-onPrimary">by&ensp;</span>
+        <span className="font-sans text-sm font-thin text-onPrimary">
+          by&ensp;
+        </span>
         <a
-          className=" font-sans font-thin text-sm text-onPrimary underline"
+          className=" font-sans text-sm font-thin text-onPrimary underline"
           href={"https://github.com/mobinyardim"}
         >
           Mobin Yardim
