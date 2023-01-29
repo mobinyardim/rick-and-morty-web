@@ -3,6 +3,6 @@ import React from "react";
 
 export function MyInput({ className, ...rest }: Omit<InputProps, "ref">) {
   return (
-    <Input {...rest} className={`w-80 font-sans font-thin ${className}`} />
+    <Input {...rest} className={`font-sans font-thin ${className}`} />
   );
 }
