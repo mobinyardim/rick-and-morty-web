@@ -1,0 +1,52 @@
+@font-face {
+  src: url("https://cdn.dribbble.com/assets/neue-haas-grotesk/NeueHaasGrotTextRound-75Bold-Web-f2ff2f34217e3fdab82c30ef689f5be3fb86a8e4218a1906a9399d0354a95d45.woff2") format("woff2");
+  font-family: "Haas Grot Text R Web";
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  src: url("https://cdn.dribbble.com/assets/neue-haas-grotesk/NeueHaasGrotTextRound-55Roman-Web-9e7322596eec47d8e79e2453d75a77fb58045ae944ec818e4fc1ba05559121a4.woff2") format("woff2");
+  font-family: "Haas Grot Text R Web";
+  font-style: normal;
+  font-weight: 100;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
