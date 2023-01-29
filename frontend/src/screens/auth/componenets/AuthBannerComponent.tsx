@@ -13,7 +13,7 @@ function AuthBannerComponent(props: AuthBannerComponentProps) {
           The Rick and Morty API
         </span>
 
-        <img className="mx-12" src={"assets/rick-and-morty-banner.png"} />
+        <img className="mx-12" src={"assets/rick-and-morty-banner.png"}  alt="The Rick and morty wallpaper"/>
       </div>
 
       <div className="mb-5 ml-10 flex flex-row font-sans font-thin">
