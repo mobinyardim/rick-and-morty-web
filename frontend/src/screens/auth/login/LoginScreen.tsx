@@ -1,6 +1,6 @@
 import AuthBannerComponent from "../componenets/AuthBannerComponent";
-import { Button } from "@material-tailwind/react";
 import { MyInput } from "../../../components/MyInput";
+import {MyButton} from "../../../components/MyButton";
 
 function LoginScreen() {
   return (
@@ -39,7 +39,7 @@ function LoginForm(props: AuthFormProps) {
 
         <div className="h-5" />
 
-        <Button className="w-full font-sans normal-case">Sign In</Button>
+        <MyButton className="w-full font-sans normal-case">Sign In</MyButton>
       </div>
     </div>
   );
