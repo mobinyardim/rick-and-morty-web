@@ -5,7 +5,7 @@ import { MyButton } from "../../../components/MyButton";
 function LoginScreen() {
   return (
     <div className="flex flex-row">
-      <AuthBannerComponent className={"w-[30rem] lg-max:hidden"} />
+      <AuthBannerComponent className={"w-[45rem] lg-max:hidden"} />
 
       <LoginForm className="mx-auto w-fit" />
     </div>
@@ -25,7 +25,7 @@ function LoginForm(props: AuthFormProps) {
       <div className="flex flex-col items-end lg-max:mt-5 lg:m-5 lg-max:order-1">
         <span className="font-sans text-xs font-thin">
           Not a member?&ensp;{" "}
-          <a className="font-sans text-xs font-thin text-primary" href="signIn">
+          <a className="font-sans text-xs font-thin text-primary" href="/signUp">
             Sign up now
           </a>
         </span>
