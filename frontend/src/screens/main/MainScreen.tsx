@@ -1,18 +1,23 @@
 import React from "react";
-import {Button} from "@material-tailwind/react";
-import {useNavigate} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { HomeScreen } from "./home/HomeScreen";
+import {Navbar} from "../../components/Navbar";
 
 function MainScreen() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // @ts-ignore
-    return (
-        <div className="flex flex-col">
-            <Button onClick={() => navigate("/login")}>
-                Login
-            </Button>
-        </div>
-    )
+  // @ts-ignore
+  return (
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route path="/characters" element={<HomeScreen />} />
+        <Route path="/locations" element={<HomeScreen />} />
+        <Route path="/episodes" element={<HomeScreen />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default MainScreen;
