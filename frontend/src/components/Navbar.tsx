@@ -16,14 +16,14 @@ export interface NavBarProps {
 }
 
 export function Navbar(props: NavBarProps) {
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(!sidebar);
 
   return (
     <>
-      <div className={`flex h-20 items-center justify-start bg-background`}>
-        <FaIcons.FaBars className="h-full w-20 p-6" onClick={showSidebar} />
+      <div className={`flex h-16 items-center justify-start bg-background`}>
+        <FaIcons.FaBars className="h-full w-16 p-5" onClick={showSidebar} />
       </div>
 
       <nav
@@ -46,8 +46,21 @@ export function Navbar(props: NavBarProps) {
           </div>
         </div>
 
-        <ul></ul>
+        <ul>
+          <li>
+            <NavMenuItem />
+          </li>
+        </ul>
       </nav>
     </>
+  );
+}
+
+function NavMenuItem() {
+  return (
+    <div className={`flex h-16 flex-row justify-evenly gap-4 pr-4`}>
+      <div className={`h-16 w-1 rounded-r bg-primary`} />
+      <div className={` h-16 grow rounded-xl bg-primary/10`}></div>
+    </div>
   );
 }

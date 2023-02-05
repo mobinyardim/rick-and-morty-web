@@ -6,6 +6,9 @@ import AuthBannerComponent from "../screens/auth/componenets/AuthBannerComponent
 import LoginScreen from "../screens/auth/login/LoginScreen";
 import {MyInput} from "../components/MyInput";
 import SignUpScreen from "../screens/auth/signup/SignUpScreen";
+import {HomeScreen} from "../screens/main/home/HomeScreen";
+import {Navbar} from "../components/Navbar";
+import MainScreen from "../screens/main/MainScreen";
 
 const ComponentPreviews = () => {
     return (
@@ -24,6 +27,15 @@ const ComponentPreviews = () => {
         </ComponentPreview>
         <ComponentPreview path="/SignUpScreen">
           <SignUpScreen />
+        </ComponentPreview>
+        <ComponentPreview path="/HomeScreen">
+          <HomeScreen />
+        </ComponentPreview>
+        <ComponentPreview path="/NavBar">
+          <Navbar />
+        </ComponentPreview>
+        <ComponentPreview path="/MainScreen">
+          <MainScreen />
         </ComponentPreview>
       </Previews>
     );
