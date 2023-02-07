@@ -16,7 +16,7 @@ export interface NavBarProps {
 }
 
 export function Navbar({ className, items, onSelect }: NavBarProps) {
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -77,7 +77,7 @@ function NavItems({ className, items, onSelect }: NavItemsProps) {
     <div className={`${className}`}>
       {items && (
         <SelectedNavMenuItemBackground
-          className={`transition-50 absolute w-full transform transition  ${selectedBackgroundTranslate}`}
+          className={`transition-50 absolute w-full transform transform-gpu transition  ${selectedBackgroundTranslate}`}
         />
       )}
       <ul className={`gap-4`}>
@@ -105,7 +105,7 @@ interface NavMenuItemProps {
 function NavMenuItem({ name, Icon, onClick }: NavMenuItemProps) {
   return (
     <div
-      className={`flex h-16 cursor-pointer flex-row justify-evenly gap-4 gap-4 bg-transparent pr-4`}
+      className={`z-10 flex h-16 cursor-pointer flex-row justify-evenly gap-4 gap-4 bg-transparent pr-4 ring-transparent hover:bg-transparent`}
       onClick={onClick}
     >
       <div className={`h-16 w-1`} />
