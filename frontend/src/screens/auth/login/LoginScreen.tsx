@@ -22,10 +22,13 @@ function LoginForm(props: AuthFormProps) {
     <div
       className={`inline-flex h-screen flex-col lg:w-full lg-max:justify-center ${className}`}
     >
-      <div className="flex flex-col items-end lg-max:mt-5 lg:m-5 lg-max:order-1">
+      <div className="flex flex-col items-end lg:m-5 lg-max:order-1 lg-max:mt-5">
         <span className="font-sans text-xs font-thin">
           Not a member?&ensp;{" "}
-          <a className="font-sans text-xs font-thin text-primary" href="/signUp">
+          <a
+            className="font-sans text-xs font-thin text-primary"
+            href="/signUp"
+          >
             Sign up now
           </a>
         </span>
