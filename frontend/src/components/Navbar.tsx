@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { ElementType, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as MdIcon from "react-icons/md";
 import { IconType } from "react-icons";
+import { IconBaseProps } from "react-icons/lib/esm/iconBase";
 
 export interface NavItem {
   title: string;
@@ -15,7 +16,7 @@ export interface NavBarProps {
   onSelect?: (navItem: NavItem) => void;
 }
 
-export function Navbar(props: NavBarProps) {
+export function Navbar({className,items,onSelect}: NavBarProps) {
   const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -46,19 +47,82 @@ export function Navbar(props: NavBarProps) {
           </div>
         </div>
 
-        <ul>
-          <li>
-            <NavMenuItem />
-          </li>
-        </ul>
+        <NavItems className={"mt-20"} />
       </nav>
     </>
   );
 }
 
-function NavMenuItem() {
+interface NavItemsProps {
+  className?: string;
+}
+
+function NavItems({ className }: NavItemsProps) {
+  const [selectedBackgroundTranslate, setSelectedBackgroundTranslate] =
+    useState("translate-y-0");
+
+  function handleSelectedItem(index: number) {
+    console.log(`clicked ${index}`);
+    console.log(`translate-y-[${index * 4}rem]`);
+    setSelectedBackgroundTranslate(`translate-y-[${index * 4}rem] `);
+  }
+
   return (
-    <div className={`flex h-16 flex-row justify-evenly gap-4 pr-4`}>
+    <div className={`${className}`}>
+      <SelectedNavMenuItemBackground
+        className={`transition-50 absolute w-full transform transition  ${selectedBackgroundTranslate}`}
+      />
+      <ul className={`gap-4`}>
+        
+        <li onClick={() => handleSelectedItem(0)} key={"banana"}>
+          <NavMenuItem name={"Banana"} Icon={MdIcon.MdHome} />
+        </li>
+        <li onClick={() => handleSelectedItem(1)} key={"carrot"}>
+          <NavMenuItem name={"Carrot"} Icon={MdIcon.MdBatchPrediction} />
+        </li>
+        <li onClick={() => handleSelectedItem(2)} key={"kiwi"}>
+          <NavMenuItem name={"Kiwi"} Icon={MdIcon.MdComputer} />
+        </li>
+        <li onClick={() => handleSelectedItem(3)} key={"watermelon"}>
+          <NavMenuItem name={"WaterMelon"} Icon={MdIcon.MdHearing} />
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+interface NavMenuItemProps {
+  name: string;
+  Icon: ElementType<IconBaseProps>;
+  onClick?: VoidFunction;
+}
+
+function NavMenuItem({ name, Icon, onClick }: NavMenuItemProps) {
+  return (
+    <div
+      className={`flex h-16 cursor-pointer flex-row justify-evenly gap-4 gap-4 bg-transparent pr-4`}
+      onClick={onClick}
+    >
+      <div className={`h-16 w-1`} />
+      <div className={`z-10 flex h-16 grow flex-row`}>
+        <Icon className={"h-16 w-16 p-3"} />
+        <span className={"my-auto w-fit justify-center"}>{name}</span>
+      </div>
+    </div>
+  );
+}
+
+interface SelectedNavMenuItemBackgroundProps {
+  className?: string;
+}
+
+function SelectedNavMenuItemBackground(
+  props: SelectedNavMenuItemBackgroundProps
+) {
+  return (
+    <div
+      className={`flex h-16 flex-row justify-evenly gap-4 pr-4 ${props.className}`}
+    >
       <div className={`h-16 w-1 rounded-r bg-primary`} />
       <div className={` h-16 grow rounded-xl bg-primary/10`}></div>
     </div>
