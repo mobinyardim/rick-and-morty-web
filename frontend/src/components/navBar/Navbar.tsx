@@ -65,10 +65,12 @@ function NavItems({ className, items, onSelect }: NavItemsProps) {
     useState("translate-y-0");
 
   function handleSelectedItem(item: NavItem, index: number) {
-    console.log(`clicked ${index}`);
-    console.log(`translate-y-[${index * 4}rem]`);
+    document.documentElement.style.setProperty(
+      "--menuItemSize",
+      `${index * 4}rem`
+    );
     onSelect?.(item);
-    setSelectedBackgroundTranslate(`translate-y-[${index * 4}rem] `);
+    setSelectedBackgroundTranslate(`translate-y-[var(--menuItemSize)] `);
   }
 
   return (
