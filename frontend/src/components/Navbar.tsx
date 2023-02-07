@@ -16,14 +16,16 @@ export interface NavBarProps {
   onSelect?: (navItem: NavItem) => void;
 }
 
-export function Navbar({className,items,onSelect}: NavBarProps) {
+export function Navbar({ className, items, onSelect }: NavBarProps) {
   const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(!sidebar);
 
   return (
     <>
-      <div className={`flex h-16 items-center justify-start bg-background`}>
+      <div
+        className={`flex h-16 items-center justify-start bg-background ${className}`}
+      >
         <FaIcons.FaBars className="h-full w-16 p-5" onClick={showSidebar} />
       </div>
 
@@ -47,7 +49,7 @@ export function Navbar({className,items,onSelect}: NavBarProps) {
           </div>
         </div>
 
-        <NavItems className={"mt-20"} />
+        <NavItems className={"mt-20"} items={items} onSelect={onSelect} />
       </nav>
     </>
   );
@@ -55,37 +57,39 @@ export function Navbar({className,items,onSelect}: NavBarProps) {
 
 interface NavItemsProps {
   className?: string;
+  items?: Array<NavItem>;
+  onSelect?: (navItem: NavItem) => void;
 }
 
-function NavItems({ className }: NavItemsProps) {
+function NavItems({ className, items, onSelect }: NavItemsProps) {
   const [selectedBackgroundTranslate, setSelectedBackgroundTranslate] =
     useState("translate-y-0");
 
-  function handleSelectedItem(index: number) {
+  function handleSelectedItem(item: NavItem, index: number) {
     console.log(`clicked ${index}`);
     console.log(`translate-y-[${index * 4}rem]`);
+    onSelect?.(item);
     setSelectedBackgroundTranslate(`translate-y-[${index * 4}rem] `);
   }
 
   return (
     <div className={`${className}`}>
-      <SelectedNavMenuItemBackground
-        className={`transition-50 absolute w-full transform transition  ${selectedBackgroundTranslate}`}
-      />
+      {items && (
+        <SelectedNavMenuItemBackground
+          className={`transition-50 absolute w-full transform transition  ${selectedBackgroundTranslate}`}
+        />
+      )}
       <ul className={`gap-4`}>
-        
-        <li onClick={() => handleSelectedItem(0)} key={"banana"}>
-          <NavMenuItem name={"Banana"} Icon={MdIcon.MdHome} />
-        </li>
-        <li onClick={() => handleSelectedItem(1)} key={"carrot"}>
-          <NavMenuItem name={"Carrot"} Icon={MdIcon.MdBatchPrediction} />
-        </li>
-        <li onClick={() => handleSelectedItem(2)} key={"kiwi"}>
-          <NavMenuItem name={"Kiwi"} Icon={MdIcon.MdComputer} />
-        </li>
-        <li onClick={() => handleSelectedItem(3)} key={"watermelon"}>
-          <NavMenuItem name={"WaterMelon"} Icon={MdIcon.MdHearing} />
-        </li>
+        {items?.map((item, index) => {
+          return (
+            <li
+              onClick={() => handleSelectedItem(item, index)}
+              key={item.title}
+            >
+              <NavMenuItem name={item.title} Icon={item.icon} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
