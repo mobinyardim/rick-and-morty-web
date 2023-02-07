@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { HomeScreen } from "./home/HomeScreen";
-import { Navbar, NavItem } from "../../components/Navbar";
+import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as MdIcon from "react-icons/md";
 
 const menuItems: Array<NavItem> = [

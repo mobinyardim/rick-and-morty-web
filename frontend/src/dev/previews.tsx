@@ -7,7 +7,7 @@ import LoginScreen from "../screens/auth/login/LoginScreen";
 import { MyInput } from "../components/MyInput";
 import SignUpScreen from "../screens/auth/signup/SignUpScreen";
 import { HomeScreen } from "../screens/main/home/HomeScreen";
-import { Navbar } from "../components/Navbar";
+import { Navbar } from "../components/navBar/Navbar";
 import MainScreen from "../screens/main/MainScreen";
 
 const ComponentPreviews = () => {
