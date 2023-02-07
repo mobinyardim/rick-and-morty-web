@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { HomeScreen } from "./home/HomeScreen";
 import { Navbar, NavItem } from "../../components/Navbar";
 import * as MdIcon from "react-icons/md";
