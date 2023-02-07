@@ -18,14 +18,17 @@ export interface NavBarProps {
 export function Navbar({ className, items, onSelect }: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
 
-  const showSidebar = () => setSidebar(!sidebar);
+  const toggleSidebarViewState = () => setSidebar(!sidebar);
 
   return (
     <>
       <div
         className={`flex h-16 items-center justify-start bg-background ${className}`}
       >
-        <FaIcons.FaBars className="h-full w-16 p-5" onClick={showSidebar} />
+        <FaIcons.FaBars
+          className="h-full w-16 p-5"
+          onClick={toggleSidebarViewState}
+        />
       </div>
 
       <nav
@@ -36,7 +39,7 @@ export function Navbar({ className, items, onSelect }: NavBarProps) {
         <div className="absolute flex w-full flex-row justify-end">
           <div
             className="relative left-10 h-20 w-20  p-6"
-            onClick={showSidebar}
+            onClick={toggleSidebarViewState}
           >
             <div className="z-10 m-auto h-8 w-8 rounded-full bg-background drop-shadow-2xl">
               <MdIcon.MdOutlineKeyboardArrowRight
