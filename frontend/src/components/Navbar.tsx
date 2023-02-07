@@ -1,13 +1,12 @@
 import { ElementType, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as MdIcon from "react-icons/md";
-import { IconType } from "react-icons";
 import { IconBaseProps } from "react-icons/lib/esm/iconBase";
 
 export interface NavItem {
   title: string;
   className?: string;
-  icon: IconType;
+  icon: ElementType<IconBaseProps>;
 }
 
 export interface NavBarProps {
