@@ -5,6 +5,8 @@ export const router = express.Router();
 
 router.get("/", CharactersController.getCharacters);
 
+router.post("/populate", CharactersController.populateDatabase);
+
 router.get("/:id", CharactersController.getCharacter);
 
-router.post("/", CharactersController.createCharacter)
+router.post("/", CharactersController.createCharacter);
