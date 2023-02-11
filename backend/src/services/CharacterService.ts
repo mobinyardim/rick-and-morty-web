@@ -12,4 +12,8 @@ export abstract class CharacterService {
     abstract updateCharacter(characterBody: CharacterBody): Promise<Result<unknown>>
 
     abstract deleteCharacter(characterBody: CharacterBody): Promise<Result<unknown>>
+
+    abstract getOutSourceCharacters(page: string): Promise<Result<Character[]>>
+
+    abstract populateDatabaseWithOutSource(): Promise<Result<unknown>>
 }
