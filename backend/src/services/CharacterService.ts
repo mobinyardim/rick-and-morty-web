@@ -1,5 +1,5 @@
-import {Result} from "../models/Result";
-import {Character} from "../models/Character";
+import {Result} from "../../../models/src/Result";
+import {Character} from "../../../models/src/Character";
 import {CharacterBody} from "../bodyModels/CharacterBody";
 
 export abstract class CharacterService {
@@ -12,4 +12,8 @@ export abstract class CharacterService {
     abstract updateCharacter(characterBody: CharacterBody): Promise<Result<unknown>>
 
     abstract deleteCharacter(characterBody: CharacterBody): Promise<Result<unknown>>
+
+    abstract getOutSourceCharacters(page: string): Promise<Result<Character[]>>
+
+    abstract populateDatabaseWithOutSource(): Promise<Result<unknown>>
 }

@@ -1,5 +1,5 @@
 import {Converter} from "./Converter";
-import {Origin} from "../models/Origin";
+import {Origin} from "../../../models/src/Origin";
 import {OriginEntity} from "../persistence/OriginEntity";
 import {LocationEntity} from "../persistence/LocationEntity";
 

@@ -1,11 +1,12 @@
 import {CharacterService} from "./CharacterService";
 import {CharacterBody} from "../bodyModels/CharacterBody";
-import {Fail, Pagination, Result, Success} from "../models/Result";
-import {Character} from "../models/Character";
+import {Fail, Pagination, Result, Success} from "../../../models/src/Result";
+import {Character} from "../../../models/src/Character";
 import CharacterDao, {CharacterEntity} from "../persistence/CharacterEntity";
-import {Document, isValidObjectId} from "mongoose";
+import {Document, Error as ValidatorError, isValidObjectId} from "mongoose";
 import {characterConverter} from "../converters/CharacterConverter";
-import {Error as ValidatorError} from "mongoose";
+import axios, {AxiosResponse} from "axios";
+import {OutSourceResult} from "./transferModels/OutSourceResult";
 
 export class CharacterServiceImpl implements CharacterService {
     async getCharacters(limit: number, offset: number): Promise<Result<Array<Character>>> {
@@ -103,5 +104,47 @@ export class CharacterServiceImpl implements CharacterService {
         throw new Error()
     }
 
+    async getOutSourceCharacters(page: string): Promise<Result<Character[]>> {
+        return axios.get<OutSourceResult<Character[]>>("https://rickandmortyapi.com/api/character", {
+            params: {
+                page: page
+            }
+        })
+            .then((result: AxiosResponse<OutSourceResult<Character[]>>) => {
+                return new Success(
+                    "success",
+                    result.data.results,
+                    new Pagination(
+                        result.data.info.pages,
+                        result.data.info.count
+                    )
+                )
+            })
+    }
 
+
+    async populateDatabaseWithOutSource(): Promise<Result<unknown>> {
+        for (let page = 1; ; page++) {
+            const response = await this.getOutSourceCharacters(`${page}`)
+            console.log("data fetched")
+            if (response && response instanceof Success) {
+                console.log(typeof response.data)
+                for (const item of response.data as Array<Character>) {
+                    try {
+                        await this.createCharacter(item)
+                        console.log(`charachter ${item.id} ${item.name} added`)
+                    } catch (e: any) {
+                        console.log(`charachter ${item.id} ${item.name} error ${e.message}`)
+                    }
+
+                }
+                console.log(`current:${page} total:${response.pagination?.totalPages ?? 0}`)
+                if (page >= (response.pagination?.totalPages ?? 0)) {
+                    return response
+                }
+            } else {
+                return response
+            }
+        }
+    }
 }

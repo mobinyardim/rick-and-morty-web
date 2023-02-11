@@ -2,7 +2,7 @@ import {RequestHandler} from "express";
 import {characterConverter} from "../converters/CharacterConverter";
 import {CharacterBody} from "../bodyModels/CharacterBody";
 import {services} from "../services/Services";
-import {Success} from "../models/Result";
+import {Success} from "../../../models/src/Result";
 import {handleFailResult} from "../utils/ControllerHelpers";
 import {PaginationQueries} from "../bodyModels/PaginationQueries";
 
@@ -42,5 +42,14 @@ export const createCharacter: RequestHandler<unknown, unknown, CharacterBody, un
         res.status(200).json(result)
     } else {
         handleFailResult(res, result)
+    }
+}
+
+export const populateDatabase: RequestHandler<unknown, unknown, unknown, unknown> = async (req, res) => {
+    const populateResponse = await services.characterService.populateDatabaseWithOutSource()
+    if (populateResponse instanceof Success) {
+        res.status(200).json(populateResponse)
+    } else {
+        handleFailResult(res, populateResponse)
     }
 }

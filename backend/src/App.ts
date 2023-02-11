@@ -2,15 +2,22 @@ import express, {NextFunction, Request, Response} from "express";
 import morgan from "morgan";
 import {router as CharactersRoute} from "./routes/Characters";
 import createHttpError, {isHttpError} from "http-errors";
+import cors, {CorsOptions} from "cors";
 
+const corsOptions: CorsOptions = {
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200
+}
 
 const app = express()
 
+app.use(cors(corsOptions))
 app.use(morgan("dev"))
 
 app.use(express.json());
 
 app.use("/api/v1/characters", CharactersRoute)
+
 app.use((req, res, next) => {
     next(createHttpError("Endpoint not found"));
 });
