@@ -44,3 +44,12 @@ export const createCharacter: RequestHandler<unknown, unknown, CharacterBody, un
         handleFailResult(res, result)
     }
 }
+
+export const populateDatabase: RequestHandler<unknown, unknown, unknown, unknown> = async (req, res) => {
+    const populateResponse = await services.characterService.populateDatabaseWithOutSource()
+    if (populateResponse instanceof Success) {
+        res.status(200).json(populateResponse)
+    } else {
+        handleFailResult(res, populateResponse)
+    }
+}
