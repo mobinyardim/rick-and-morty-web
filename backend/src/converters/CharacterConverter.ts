@@ -1,6 +1,6 @@
 import {CharacterEntity} from "../persistence/CharacterEntity";
 import CharacterDao from "../persistence/CharacterEntity";
-import {Character, Gender, Status} from "../models/Character";
+import {Character, Gender, Status} from "../../../models/src/Character";
 import {Converter} from "./Converter";
 import {originConverters} from "./OriginConverter";
 import {locationConverter} from "./LocationConverter";

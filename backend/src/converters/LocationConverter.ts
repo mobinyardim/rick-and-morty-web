@@ -1,7 +1,7 @@
-import {Location} from "../models/Location";
+import {Location} from "../../../models/src/Location";
 import {LocationEntity} from "../persistence/LocationEntity";
 import {Converter} from "./Converter";
-import {} from "../models/Character";
+import {} from "../../../models/src/Character";
 
 export const locationConverter: Converter<LocationEntity, unknown, Location> = {
 

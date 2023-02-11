@@ -1,5 +1,5 @@
-import {Result} from "../models/Result";
-import {Character} from "../models/Character";
+import {Result} from "../../../models/src/Result";
+import {Character} from "../../../models/src/Character";
 import {CharacterBody} from "../bodyModels/CharacterBody";
 
 export abstract class CharacterService {

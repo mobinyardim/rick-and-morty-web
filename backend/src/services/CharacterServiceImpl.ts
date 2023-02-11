@@ -1,7 +1,7 @@
 import {CharacterService} from "./CharacterService";
 import {CharacterBody} from "../bodyModels/CharacterBody";
-import {Fail, Pagination, Result, Success} from "../models/Result";
-import {Character} from "../models/Character";
+import {Fail, Pagination, Result, Success} from "../../../models/src/Result";
+import {Character} from "../../../models/src/Character";
 import CharacterDao, {CharacterEntity} from "../persistence/CharacterEntity";
 import {Document, isValidObjectId} from "mongoose";
 import {characterConverter} from "../converters/CharacterConverter";
