@@ -22,9 +22,7 @@ export function Navbar({className, items, onSelect}: NavBarProps) {
 
     return (
         <>
-            <div
-                className={`flex h-16 items-center justify-start bg-background ${className}`}
-            >
+            <div className={`flex h-16 items-center justify-start lg:hidden bg-background ${className}`}>
                 <FaIcons.FaBars
                     className="h-full w-16 p-5"
                     onClick={toggleSidebarViewState}
