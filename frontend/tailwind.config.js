@@ -21,7 +21,12 @@ module.exports = withMT({
             stroke: "#9FAECD",
             onBackgroundHigh: "#262B36",
             onBackgroundMedium: "#465064",
-            onBackgroundLow: "#677593"
+            onBackgroundLow: "#677593",
+
+            error: "#DC3848",
+            onError: "#FFFFFF",
+            success: "#28AB46",
+            onSuccess: "#FFFFFF"
         },
         fontFamily: {
             "sans": ['Haas Grot Text R Web']
