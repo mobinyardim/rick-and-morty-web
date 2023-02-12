@@ -12,9 +12,10 @@ module.exports = withMT({
             primaryContainer: "#EEF7FE",
             onPrimaryContainer: "#4189C3",
 
-            background: "#FFFFFF",
+            background: "#F6F6F8",
             backgroundVariant: "#F8F9FC",
             backgroundDisabled: "#F3F5F9",
+            surface: "#FFFFFF",
             divider: "#E7EBF3",
             disabled: "#CFD7E6",
             stroke: "#9FAECD",
