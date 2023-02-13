@@ -1,6 +1,7 @@
 import { generateFakeCharacterList } from "./Utils";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { Typography } from "@material-tailwind/react";
+import * as BsIcon from "react-icons/bs";
 
 export function HomeScreen() {
   const characters = generateFakeCharacterList();
@@ -58,21 +59,26 @@ function ItemsList({ className, items, title, onSeeMore }: ItemsListProp) {
   return (
     <div className={`flex flex-col ${className}`}>
       <div className={"flex max-w-[100vw] flex-row items-center px-8"}>
-        <Typography variant="h4" className={"text-primary"}>
+        <Typography variant="h4" className={"text-onBackgroundMedium"}>
           {title}
         </Typography>
         <div className="grow" />
-        <Typography variant="small" onClick={onSeeMore}>
+        <Typography
+          variant="small"
+          onClick={onSeeMore}
+          className={"text-primary"}
+        >
           See More
         </Typography>
+        <BsIcon.BsChevronDoubleRight className={"h-4 w-4 text-primary"} />
       </div>
       <div className={`h-4 flex-shrink-0`} />
       <div
         className={`grid h-fit w-fit max-w-[100vw] flex-shrink-0 auto-cols-max grid-flow-col auto-rows-max justify-items-center gap-4 overflow-x-auto lg:grid-rows-3 2xl:grid-rows-2`}
       >
-        <div className={"h-4 w-4"} />
+        <div className={"h-4 w-4 lg:hidden"} />
         {items.map((item) => item)}
-        <div className={"h-4 w-4"} />
+        <div className={"h-4 w-4 lg:hidden"} />
       </div>
     </div>
   );
