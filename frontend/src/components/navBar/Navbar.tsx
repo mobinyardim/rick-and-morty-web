@@ -123,9 +123,9 @@ export function NavMenuItem({ name, isFull, Icon, onClick }: NavMenuItemProps) {
       <div className={`h-16 w-1 shrink-0`} />
       <div className={"w-4 shrink-0"} />
       <div className={`flex h-16 min-w-0 flex-shrink shrink grow flex-row`}>
-        <Icon className={"h-16 w-16 shrink-0 p-3"} />
+        <Icon className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"} />
         <span
-          className={`my-auto w-fit min-w-0 justify-center whitespace-nowrap ${
+          className={`my-auto w-fit min-w-0 justify-center whitespace-nowrap text-onBackgroundHigh ${
             isFull ? "lg:visible lg:w-fit" : "lg:invisible lg:w-0"
           } overflow-clip transition delay-500 ease-in-out`}
         >

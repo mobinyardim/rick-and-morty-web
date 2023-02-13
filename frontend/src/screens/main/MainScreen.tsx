@@ -2,28 +2,28 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { HomeScreen } from "./home/HomeScreen";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
-import * as MdIcon from "react-icons/md";
+import * as IoIcon from "react-icons/io5";
 
 const menuItems: Array<NavItem> = [
   {
     title: "Home",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoHomeOutline,
   },
   {
     title: "Characters",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoPersonOutline,
   },
   {
     title: "Locations",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoLocationOutline,
   },
   {
     title: "Episodes",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoFilmOutline,
   },
 ];
 
