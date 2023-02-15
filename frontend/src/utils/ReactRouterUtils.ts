@@ -5,6 +5,7 @@ import {
   LoaderFunctionArgs,
   useLoaderData as useRrdLoaderData,
 } from "react-router-dom";
+import React from "react";
 
 export function useLoaderData<
   TLoader extends ReturnType<typeof deferredLoader>
