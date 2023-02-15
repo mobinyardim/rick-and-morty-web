@@ -36,7 +36,7 @@ export function CharacterComponent({
     >
       <img
         src={character?.image ?? "/assets/transparent.png"}
-        className={`lg:h-36 lg:w-36 lg-max:aspect-square lg-max:grow lg-max:grow ${
+        className={`bg-clip-content lg:h-36 lg:w-36 lg-max:aspect-square lg-max:max-h-64 lg-max:grow ${
           character ? "" : "shimmer"
         }`}
         alt={" "}

@@ -79,11 +79,11 @@ function ItemsList({ className, items, title, onSeeMore }: ItemsListProp) {
       </div>
       <div className={`h-4 flex-shrink-0`} />
       <div
-        className={`grid h-fit w-fit max-w-[100vw] flex-shrink-0 auto-cols-max grid-flow-col auto-rows-max justify-items-center gap-4 overflow-x-auto lg:grid-rows-3 2xl:grid-rows-2`}
+        className={`grid h-fit w-fit max-w-[90vw] flex-shrink-0 auto-cols-max grid-flow-col auto-rows-max justify-items-center gap-4 overflow-x-scroll lg:grid-rows-3 2xl:grid-rows-2`}
       >
         <div className={"h-4 w-4 lg:hidden"} />
         {items.map((item) => item)}
-        <div className={"h-4 w-4 lg:hidden"} />
+        <div className={"h-4 w-4 "} />
       </div>
     </div>
   );
