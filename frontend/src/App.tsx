@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  RouterProvider,
 } from "react-router-dom";
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignUpScreen from "./screens/auth/signup/SignUpScreen";
@@ -25,4 +26,10 @@ export const appRouter = createBrowserRouter(
     </Fragment>
   )
 );
+
+function App() {
+  return <RouterProvider router={appRouter} />;
+}
+
+export default App;
 
