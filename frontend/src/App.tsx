@@ -9,7 +9,7 @@ import {
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignUpScreen from "./screens/auth/signup/SignUpScreen";
 import MainScreen from "./screens/main/MainScreen";
-import { sources } from "./remoteSources/common/Sources";
+import { charactersLoader } from "./screens/main/home/HomeScreen";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -17,9 +17,8 @@ export const appRouter = createBrowserRouter(
       <Route
         path="/"
         element={<MainScreen />}
-        loader={async () => {
-          return await sources.charactersSource.getCharacters();
-        }}
+        loader={charactersLoader}
+        errorElement={<MainScreen />}
       />
       <Route path="login" element={<LoginScreen />} />
       <Route path="signup" element={<SignUpScreen />} />
@@ -32,4 +31,3 @@ function App() {
 }
 
 export default App;
-
