@@ -3,7 +3,7 @@ import { Typography } from "@material-tailwind/react";
 
 export interface CharacterComponentProps {
   className?: string;
-  character: Character;
+  character?: Character;
 }
 
 export function CharacterComponent({
@@ -11,7 +11,7 @@ export function CharacterComponent({
   character,
 }: CharacterComponentProps) {
   let statusClassName = "";
-  switch (character.status) {
+  switch (character?.status) {
     case "Alive": {
       statusClassName = "bg-error";
       break;
@@ -24,33 +24,74 @@ export function CharacterComponent({
       statusClassName = "bg-onBackgroundMedium";
       break;
     }
+    default: {
+      statusClassName = "";
+      break;
+    }
   }
+
   return (
     <div
       className={`flex w-fit overflow-clip rounded-2xl bg-surface lg:w-96 lg:flex-row lg-max:flex-col ${className}`}
     >
       <img
-        src={character.image}
-        className={`lg:h-36 lg:w-36 lg-max:aspect-square  lg-max:w-60 lg-max:grow`}
+        src={character?.image ?? "/assets/transparent.png"}
+        className={`lg:h-36 lg:w-36 lg-max:aspect-square lg-max:grow lg-max:grow ${
+          character ? "" : "shimmer"
+        }`}
+        alt={" "}
       />
       <div className={`flex flex-col p-4`}>
-        <Typography variant="h5" className={`text-onBackgroundHigh`}>
-          {character.name}
+        <Typography
+          variant="h5"
+          className={`truncate text-onBackgroundHigh  ${
+            character ? "" : "shimmer-text-m"
+          }`}
+        >
+          {character?.name}
         </Typography>
-        <div className={`flex flex-row items-center gap-1`}>
+        <div className={`mt-1 flex flex-row items-center gap-1`}>
           <div
-            className={`aspect-square h-3 w-3 shrink-0 grow-0 ${statusClassName} items-center rounded-full`}
+            className={`aspect-square h-3 w-3 shrink-0 grow-0 ${statusClassName} items-center rounded-full ${
+              character ? "" : "shimmerRounded"
+            }`}
           />
-          <Typography variant="paragraph" className={`text-onBackgroundHigh`}>
-            {character.status}&ensp;-&ensp;{character.species}
-          </Typography>
+          <div className={`flex flex-row items-center gap-1`}>
+            <Typography
+              variant="paragraph"
+              className={`truncate text-onBackgroundHigh ${
+                character ? "" : "shimmer-text-s"
+              }`}
+            >
+              {character?.status}
+            </Typography>
+            <Typography variant="paragraph" className={`text-onBackgroundHigh`}>
+              &ensp;-&ensp;
+            </Typography>
+            <Typography
+              variant="paragraph"
+              className={`truncate text-onBackgroundHigh ${
+                character ? "" : "shimmer-text-s"
+              }`}
+            >
+              {character?.species}
+            </Typography>
+          </div>
         </div>
         <div className={`grow`} />
-        <Typography variant="paragraph" className={`text-onBackgroundLow`}>
+        <Typography
+          variant="small"
+          className={`truncate text-onBackgroundLow `}
+        >
           Last known location:
         </Typography>
-        <Typography variant="paragraph" className={`text-onBackgroundHigh`}>
-          {character.location.name}
+        <Typography
+          variant="small"
+          className={`text-onBackgroundHigh ${
+            character ? "" : "shimmer-text-m"
+          }`}
+        >
+          {character?.location.name}
         </Typography>
       </div>
     </div>
