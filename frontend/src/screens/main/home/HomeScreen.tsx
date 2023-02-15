@@ -1,47 +1,52 @@
-import { generateFakeCharacterList } from "./Utils";
-import { CharacterComponent } from "../../../components/CharacterComponent";
 import { Typography } from "@material-tailwind/react";
 import * as BsIcon from "react-icons/bs";
+import {
+  Await,
+  deferredLoader,
+  useLoaderData,
+} from "../../../utils/ReactRouterUtils";
+import { sources } from "../../../remoteSources/common/Sources";
+import { Character } from "models/src/Character";
+import React, { Suspense } from "react";
+import { CharacterComponent } from "../../../components/CharacterComponent";
+
+export const charactersLoader = deferredLoader((args) => ({
+  metrics: sources.charactersSource.getCharacters(),
+}));
 
 export function HomeScreen() {
-  const characters = generateFakeCharacterList();
+  const characters = useLoaderData<typeof charactersLoader>();
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
       <div className="flex h-screen w-max flex-shrink-0 flex-col gap-12 pr-5 pt-5 lg:pl-40">
-        <ItemsList
-          className={""}
-          title={"Characters"}
-          items={characters.map((character) => (
-            <CharacterComponent
-              className={"col-span-1 h-fit"}
-              character={character}
+        <Suspense
+          fallback={
+            <ItemsList
+              className={""}
+              title={"Locations"}
+              items={Array.apply(null, Array(10)).map(() => (
+                <CharacterComponent className={"col-span-1 h-fit"} />
+              ))}
             />
-          ))}
-        />
+          }
+        >
+          <Await resolve={characters.metrics}>
+            {(characters: Awaited<Character>[]) => (
+              <ItemsList
+                className={""}
+                title={"Locations"}
+                items={characters.map((character) => (
+                  <CharacterComponent
+                    className={"col-span-1 h-fit"}
+                    character={character}
+                  />
+                ))}
+              />
+            )}
+          </Await>
+        </Suspense>
 
-        <ItemsList
-          className={""}
-          title={"Locations"}
-          items={characters.map((character) => (
-            <CharacterComponent
-              className={"col-span-1 h-fit"}
-              character={character}
-            />
-          ))}
-        />
-
-        <ItemsList
-          key={"moz"}
-          className={""}
-          title={"Episodes"}
-          items={characters.map((character) => (
-            <CharacterComponent
-              className={"col-span-1 row-span-1 h-fit"}
-              character={character}
-            />
-          ))}
-        />
         <div className={"shrink-0 lg-max:h-10"} />
       </div>
     </div>
