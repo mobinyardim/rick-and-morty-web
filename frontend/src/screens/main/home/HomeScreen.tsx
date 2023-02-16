@@ -9,13 +9,15 @@ import { sources } from "../../../remoteSources/common/Sources";
 import { Character } from "models/src/Character";
 import React, { Suspense } from "react";
 import { CharacterComponent } from "../../../components/CharacterComponent";
+import { useNavigate } from "react-router-dom";
 
 export const charactersLoader = deferredLoader((args) => ({
   metrics: sources.charactersSource.getCharacters(),
 }));
 
 export function HomeScreen() {
-  const characters = useLoaderData<typeof charactersLoader>();
+    const navigate = useNavigate();
+    const characters = useLoaderData<typeof charactersLoader>();
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
@@ -24,7 +26,10 @@ export function HomeScreen() {
           fallback={
             <ItemsList
               className={""}
-              title={"Locations"}
+              onSeeMore={() => {
+                navigate("/characters");
+              }}
+              title={"Characters"}
               items={Array.apply(null, Array(10)).map(() => (
                 <CharacterComponent className={"col-span-1 h-fit"} />
               ))}
@@ -35,7 +40,10 @@ export function HomeScreen() {
             {(characters: Awaited<Character>[]) => (
               <ItemsList
                 className={""}
-                title={"Locations"}
+                title={"Characters"}
+                onSeeMore={() => {
+                  navigate("/characters");
+                }}
                 items={characters.map((character) => (
                   <CharacterComponent
                     className={"col-span-1 h-fit"}
@@ -70,8 +78,8 @@ function ItemsList({ className, items, title, onSeeMore }: ItemsListProp) {
         <div className="grow" />
         <Typography
           variant="small"
-          onClick={onSeeMore}
-          className={"text-primary"}
+          onClick={() => onSeeMore?.()}
+          className={"cursor-pointer text-primary"}
         >
           See More
         </Typography>
