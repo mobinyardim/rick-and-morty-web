@@ -1,6 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { HomeScreen } from "./home/HomeScreen";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as IoIcon from "react-icons/io5";
 
@@ -28,18 +27,35 @@ const menuItems: Array<NavItem> = [
 ];
 
 function MainScreen() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // @ts-ignore
   return (
     <div>
-      <Navbar items={menuItems} />
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/characters" element={<HomeScreen />} />
-        <Route path="/locations" element={<HomeScreen />} />
-        <Route path="/episodes" element={<HomeScreen />} />
-      </Routes>
+      <Navbar
+        items={menuItems}
+        onSelect={(navItem) => {
+          switch (navItem) {
+            case menuItems[0]: {
+              navigate("/");
+              break;
+            }
+            case menuItems[1]: {
+              navigate("/characters");
+              break;
+            }
+            case menuItems[2]: {
+              navigate("/locations");
+              break;
+            }
+            case menuItems[3]: {
+              navigate("/episodes");
+              break;
+            }
+          }
+        }}
+      />
+      <Outlet />
     </div>
   );
 }
