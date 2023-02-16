@@ -12,15 +12,21 @@ module.exports = withMT({
             primaryContainer: "#EEF7FE",
             onPrimaryContainer: "#4189C3",
 
-            background: "#FFFFFF",
+            background: "#F6F6F8",
             backgroundVariant: "#F8F9FC",
             backgroundDisabled: "#F3F5F9",
+            surface: "#FFFFFF",
             divider: "#E7EBF3",
             disabled: "#CFD7E6",
             stroke: "#9FAECD",
             onBackgroundHigh: "#262B36",
             onBackgroundMedium: "#465064",
-            onBackgroundLow: "#677593"
+            onBackgroundLow: "#677593",
+
+            error: "#DC3848",
+            onError: "#FFFFFF",
+            success: "#28AB46",
+            onSuccess: "#FFFFFF"
         },
         fontFamily: {
             "sans": ['Haas Grot Text R Web']

@@ -1,34 +1,42 @@
 import CharactersRemoteSource from "./CharactersRemoteSource";
-import {Character} from "models/src/Character"
-import {BASE_URL} from "../common/Consts";
-import axios, {AxiosRequestConfig} from "axios";
-
+import { Character } from "models/src/Character";
+import { BASE_URL, LOCAL_BASE_URL } from "../common/Consts";
+import axios, { AxiosRequestConfig } from "axios";
+import { Success } from "models/src/Result";
 
 export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
+  async addCharacter(character: Omit<Character, "id">): Promise<Character> {
+    const options: AxiosRequestConfig<Omit<Character, "id">> = {
+      method: "POST",
+    };
 
+    return axios
+      .post<Character>(`${BASE_URL}/characters`, character, options)
+      .then((result) => {
+        return result.data;
+      });
+  }
 
-    async addCharacter(character: Omit<Character, "id">): Promise<Character> {
-        const options: AxiosRequestConfig<Omit<Character, "id">> = {
-            method: 'POST'
-        };
+  getCharacter(id: string): Promise<Character> {
+    throw Error();
+  }
 
-        return axios.post<Character>(`${BASE_URL}/characters`, character, options).then((result) => {
-            return result.data
-        })
-    }
+  getCharacters(): Promise<Character[]> {
+    const options: AxiosRequestConfig = {
+      method: "GET",
+    };
 
-    getCharacter(id: string): Promise<Character> {
-        throw Error()
+    return axios
+      .get<Success<Character[]>>(`${LOCAL_BASE_URL}/characters`, options)
+      .then((result) => {
+        return result.data.data;
+      });
+  }
 
-    }
-
-    getCharacters(): Promise<Array<Character>> {
-        throw Error()
-
-    }
-
-    updateCharacter(id: string, character: Partial<Character>): Promise<Character> {
-        throw Error()
-    }
-
+  updateCharacter(
+    id: string,
+    character: Partial<Character>
+  ): Promise<Character> {
+    throw Error();
+  }
 }

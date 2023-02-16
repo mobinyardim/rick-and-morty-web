@@ -1,45 +1,69 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { HomeScreen } from "./home/HomeScreen";
+import React, { useEffect, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
-import * as MdIcon from "react-icons/md";
+import * as IoIcon from "react-icons/io5";
 
-const menuItems: Array<NavItem> = [
+interface Path {
+  path: string;
+}
+
+const menuItems: Array<NavItem & Path> = [
   {
     title: "Home",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoHomeOutline,
+    path: "/",
   },
   {
     title: "Characters",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoPersonOutline,
+    path: "/characters",
   },
   {
     title: "Locations",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoLocationOutline,
+    path: "/locations",
   },
   {
     title: "Episodes",
     className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
+    icon: IoIcon.IoFilmOutline,
+    path: "/episodes",
   },
 ];
 
 function MainScreen() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
+
+  useEffect(() => {
+    const newSelectedTab = menuItems.find((item) => {
+      return item.path === location.pathname;
+    });
+    if (selectedTab !== newSelectedTab) {
+      setSelectedTab(newSelectedTab ?? menuItems[0]);
+    }
+  }, [location, selectedTab]);
 
   // @ts-ignore
   return (
     <div>
-      <Navbar items={menuItems} />
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/characters" element={<HomeScreen />} />
-        <Route path="/locations" element={<HomeScreen />} />
-        <Route path="/episodes" element={<HomeScreen />} />
-      </Routes>
+      <Navbar
+        items={menuItems}
+        selected={selectedTab}
+        onSelect={(navItem) => {
+          setSelectedTab(navItem);
+          const path =
+            menuItems.find((item) => {
+              return item.title === navItem.title;
+            })?.path ?? "";
+          navigate(path);
+        }}
+      />
+      <Outlet />
     </div>
   );
 }

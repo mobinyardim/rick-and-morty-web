@@ -1,44 +1,8 @@
-import React from "react";
-import { ComponentPreview, Previews } from "@react-buddy/ide-toolbox";
-import { PaletteTree } from "./palette";
-import App from "../App";
-import AuthBannerComponent from "../screens/auth/componenets/AuthBannerComponent";
-import LoginScreen from "../screens/auth/login/LoginScreen";
-import { MyInput } from "../components/MyInput";
-import SignUpScreen from "../screens/auth/signup/SignUpScreen";
-import { HomeScreen } from "../screens/main/home/HomeScreen";
-import { Navbar, NavItem, NavMenuItem } from "../components/navBar/Navbar";
-import MainScreen from "../screens/main/MainScreen";
-import * as MdIcon from "react-icons/md";
-import { CharacterComponent } from "../components/CharacterComponent";
 import { Character } from "models/src/Character";
 import { Origin } from "models/src/Origin";
 import { Location } from "models/src/Location";
 
-const menuItems: Array<NavItem> = [
-  {
-    title: "Home",
-    className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
-  },
-  {
-    title: "Characters",
-    className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
-  },
-  {
-    title: "Locations",
-    className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
-  },
-  {
-    title: "Episodes",
-    className: "",
-    icon: MdIcon.MdOutlineKeyboardArrowRight,
-  },
-];
-
-const rick = new Character(
+export const rick = new Character(
   "1",
   "Rick Sanchez",
   "Alive",
@@ -106,48 +70,7 @@ const rick = new Character(
   "https://rickandmortyapi.com/api/character/1",
   "Human"
 );
-const ComponentPreviews = () => {
-  return (
-    <Previews palette={<PaletteTree />}>
-      <ComponentPreview path="/App">
-        <App />
-      </ComponentPreview>
-      <ComponentPreview path="/AuthBannerComponent">
-        <AuthBannerComponent />
-      </ComponentPreview>
-      <ComponentPreview path="/LoginScreen">
-        <LoginScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/MyInput">
-        <MyInput />
-      </ComponentPreview>
-      <ComponentPreview path="/SignUpScreen">
-        <SignUpScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/HomeScreen">
-        <HomeScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/NavBar">
-        <Navbar items={menuItems} />
-      </ComponentPreview>
-      <ComponentPreview path="/MainScreen">
-        <MainScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/NavMenuItem">
-        <NavMenuItem
-          name={"Item"}
-          isFull={true}
-          Icon={MdIcon.MdOutlineKeyboardArrowRight}
-        />
-      </ComponentPreview>
-      <ComponentPreview path="/CharacterComponent">
-        <CharacterComponent character={rick} />
-      </ComponentPreview>
-      <ComponentPreview path="/ComponentPreviews">
-        <ComponentPreviews />
-      </ComponentPreview>
-    </Previews>
-  );
-};
 
-export default ComponentPreviews;
+export function generateFakeCharacterList(): Character[] {
+  return [rick, rick, rick, rick, rick, rick, rick, rick];
+}
