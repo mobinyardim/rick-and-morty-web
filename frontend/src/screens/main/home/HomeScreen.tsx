@@ -13,7 +13,7 @@ export function HomeScreen() {
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
-      <div className="flex h-screen w-max flex-shrink-0 flex-col gap-12 pr-5 pt-5 lg:pl-40">
+      <div className="mx-auto flex h-screen w-max flex-shrink-0 flex-col gap-12 pt-5 lg:p-32 ">
         <Suspense
           fallback={
             <ItemsList
@@ -60,7 +60,12 @@ interface ItemsListProp {
   items: JSX.Element[];
 }
 
-function ItemsList({ className, items, title, onSeeMore }: ItemsListProp) {
+export function ItemsList({
+  className,
+  items,
+  title,
+  onSeeMore,
+}: ItemsListProp) {
   return (
     <div className={`flex flex-col ${className}`}>
       <div className={"flex max-w-[100vw] flex-row items-center px-8"}>
@@ -79,11 +84,9 @@ function ItemsList({ className, items, title, onSeeMore }: ItemsListProp) {
       </div>
       <div className={`h-4 flex-shrink-0`} />
       <div
-        className={`grid h-fit w-fit max-w-[90vw] flex-shrink-0 auto-cols-max grid-flow-col auto-rows-max justify-items-center gap-4 overflow-x-scroll lg:grid-rows-3 2xl:grid-rows-2`}
+        className={`grid h-fit w-fit max-w-[90vw] grid-flow-row grid-cols-const_40 justify-items-center gap-4 overflow-x-scroll lg:grid-cols-const_96 sm:lg-max:grid-cols-const_44`}
       >
-        <div className={"h-4 w-4 lg:hidden"} />
         {items.map((item) => item)}
-        <div className={"h-4 w-4 "} />
       </div>
     </div>
   );

@@ -32,11 +32,11 @@ export function CharacterComponent({
 
   return (
     <div
-      className={`flex w-fit overflow-clip rounded-2xl bg-surface lg:w-96 lg:flex-row lg-max:flex-col ${className}`}
+      className={`lg-max:min-w-44 max-w-md:w-64 flex overflow-clip rounded-2xl bg-surface lg:w-96 lg:flex-row lg-max:h-full lg-max:w-56 lg-max:w-full lg-max:flex-col ${className}`}
     >
       <img
         src={character?.image ?? "/assets/transparent.png"}
-        className={`bg-clip-content lg:h-36 lg:w-36 lg-max:aspect-square lg-max:max-h-64 lg-max:grow ${
+        className={`aspect-square w-full bg-clip-content lg:h-36  lg:w-36 lg-max:max-h-64  ${
           character ? "" : "shimmer"
         }`}
         alt={" "}
@@ -83,7 +83,7 @@ export function CharacterComponent({
           variant="small"
           className={`truncate text-onBackgroundLow `}
         >
-          Last known location:
+          Last location:
         </Typography>
         <Typography
           variant="small"
