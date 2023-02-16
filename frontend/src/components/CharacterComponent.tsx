@@ -13,11 +13,11 @@ export function CharacterComponent({
   let statusClassName = "";
   switch (character?.status) {
     case "Alive": {
-      statusClassName = "bg-error";
+      statusClassName = "bg-success";
       break;
     }
     case "Dead": {
-      statusClassName = "bg-success";
+      statusClassName = "bg-error";
       break;
     }
     case "Unknown": {
