@@ -1,4 +1,4 @@
-import { ElementType, useState } from "react";
+import { ElementType, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as MdIcon from "react-icons/md";
 import { IconBaseProps } from "react-icons/lib/esm/iconBase";
@@ -13,9 +13,11 @@ export interface NavBarProps {
   className?: string;
   items?: Array<NavItem>;
   onSelect?: (navItem: NavItem) => void;
+
+  selected?: NavItem;
 }
 
-export function Navbar({ className, items, onSelect }: NavBarProps) {
+export function Navbar({ className, items, onSelect, selected }: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
 
   const toggleSidebarViewState = () => setSidebar(!sidebar);
@@ -56,6 +58,7 @@ export function Navbar({ className, items, onSelect }: NavBarProps) {
         <NavItems
           className={"mt-20"}
           items={items}
+          selected={selected}
           onSelect={onSelect}
           isFull={sidebar}
         />
@@ -68,19 +71,40 @@ interface NavItemsProps {
   className?: string;
   isFull?: boolean;
   items?: Array<NavItem>;
+  selected?: NavItem;
   onSelect?: (navItem: NavItem) => void;
 }
 
-function NavItems({ className, isFull, items, onSelect }: NavItemsProps) {
+function NavItems({
+  className,
+  isFull,
+  items,
+  selected,
+  onSelect,
+}: NavItemsProps) {
+  useEffect(() => {
+    handleSelectedItem(
+      selected ? items?.indexOf(selected) ?? 0 : 0,
+      selected,
+      true
+    );
+  }, [selected]);
+
   const [selectedBackgroundTranslate, setSelectedBackgroundTranslate] =
     useState("translate-y-0");
 
-  function handleSelectedItem(item: NavItem, index: number) {
+  function handleSelectedItem(
+    index: number,
+    item?: NavItem,
+    isFromUser?: boolean
+  ) {
     document.documentElement.style.setProperty(
       "--menuItemSize",
       `${index * 4}rem`
     );
-    onSelect?.(item);
+    if (item && !isFromUser) {
+      onSelect?.(item);
+    }
     setSelectedBackgroundTranslate(`translate-y-[var(--menuItemSize)] `);
   }
 
@@ -95,7 +119,7 @@ function NavItems({ className, isFull, items, onSelect }: NavItemsProps) {
         {items?.map((item, index) => {
           return (
             <li
-              onClick={() => handleSelectedItem(item, index)}
+              onClick={() => handleSelectedItem(index, item)}
               key={item.title}
             >
               <NavMenuItem name={item.title} Icon={item.icon} isFull={isFull} />
