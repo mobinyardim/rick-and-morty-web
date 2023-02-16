@@ -9,8 +9,9 @@ import {
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignUpScreen from "./screens/auth/signup/SignUpScreen";
 import MainScreen from "./screens/main/MainScreen";
-import { charactersLoader, HomeScreen } from "./screens/main/home/HomeScreen";
+import { HomeScreen } from "./screens/main/home/HomeScreen";
 import { NotFound } from "./screens/404/NotFound";
+import { charactersLoader } from "./loaders/characters/CharactersLoader";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(

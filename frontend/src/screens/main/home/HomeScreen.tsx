@@ -1,19 +1,11 @@
 import { Typography } from "@material-tailwind/react";
 import * as BsIcon from "react-icons/bs";
-import {
-  Await,
-  deferredLoader,
-  useRouteLoaderData,
-} from "../../../utils/ReactRouterUtils";
-import { sources } from "../../../remoteSources/common/Sources";
+import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { Character } from "models/src/Character";
 import React, { Suspense } from "react";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { useNavigate } from "react-router-dom";
-
-export const charactersLoader = deferredLoader((args) => ({
-  metrics: sources.charactersSource.getCharacters(),
-}));
+import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
 
 export function HomeScreen() {
   const navigate = useNavigate();
