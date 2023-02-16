@@ -15,8 +15,14 @@ import { NotFound } from "./screens/404/NotFound";
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <Fragment>
-      <Route path="/" element={<MainScreen />} errorElement={<MainScreen />}>
-        <Route path="/" loader={charactersLoader} element={<HomeScreen />} />
+      <Route
+        path="/"
+        element={<MainScreen />}
+        loader={charactersLoader}
+        errorElement={<MainScreen />}
+        id="root"
+      >
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/characters" element={<NotFound />} />
         <Route path="/locations" element={<NotFound />} />
         <Route path="/episodes" element={<NotFound />} />

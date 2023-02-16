@@ -3,7 +3,7 @@ import * as BsIcon from "react-icons/bs";
 import {
   Await,
   deferredLoader,
-  useLoaderData,
+  useRouteLoaderData,
 } from "../../../utils/ReactRouterUtils";
 import { sources } from "../../../remoteSources/common/Sources";
 import { Character } from "models/src/Character";
@@ -16,8 +16,8 @@ export const charactersLoader = deferredLoader((args) => ({
 }));
 
 export function HomeScreen() {
-    const navigate = useNavigate();
-    const characters = useLoaderData<typeof charactersLoader>();
+  const navigate = useNavigate();
+  const characters = useRouteLoaderData<typeof charactersLoader>("root");
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
