@@ -1,18 +1,17 @@
 import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
-import { useImmer } from "use-immer";
-import { Character } from "models/src/Character";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { ItemsList } from "../../../components/ItemsList";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { sources } from "../../../remoteSources/common/Sources";
 import debounce from "lodash.debounce";
+import { useCharactersStore } from "../../../stores/CharctersStore";
 
 export function CharactersScreen() {
   const charactersFirstPage =
     useRouteLoaderData<typeof charactersLoader>("root");
 
-  const [characters, setCharacters] = useImmer<Character[]>([]);
+  const charactersStore = useCharactersStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,9 +20,7 @@ export function CharactersScreen() {
       const data = await charactersFirstPage.metrics;
       if (!ignore) {
         setIsLoading(false);
-        setCharacters((draft) => {
-          return [...data, ...draft];
-        });
+        charactersStore.addCharacters([...data]);
       }
     };
     fetchData().catch(console.error);
@@ -42,12 +39,10 @@ export function CharactersScreen() {
           await sources.charactersSource
             .getCharacters({
               limit: 10,
-              offset: characters.length,
+              offset: charactersStore.characters.length,
             })
             .then((result) => {
-              setCharacters((draft) => {
-                return [...draft, ...result];
-              });
+              charactersStore.addCharacters(result);
             });
           setIsLoading((_) => false);
         }
@@ -77,7 +72,7 @@ export function CharactersScreen() {
                 onLoadNext={() => {
                   getNextPageData();
                 }}
-                items={characters.map((character) => (
+                items={charactersStore.characters.map((character) => (
                   <CharacterComponent
                     className={"col-span-1 h-fit"}
                     character={character}
