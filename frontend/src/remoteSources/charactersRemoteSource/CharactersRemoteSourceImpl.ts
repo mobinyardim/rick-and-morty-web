@@ -3,6 +3,7 @@ import { Character } from "models/src/Character";
 import { BASE_URL, LOCAL_BASE_URL } from "../common/Consts";
 import axios, { AxiosRequestConfig } from "axios";
 import { Success } from "models/src/Result";
+import { PaginationParams } from "../common/PaginationParams";
 
 export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
   async addCharacter(character: Omit<Character, "id">): Promise<Character> {
@@ -21,9 +22,12 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
     throw Error();
   }
 
-  getCharacters(): Promise<Character[]> {
+  getCharacters(paginationParams: PaginationParams): Promise<Character[]> {
     const options: AxiosRequestConfig = {
       method: "GET",
+      params: {
+        ...paginationParams,
+      },
     };
 
     return axios
