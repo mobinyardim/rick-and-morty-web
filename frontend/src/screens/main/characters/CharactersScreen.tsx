@@ -2,21 +2,25 @@ import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
 import { useImmer } from "use-immer";
 import { Character } from "models/src/Character";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { ItemsList } from "../../../components/ItemsList";
 import { CharacterComponent } from "../../../components/CharacterComponent";
+import { sources } from "../../../remoteSources/common/Sources";
+import debounce from "lodash.debounce";
 
 export function CharactersScreen() {
   const charactersFirstPage =
     useRouteLoaderData<typeof charactersLoader>("root");
 
   const [characters, setCharacters] = useImmer<Character[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let ignore = false;
     const fetchData = async () => {
       const data = await charactersFirstPage.metrics;
       if (!ignore) {
+        setIsLoading(false);
         setCharacters((draft) => {
           return [...data, ...draft];
         });
@@ -27,6 +31,29 @@ export function CharactersScreen() {
       ignore = true;
     };
   }, [charactersFirstPage]);
+
+  const getNextPageData = useMemo(
+    () =>
+      debounce(async () => {
+        if (!isLoading) {
+          setIsLoading((_) => true);
+          console.log("loading data");
+
+          await sources.charactersSource
+            .getCharacters({
+              limit: 10,
+              offset: characters.length,
+            })
+            .then((result) => {
+              setCharacters((draft) => {
+                return [...draft, ...result];
+              });
+            });
+          setIsLoading((_) => false);
+        }
+      }, 100),
+    [isLoading]
+  );
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
@@ -47,6 +74,9 @@ export function CharactersScreen() {
               <ItemsList
                 className={""}
                 title={"Characters"}
+                onLoadNext={() => {
+                  getNextPageData();
+                }}
                 items={characters.map((character) => (
                   <CharacterComponent
                     className={"col-span-1 h-fit"}
