@@ -56,7 +56,7 @@ function MainScreen() {
       const firstPage = await charactersFirstPage.metrics;
       console.log("isIgnore:" + ignore  + "length:" +charactersStore.characters.length);
       if (!ignore && !charactersStore.characters.length) {
-        addCharacters(firstPage);
+        addCharacters(firstPage.data);
       }
     }
     fetchData().catch(console.error)

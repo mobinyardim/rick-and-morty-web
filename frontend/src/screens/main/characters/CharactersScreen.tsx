@@ -32,7 +32,7 @@ export function CharactersScreen() {
             offset: charactersStore.characters.length,
           })
           .then((result) => {
-            addCharacters(result);
+            addCharacters(result.data);
           });
         setIsLoading((_) => false);
       }

@@ -5,6 +5,7 @@ import { CharacterComponent } from "../../../components/CharacterComponent";
 import { useNavigate } from "react-router-dom";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
 import { ItemsList } from "../../../components/ItemsList";
+import { Success } from "models/src/Result";
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -29,21 +30,24 @@ export function HomeScreen() {
           }
         >
           <Await resolve={characters.metrics}>
-            {(characters: Awaited<Character>[]) => (
-              <ItemsList
-                className={""}
-                title={"Characters"}
-                isSeeMoreButtonVisible={true}
-                onSeeMore={() => {
-                  navigate("/characters");
-                }}
-                items={characters.map((character) => (
-                  <CharacterComponent
-                    className={"col-span-1 h-fit"}
-                    character={character}
-                  />
-                ))}
-              />
+            {(characters: Awaited<Success<Character[]>>) => (
+                <div>
+                    <ItemsList
+                        className={""}
+                        title={"Characters"}
+                        isSeeMoreButtonVisible={true}
+                        onSeeMore={() => {
+                            navigate("/characters");
+                        }}
+                        items={characters.data?.map((character) => (
+                            <CharacterComponent
+                                className={"col-span-1 h-fit"}
+                                character={character}
+                            />
+                        ))}
+                    />
+                </div>
+
             )}
           </Await>
         </Suspense>

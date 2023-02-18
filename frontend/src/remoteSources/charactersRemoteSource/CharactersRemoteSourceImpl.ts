@@ -32,7 +32,7 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
 
     return axios
       .get<Success<Character[]>>(`${LOCAL_BASE_URL}/characters`, options)
-      .then();
+      .then((result) => result.data);
   }
 
   updateCharacter(
