@@ -1,11 +1,12 @@
 import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
-import React, { Suspense, useMemo, useState } from "react";
+import React, {Suspense, useCallback, useMemo, useState} from "react";
 import { ItemsList } from "../../../components/ItemsList";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { sources } from "../../../remoteSources/common/Sources";
 import debounce from "lodash.debounce";
 import { useCharactersStore } from "../../../stores/CharctersStore";
+import { Character } from "models/src/Character";
 
 export function CharactersScreen() {
   const charactersFirstPage = useRouteLoaderData<typeof charactersLoader>("root");
@@ -13,27 +14,30 @@ export function CharactersScreen() {
   const charactersStore = useCharactersStore();
   const [isLoading, setIsLoading] = useState(false);
 
+  const addCharacters = useCallback(
+      (characters:Character[]) => {
+          charactersStore.addCharacters(characters)
+      }, [charactersStore]
+  )
 
-  const getNextPageData = useMemo(
-    () =>
-      debounce(async () => {
-        if (!isLoading) {
-          setIsLoading((_) => true);
-          console.log("loading data");
+  const getNextPageData = useMemo(() => {
+    return debounce(async () => {
+      if (!isLoading) {
+        setIsLoading((_) => true);
+        console.log("loading data");
 
-          await sources.charactersSource
-            .getCharacters({
-              limit: 10,
-              offset: charactersStore.characters.length,
-            })
-            .then((result) => {
-              charactersStore.addCharacters(result);
-            });
-          setIsLoading((_) => false);
-        }
-      }, 100),
-    [isLoading]
-  );
+        await sources.charactersSource
+          .getCharacters({
+            limit: 10,
+            offset: charactersStore.characters.length,
+          })
+          .then((result) => {
+            addCharacters(result);
+          });
+        setIsLoading((_) => false);
+      }
+    }, 100);
+  }, [addCharacters, charactersStore.characters.length, isLoading]);
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
