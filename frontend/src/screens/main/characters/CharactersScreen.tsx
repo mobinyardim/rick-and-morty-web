@@ -1,6 +1,6 @@
 import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { ItemsList } from "../../../components/ItemsList";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { sources } from "../../../remoteSources/common/Sources";
@@ -8,26 +8,11 @@ import debounce from "lodash.debounce";
 import { useCharactersStore } from "../../../stores/CharctersStore";
 
 export function CharactersScreen() {
-  const charactersFirstPage =
-    useRouteLoaderData<typeof charactersLoader>("root");
+  const charactersFirstPage = useRouteLoaderData<typeof charactersLoader>("root");
 
   const charactersStore = useCharactersStore();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    let ignore = false;
-    const fetchData = async () => {
-      const data = await charactersFirstPage.metrics;
-      if (!ignore) {
-        setIsLoading(false);
-        charactersStore.addCharacters([...data]);
-      }
-    };
-    fetchData().catch(console.error);
-    return () => {
-      ignore = true;
-    };
-  }, [charactersFirstPage]);
 
   const getNextPageData = useMemo(
     () =>

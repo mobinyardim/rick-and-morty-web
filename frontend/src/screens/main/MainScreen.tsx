@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as IoIcon from "react-icons/io5";
+import { useRouteLoaderData } from "../../utils/ReactRouterUtils";
+import { charactersLoader } from "../../loaders/characters/CharactersLoader";
+import { useCharactersStore } from "../../stores/CharctersStore";
+import { Character } from "models/src/Character";
 
 interface Path {
   path: string;
@@ -38,6 +42,29 @@ function MainScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
+  const charactersFirstPage = useRouteLoaderData<typeof charactersLoader>("root");
+  const charactersStore = useCharactersStore();
+
+  const addCharacters = useCallback((characters:Character[])=>{
+    charactersStore.addCharacters(characters)
+  },[charactersStore])
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function fetchData() {
+      const firstPage = await charactersFirstPage.metrics;
+      console.log("isIgnore:" + ignore  + "length:" +charactersStore.characters.length);
+      if (!ignore && !charactersStore.characters.length) {
+        addCharacters(firstPage);
+      }
+    }
+    fetchData().catch(console.error)
+
+    return () => {
+      ignore = true;
+    };
+  },[addCharacters, charactersFirstPage.metrics, charactersStore]);
 
   useEffect(() => {
     const newSelectedTab = menuItems.find((item) => {
