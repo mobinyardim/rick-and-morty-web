@@ -22,7 +22,7 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
     throw Error();
   }
 
-  getCharacters(paginationParams: PaginationParams): Promise<Character[]> {
+  getCharacters(paginationParams: PaginationParams): Promise<Success<Character[]>> {
     const options: AxiosRequestConfig = {
       method: "GET",
       params: {
@@ -32,9 +32,7 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
 
     return axios
       .get<Success<Character[]>>(`${LOCAL_BASE_URL}/characters`, options)
-      .then((result) => {
-        return result.data.data;
-      });
+      .then();
   }
 
   updateCharacter(
