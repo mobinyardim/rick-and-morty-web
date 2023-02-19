@@ -48,7 +48,7 @@ export function CharacterComponent({
             character ? "" : "shimmer-text-m"
           }`}
         >
-          {character?.name}
+          {character?.name ?? ""}
         </Typography>
         <div className={`mt-1 flex flex-row items-center gap-1`}>
           <div
@@ -63,7 +63,7 @@ export function CharacterComponent({
                 character ? "" : "shimmer-text-s"
               }`}
             >
-              {character?.status}
+              {character?.status ?? ""}
             </Typography>
             <Typography variant="paragraph" className={`text-onBackgroundHigh`}>
               &ensp;-&ensp;
@@ -74,7 +74,7 @@ export function CharacterComponent({
                 character ? "" : "shimmer-text-s"
               }`}
             >
-              {character?.species}
+              {character?.species ?? ""}
             </Typography>
           </div>
         </div>
@@ -91,7 +91,7 @@ export function CharacterComponent({
             character ? "" : "shimmer-text-m"
           }`}
         >
-          {character?.location.name}
+          {character?.location.name ?? ""}
         </Typography>
       </div>
     </div>

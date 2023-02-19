@@ -1,4 +1,4 @@
-import { ElementType, useEffect, useState } from "react";
+import { ElementType, useCallback, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as MdIcon from "react-icons/md";
 import { IconBaseProps } from "react-icons/lib/esm/iconBase";
@@ -82,31 +82,30 @@ function NavItems({
   selected,
   onSelect,
 }: NavItemsProps) {
+  const handleSelectedItem = useCallback(
+    (index: number, item?: NavItem, isFromUser?: boolean) => {
+      document.documentElement.style.setProperty(
+        "--menuItemSize",
+        `${index * 4}rem`
+      );
+      if (item && !isFromUser) {
+        onSelect?.(item);
+      }
+      setSelectedBackgroundTranslate(`translate-y-[var(--menuItemSize)] `);
+    },
+    [onSelect]
+  );
+
   useEffect(() => {
     handleSelectedItem(
       selected ? items?.indexOf(selected) ?? 0 : 0,
       selected,
       true
     );
-  }, [selected]);
+  }, [handleSelectedItem, items, selected]);
 
   const [selectedBackgroundTranslate, setSelectedBackgroundTranslate] =
     useState("translate-y-0");
-
-  function handleSelectedItem(
-    index: number,
-    item?: NavItem,
-    isFromUser?: boolean
-  ) {
-    document.documentElement.style.setProperty(
-      "--menuItemSize",
-      `${index * 4}rem`
-    );
-    if (item && !isFromUser) {
-      onSelect?.(item);
-    }
-    setSelectedBackgroundTranslate(`translate-y-[var(--menuItemSize)] `);
-  }
 
   return (
     <div className={`${className}`}>

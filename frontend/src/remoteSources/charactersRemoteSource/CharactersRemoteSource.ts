@@ -1,7 +1,9 @@
 import { Character } from "models/src/Character";
+import { Success } from "models/src/Result";
+import { PaginationParams } from "../common/PaginationParams";
 
 interface CharactersRemoteSource {
-  getCharacters(): Promise<Array<Character>>;
+  getCharacters(pagination?: PaginationParams): Promise<Success<Character[]>>;
 
   getCharacter(id: string): Promise<Character>;
 

@@ -1,11 +1,11 @@
-import { Typography } from "@material-tailwind/react";
-import * as BsIcon from "react-icons/bs";
 import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { Character } from "models/src/Character";
 import React, { Suspense } from "react";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { useNavigate } from "react-router-dom";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
+import { ItemsList } from "../../../components/ItemsList";
+import { Success } from "models/src/Result";
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -18,75 +18,44 @@ export function HomeScreen() {
           fallback={
             <ItemsList
               className={""}
+              isSeeMoreButtonVisible={true}
               onSeeMore={() => {
                 navigate("/characters");
               }}
               title={"Characters"}
               items={Array.apply(null, Array(10)).map(() => (
-                <CharacterComponent className={"col-span-1 h-fit"} />
+                <CharacterComponent
+                  className={"col-span-1 h-fit"}
+                  key={crypto.randomUUID()}
+                />
               ))}
             />
           }
         >
           <Await resolve={characters.metrics}>
-            {(characters: Awaited<Character>[]) => (
-              <ItemsList
-                className={""}
-                title={"Characters"}
-                onSeeMore={() => {
-                  navigate("/characters");
-                }}
-                items={characters.map((character) => (
-                  <CharacterComponent
-                    className={"col-span-1 h-fit"}
-                    character={character}
-                  />
-                ))}
-              />
+            {(characters: Awaited<Success<Character[]>>) => (
+              <div>
+                <ItemsList
+                  className={""}
+                  title={"Characters"}
+                  isSeeMoreButtonVisible={true}
+                  onSeeMore={() => {
+                    navigate("/characters");
+                  }}
+                  items={characters.data?.map((character) => (
+                    <CharacterComponent
+                      className={"col-span-1 h-fit"}
+                      key={character?.id ?? crypto.randomUUID()}
+                      character={character}
+                    />
+                  ))}
+                />
+              </div>
             )}
           </Await>
         </Suspense>
 
         <div className={"shrink-0 lg-max:h-10"} />
-      </div>
-    </div>
-  );
-}
-
-interface ItemsListProp {
-  className: string;
-  title: string;
-  onSeeMore?: VoidFunction;
-  items: JSX.Element[];
-}
-
-export function ItemsList({
-  className,
-  items,
-  title,
-  onSeeMore,
-}: ItemsListProp) {
-  return (
-    <div className={`flex flex-col ${className}`}>
-      <div className={"flex max-w-[100vw] flex-row items-center px-8"}>
-        <Typography variant="h4" className={"text-onBackgroundMedium"}>
-          {title}
-        </Typography>
-        <div className="grow" />
-        <Typography
-          variant="small"
-          onClick={() => onSeeMore?.()}
-          className={"cursor-pointer text-primary"}
-        >
-          See More
-        </Typography>
-        <BsIcon.BsChevronDoubleRight className={"h-4 w-4 text-primary"} />
-      </div>
-      <div className={`h-4 flex-shrink-0`} />
-      <div
-        className={`grid h-fit w-fit max-w-[90vw] grid-flow-row grid-cols-const_40 justify-items-center gap-4 overflow-x-scroll lg:grid-cols-const_96 sm:lg-max:grid-cols-const_44`}
-      >
-        {items.map((item) => item)}
       </div>
     </div>
   );

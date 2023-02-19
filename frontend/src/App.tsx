@@ -12,6 +12,7 @@ import MainScreen from "./screens/main/MainScreen";
 import { HomeScreen } from "./screens/main/home/HomeScreen";
 import { NotFound } from "./screens/404/NotFound";
 import { charactersLoader } from "./loaders/characters/CharactersLoader";
+import { CharactersScreen } from "./screens/main/characters/CharactersScreen";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -24,7 +25,7 @@ export const appRouter = createBrowserRouter(
         id="root"
       >
         <Route path="/" element={<HomeScreen />} />
-        <Route path="/characters" element={<NotFound />} />
+        <Route path="/characters" element={<CharactersScreen />} />
         <Route path="/locations" element={<NotFound />} />
         <Route path="/episodes" element={<NotFound />} />
       </Route>
