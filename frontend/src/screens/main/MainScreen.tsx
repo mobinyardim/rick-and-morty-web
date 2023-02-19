@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as IoIcon from "react-icons/io5";
@@ -43,12 +43,16 @@ function MainScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
-  const charactersFirstPage = useRouteLoaderData<typeof charactersLoader>("root");
+  const charactersFirstPage =
+    useRouteLoaderData<typeof charactersLoader>("root");
   const charactersStore = useCharactersStore();
 
-  const addCharacters = useCallback((characters:Character[],pagination?:Pagination)=>{
-    charactersStore.addCharacters(characters,pagination)
-  },[charactersStore])
+  const addCharacters = useCallback(
+    (characters: Character[], pagination?: Pagination) => {
+      charactersStore.addCharacters(characters, pagination);
+    },
+    [charactersStore]
+  );
 
   useEffect(() => {
     let ignore = false;
@@ -56,15 +60,16 @@ function MainScreen() {
     async function fetchData() {
       const firstPage = await charactersFirstPage.metrics;
       if (!ignore && !charactersStore.characters.length) {
-        addCharacters(firstPage.data,firstPage.pagination);
+        addCharacters(firstPage.data, firstPage.pagination);
       }
     }
-    fetchData().catch(console.error)
+
+    fetchData().catch(console.error);
 
     return () => {
       ignore = true;
     };
-  },[addCharacters, charactersFirstPage.metrics, charactersStore]);
+  }, [addCharacters, charactersFirstPage.metrics, charactersStore]);
 
   useEffect(() => {
     const newSelectedTab = menuItems.find((item) => {
