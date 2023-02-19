@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Character } from "models/src/Character";
 import { Pagination } from "models/src/Result";
+import produce from "immer";
 
 interface CharactersState {
   characters: (Character | undefined)[];
@@ -14,24 +15,29 @@ interface CharactersState {
 export const useCharactersStore = create<CharactersState>((set) => ({
   characters: new Array<Character>(),
   addCharacters: (newCharacters: Character[], pagination?: Pagination) =>
-    set((state: CharactersState) => ({
-      characters: [...state.characters, ...newCharacters],
-      lastPagination: pagination,
-    })),
+    set(
+      produce((state: CharactersState) => {
+        state.characters.push(...newCharacters);
+        state.lastPagination = pagination;
+      })
+    ),
   addPlaceHolders: (count: number) => {
-    const placeHolders = Array.apply(
-        undefined,
-      Array(count)
-    ) as (Character | undefined)[];
-    set((state: CharactersState) => ({
-      ...state,
-      characters: [...state.characters, ...placeHolders],
-    }));
+    const placeHolders = Array.apply(undefined, Array(count)) as (
+      | Character
+      | undefined
+    )[];
+
+    set(
+      produce((state: CharactersState) => {
+        state.characters.push(...placeHolders);
+      })
+    );
   },
   removePlaceHolders: () => {
-    set((state: CharactersState) => ({
-      ...state,
-      characters: state.characters.filter((it) => it !== undefined),
-    }));
+    set(
+      produce((state: CharactersState) => {
+        state.characters = state.characters.filter((it) => it !== undefined);
+      })
+    );
   },
 }));
