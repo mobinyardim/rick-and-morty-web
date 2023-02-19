@@ -33,7 +33,7 @@ export function CharactersScreen() {
     charactersStore.removePlaceHolders();
   }, [charactersStore]);
 
-  const getNextPageData = useCallback(async () => {
+  async function getNextPageData() {
     if (!isLoading) {
       setIsLoading((_) => true);
 
@@ -53,14 +53,7 @@ export function CharactersScreen() {
         });
       setIsLoading((_) => false);
     }
-  }, [
-    addCharacters,
-    addPlaceHolders,
-    charactersStore.characters.length,
-    charactersStore.lastPagination?.totalCount,
-    isLoading,
-    removePlaceHolders,
-  ]);
+  }
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
@@ -81,9 +74,7 @@ export function CharactersScreen() {
               <ItemsList
                 className={""}
                 title={"Characters"}
-                onLoadNext={() => {
-                  getNextPageData();
-                }}
+                onLoadNext={getNextPageData}
                 items={charactersStore.characters.map((character) => (
                   <CharacterComponent
                     className={"col-span-1 h-fit"}
