@@ -1,10 +1,9 @@
 import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
-import React, { Suspense, useCallback, useMemo, useState } from "react";
+import React, { Suspense, useCallback, useState } from "react";
 import { ItemsList } from "../../../components/ItemsList";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { sources } from "../../../remoteSources/common/Sources";
-import debounce from "lodash.debounce";
 import { useCharactersStore } from "../../../stores/CharctersStore";
 import { Character } from "models/src/Character";
 import { Pagination } from "models/src/Result";
@@ -34,28 +33,26 @@ export function CharactersScreen() {
     charactersStore.removePlaceHolders();
   }, [charactersStore]);
 
-  const getNextPageData = useMemo(() => {
-    return debounce(async () => {
-      if (!isLoading) {
-        setIsLoading((_) => true);
+  const getNextPageData = useCallback(async () => {
+    if (!isLoading) {
+      setIsLoading((_) => true);
 
-        const total = charactersStore.lastPagination?.totalCount ?? 0;
-        const mod = total - charactersStore.characters.length;
-        const placeHolderCount = mod > 10 ? 10 : mod % 10;
-        addPlaceHolders(placeHolderCount);
+      const total = charactersStore.lastPagination?.totalCount ?? 0;
+      const mod = total - charactersStore.characters.length;
+      const placeHolderCount = mod > 10 ? 10 : mod % 10;
+      addPlaceHolders(placeHolderCount);
 
-        await sources.charactersSource
-          .getCharacters({
-            limit: 10,
-            offset: charactersStore.characters.length,
-          })
-          .then((result) => {
-            removePlaceHolders();
-            addCharacters(result.data, result.pagination);
-          });
-        setIsLoading((_) => false);
-      }
-    }, 100);
+      await sources.charactersSource
+        .getCharacters({
+          limit: 10,
+          offset: charactersStore.characters.length,
+        })
+        .then((result) => {
+          removePlaceHolders();
+          addCharacters(result.data, result.pagination);
+        });
+      setIsLoading((_) => false);
+    }
   }, [
     addCharacters,
     addPlaceHolders,
