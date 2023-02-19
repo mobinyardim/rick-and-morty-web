@@ -64,7 +64,10 @@ export function CharactersScreen() {
               className={""}
               title={"Characters"}
               items={Array.apply(null, Array(10)).map(() => (
-                <CharacterComponent className={"col-span-1 h-fit"} />
+                <CharacterComponent
+                  className={"col-span-1 h-fit"}
+                  key={crypto.randomUUID()}
+                />
               ))}
             />
           }
@@ -79,6 +82,7 @@ export function CharactersScreen() {
                   <CharacterComponent
                     className={"col-span-1 h-fit"}
                     character={character}
+                    key={character?.id ?? crypto.randomUUID()}
                   />
                 ))}
               />

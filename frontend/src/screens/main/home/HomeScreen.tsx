@@ -24,30 +24,33 @@ export function HomeScreen() {
               }}
               title={"Characters"}
               items={Array.apply(null, Array(10)).map(() => (
-                <CharacterComponent className={"col-span-1 h-fit"} />
+                <CharacterComponent
+                  className={"col-span-1 h-fit"}
+                  key={crypto.randomUUID()}
+                />
               ))}
             />
           }
         >
           <Await resolve={characters.metrics}>
             {(characters: Awaited<Success<Character[]>>) => (
-                <div>
-                    <ItemsList
-                        className={""}
-                        title={"Characters"}
-                        isSeeMoreButtonVisible={true}
-                        onSeeMore={() => {
-                            navigate("/characters");
-                        }}
-                        items={characters.data?.map((character) => (
-                            <CharacterComponent
-                                className={"col-span-1 h-fit"}
-                                character={character}
-                            />
-                        ))}
+              <div>
+                <ItemsList
+                  className={""}
+                  title={"Characters"}
+                  isSeeMoreButtonVisible={true}
+                  onSeeMore={() => {
+                    navigate("/characters");
+                  }}
+                  items={characters.data?.map((character) => (
+                    <CharacterComponent
+                      className={"col-span-1 h-fit"}
+                      key={character?.id ?? crypto.randomUUID()}
+                      character={character}
                     />
-                </div>
-
+                  ))}
+                />
+              </div>
             )}
           </Await>
         </Suspense>
