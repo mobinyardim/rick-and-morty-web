@@ -4,7 +4,7 @@ import { Converter } from "./Converter";
 import { originConverters } from "./OriginConverter";
 import { locationConverter } from "./LocationConverter";
 import { Document } from "mongoose";
-import { CharacterBody } from "../bodyModels/CharacterBody";
+import { CharacterBody } from "../../../models/src/bodyModels/CharacterBody";
 import { characters_slug, domain } from "../Urls";
 
 export const characterConverter: Converter<

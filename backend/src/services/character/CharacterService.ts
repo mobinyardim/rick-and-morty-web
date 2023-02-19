@@ -1,6 +1,6 @@
 import { Result } from "../../../../models/src/Result";
 import { Character } from "../../../../models/src/Character";
-import { CharacterBody } from "../../bodyModels/CharacterBody";
+import { CharacterBody } from "../../../../models/src/bodyModels/CharacterBody";
 
 export abstract class CharacterService {
   abstract getCharacters(

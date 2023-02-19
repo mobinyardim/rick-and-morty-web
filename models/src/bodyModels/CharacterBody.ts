@@ -1,6 +1,6 @@
-import { Gender, Status } from "../../../models/src/Character";
-import { Origin } from "../../../models/src/Origin";
-import { Location } from "../../../models/src/Location";
+import { Gender, Status } from "../Character";
+import { Origin } from "../Origin";
+import { Location } from "../Location";
 
 export interface CharacterBody {
   name: string;

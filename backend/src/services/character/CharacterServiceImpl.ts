@@ -1,5 +1,5 @@
 import { CharacterService } from "./CharacterService";
-import { CharacterBody } from "../../bodyModels/CharacterBody";
+import { CharacterBody } from "../../../../models/src/bodyModels/CharacterBody";
 import {
   Fail,
   Pagination,
