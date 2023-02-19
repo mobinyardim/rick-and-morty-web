@@ -6,6 +6,7 @@ import { useRouteLoaderData } from "../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../loaders/characters/CharactersLoader";
 import { useCharactersStore } from "../../stores/CharctersStore";
 import { Character } from "models/src/Character";
+import { Pagination } from "models/src/Result";
 
 interface Path {
   path: string;
@@ -45,8 +46,8 @@ function MainScreen() {
   const charactersFirstPage = useRouteLoaderData<typeof charactersLoader>("root");
   const charactersStore = useCharactersStore();
 
-  const addCharacters = useCallback((characters:Character[])=>{
-    charactersStore.addCharacters(characters)
+  const addCharacters = useCallback((characters:Character[],pagination?:Pagination)=>{
+    charactersStore.addCharacters(characters,pagination)
   },[charactersStore])
 
   useEffect(() => {
@@ -54,9 +55,8 @@ function MainScreen() {
 
     async function fetchData() {
       const firstPage = await charactersFirstPage.metrics;
-      console.log("isIgnore:" + ignore  + "length:" +charactersStore.characters.length);
       if (!ignore && !charactersStore.characters.length) {
-        addCharacters(firstPage.data);
+        addCharacters(firstPage.data,firstPage.pagination);
       }
     }
     fetchData().catch(console.error)

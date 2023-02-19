@@ -1,30 +1,48 @@
 import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
-import React, {Suspense, useCallback, useMemo, useState} from "react";
+import React, { Suspense, useCallback, useMemo, useState } from "react";
 import { ItemsList } from "../../../components/ItemsList";
 import { CharacterComponent } from "../../../components/CharacterComponent";
 import { sources } from "../../../remoteSources/common/Sources";
 import debounce from "lodash.debounce";
 import { useCharactersStore } from "../../../stores/CharctersStore";
 import { Character } from "models/src/Character";
+import { Pagination } from "models/src/Result";
 
 export function CharactersScreen() {
-  const charactersFirstPage = useRouteLoaderData<typeof charactersLoader>("root");
+  const charactersFirstPage =
+    useRouteLoaderData<typeof charactersLoader>("root");
 
   const charactersStore = useCharactersStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const addCharacters = useCallback(
-      (characters:Character[]) => {
-          charactersStore.addCharacters(characters)
-      }, [charactersStore]
-  )
+    (characters: Character[], pagination?: Pagination) => {
+      charactersStore.addCharacters(characters, pagination);
+    },
+    [charactersStore]
+  );
+
+  const addPlaceHolders = useCallback(
+    (count: number) => {
+      charactersStore.addPlaceHolders(count);
+    },
+    [charactersStore]
+  );
+
+  const removePlaceHolders = useCallback(() => {
+    charactersStore.removePlaceHolders();
+  }, [charactersStore]);
 
   const getNextPageData = useMemo(() => {
     return debounce(async () => {
       if (!isLoading) {
         setIsLoading((_) => true);
-        console.log("loading data");
+
+        const total = charactersStore.lastPagination?.totalCount ?? 0;
+        const mod = total - charactersStore.characters.length;
+        const placeHolderCount = mod > 10 ? 10 : mod % 10;
+        addPlaceHolders(placeHolderCount);
 
         await sources.charactersSource
           .getCharacters({
@@ -32,12 +50,20 @@ export function CharactersScreen() {
             offset: charactersStore.characters.length,
           })
           .then((result) => {
-            addCharacters(result.data);
+            removePlaceHolders();
+            addCharacters(result.data, result.pagination);
           });
         setIsLoading((_) => false);
       }
     }, 100);
-  }, [addCharacters, charactersStore.characters.length, isLoading]);
+  }, [
+    addCharacters,
+    addPlaceHolders,
+    charactersStore.characters.length,
+    charactersStore.lastPagination?.totalCount,
+    isLoading,
+    removePlaceHolders,
+  ]);
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>
