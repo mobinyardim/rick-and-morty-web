@@ -1,24 +1,20 @@
-class User {
+export class User {
   username: string;
 
   email: string;
 
-  password: string;
-
-  isVerified: string;
+  isVerified: boolean;
 
   avatar?: string;
 
   constructor(
     username: string,
     email: string,
-    password: string,
-    isVerified: string,
-    avatar: string
+    isVerified: boolean,
+    avatar?: string
   ) {
     this.username = username;
     this.email = email;
-    this.password = password;
     this.isVerified = isVerified;
     this.avatar = avatar;
   }
