@@ -1,6 +1,6 @@
 import { Typography } from "@material-tailwind/react";
 import * as BsIcon from "react-icons/bs";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 
 interface ItemsListProp {
   className: string;
@@ -19,22 +19,34 @@ export function ItemsList({
   isSeeMoreButtonVisible,
   onLoadNext,
 }: ItemsListProp) {
-  const handleScroll = (e: any) => {
-    if (
-      window.innerHeight + e.target.documentElement.scrollTop + 1 >=
-      e.target.documentElement.scrollHeight
-    ) {
-      onLoadNext?.();
-    }
-  };
-
-  useEffect(() => {
-    window?.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window?.removeEventListener("scroll", handleScroll, { capture: false });
+  let observer = useMemo(() => {
+    let options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1,
     };
-  });
+
+    return new IntersectionObserver((entries, observer) => {
+      entries.forEach((item) => {
+        if (item.isIntersecting) {
+          onLoadNext?.();
+        }
+      });
+    }, options);
+  }, [onLoadNext]);
+
+  const lastItem = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const item = lastItem.current;
+    if (item) {
+      observer.observe(lastItem.current);
+    }
+    return () => {
+      if (item) {
+        observer.unobserve(item);
+      }
+    };
+  }, [observer]);
 
   return (
     <div className={`flex flex-col ${className}`}>
@@ -63,6 +75,7 @@ export function ItemsList({
         className={`grid h-fit w-fit max-w-[90vw] grid-flow-row grid-cols-const_40 justify-items-center gap-4 overflow-y-auto lg:grid-cols-const_96 sm:lg-max:grid-cols-const_44`}
       >
         {items.map((item) => item)}
+        <div ref={lastItem} />
       </div>
     </div>
   );
