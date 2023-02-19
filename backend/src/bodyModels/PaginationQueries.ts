@@ -1,4 +1,4 @@
 export interface PaginationQueries {
-    limit?: number,
-    offset?: number
+  limit?: number;
+  offset?: number;
 }
