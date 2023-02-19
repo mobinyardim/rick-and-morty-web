@@ -13,7 +13,7 @@ import CharacterDao, {
 import { Document, Error as ValidatorError, isValidObjectId } from "mongoose";
 import { characterConverter } from "../../converters/CharacterConverter";
 import axios, { AxiosResponse } from "axios";
-import { OutSourceResult } from "../transferModels/OutSourceResult";
+import { OutSourceResult } from "./transferModels/OutSourceResult";
 
 export class CharacterServiceImpl implements CharacterService {
   async getCharacters(
