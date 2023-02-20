@@ -1,8 +1,11 @@
+import { router as CharactersRoute } from "./routes/Characters";
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
-import { router as CharactersRoute } from "./routes/Characters";
 import createHttpError, { isHttpError } from "http-errors";
 import cors, { CorsOptions } from "cors";
+import session from "express-session";
+import Env from "./utils/Env";
+import MongoStore from "connect-mongo";
 
 const corsOptions: CorsOptions = {
   origin: "http://localhost:3000",
@@ -15,6 +18,21 @@ app.use(cors(corsOptions));
 app.use(morgan("dev"));
 
 app.use(express.json());
+
+app.use(
+  session({
+    secret: Env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 60 * 60 * 1000,
+    },
+    rolling: true,
+    store: MongoStore.create({
+      mongoUrl: Env.DATABASE_URL,
+    }),
+  })
+);
 
 app.use("/api/v1/characters", CharactersRoute);
 
