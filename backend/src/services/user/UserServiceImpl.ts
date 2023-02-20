@@ -6,10 +6,18 @@ import { SignUpBody } from "models/src/bodyModels/SignUpBody";
 import bcrypt from "bcrypt";
 import { userConverter } from "../../converters/UserConverter";
 import { LoginBody } from "models/src/bodyModels/LoginBody";
+import mongoose from "mongoose";
 
 export class UserServiceImpl extends UserService {
-  getUser(userId: string): Promise<Result<User>> {
-    throw Error();
+  async getUser(userId: string): Promise<Result<User>> {
+    if (!mongoose.isValidObjectId(userId)) {
+      return new Fail("Wrong credential!", 400, "BAD_REQUEST");
+    }
+    const user = await UserDao.findById(userId).exec();
+    if (user === null) {
+      return new Fail("Wrong credential!", 401, "NOT_AUTHORIZED");
+    }
+    return new Success("Successful", userConverter.toDomain(user));
   }
 
   async login(loginBody: LoginBody): Promise<Result<User>> {
