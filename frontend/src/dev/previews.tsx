@@ -14,6 +14,7 @@ import { CharacterComponent } from "../components/CharacterComponent";
 import { Character } from "models/src/Character";
 import { Origin } from "models/src/Origin";
 import { Location } from "models/src/Location";
+import { CircularLoading } from "../components/circularIndeterminate/CircularLoading";
 
 const menuItems: Array<NavItem> = [
   {
@@ -145,6 +146,9 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path="/ComponentPreviews">
         <ComponentPreviews />
+      </ComponentPreview>
+      <ComponentPreview path="/CircularIndeterminate">
+        <CircularLoading />
       </ComponentPreview>
     </Previews>
   );
