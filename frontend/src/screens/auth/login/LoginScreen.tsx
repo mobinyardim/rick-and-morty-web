@@ -1,6 +1,12 @@
 import AuthBannerComponent from "../componenets/AuthBannerComponent";
 import { MyInput } from "../../../components/MyInput";
 import { MyButton } from "../../../components/MyButton";
+import { useForm } from "react-hook-form";
+import { LoginBody } from "models/src/bodyModels/LoginBody";
+import { Typography } from "@material-tailwind/react";
+import { useEffect } from "react";
+import { sleep } from "../../../utils/AsyncUtils";
+import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
 
 function LoginScreen() {
   return (
@@ -18,6 +24,18 @@ interface AuthFormProps {
 
 function LoginForm(props: AuthFormProps) {
   const { className } = props;
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginBody>();
+
+  useEffect(() => {
+    console.log(`isSubmitting: ${isSubmitting}`);
+  }, [isSubmitting]);
+
   return (
     <div
       className={`inline-flex h-screen flex-col lg:w-full lg-max:justify-center ${className}`}
@@ -34,12 +52,64 @@ function LoginForm(props: AuthFormProps) {
         </span>
       </div>
 
-      <div className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto">
-        <MyInput className={"inline w-80"} label="Email" type="email" />
+      <form
+        className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto"
+        onSubmit={handleSubmit(async (data) => {
+          await sleep(5000);
+
+          return "";
+        })}
+      >
+        <MyInput
+          {...register("username", {
+            required: "You must enter your username",
+          })}
+          disabled={isSubmitting}
+          error={errors.username?.message !== undefined}
+          className={"inline w-80"}
+          label="Username"
+          type="text"
+          onClick={() => {
+            clearErrors("username");
+            setError("username", { message: undefined });
+          }}
+        />
+        <Typography
+          key={"usernameError"}
+          variant={"small"}
+          className={`w-full text-error ${
+            errors.username?.type ? "" : "hidden"
+          }`}
+        >
+          {errors.username?.message ?? ""}
+        </Typography>
 
         <div className="h-5" />
 
-        <MyInput className={"w-80"} label="Password" type="password" />
+        <MyInput
+          {...register("password", {
+            required: "You must enter your password",
+            minLength: { value: 4, message: "Minimum length of password is 4" },
+          })}
+          disabled={isSubmitting}
+          className={"w-80"}
+          label="Password"
+          type="password"
+          error={errors.password?.message !== undefined}
+          onClick={() => {
+            clearErrors("password");
+            setError("password", { message: undefined });
+          }}
+        />
+        <Typography
+          key={"passwordError"}
+          variant={"small"}
+          className={`w-full text-error ${
+            errors.password?.message ? "" : "hidden"
+          }`}
+        >
+          {errors.password?.message ?? ""}
+        </Typography>
 
         <div className="h-2" />
 
@@ -51,8 +121,14 @@ function LoginForm(props: AuthFormProps) {
 
         <div className="h-5" />
 
-        <MyButton className="w-80 font-sans normal-case">Sign In</MyButton>
-      </div>
+        <MyButton
+          disabled={isSubmitting}
+          className="w-80 font-sans normal-case"
+          type={"submit"}
+        >
+          {isSubmitting ? <CircularLoading className={"h-5 w-5"} /> : "Sign In"}
+        </MyButton>
+      </form>
     </div>
   );
 }
