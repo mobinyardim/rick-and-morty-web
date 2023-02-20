@@ -4,9 +4,8 @@ import { MyButton } from "../../../components/MyButton";
 import { useForm } from "react-hook-form";
 import { LoginBody } from "models/src/bodyModels/LoginBody";
 import { Typography } from "@material-tailwind/react";
-import { useEffect } from "react";
-import { sleep } from "../../../utils/AsyncUtils";
 import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
+import { sources } from "../../../remoteSources/common/Sources";
 
 function LoginScreen() {
   return (
@@ -32,10 +31,6 @@ function LoginForm(props: AuthFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<LoginBody>();
 
-  useEffect(() => {
-    console.log(`isSubmitting: ${isSubmitting}`);
-  }, [isSubmitting]);
-
   return (
     <div
       className={`inline-flex h-screen flex-col lg:w-full lg-max:justify-center ${className}`}
@@ -55,9 +50,9 @@ function LoginForm(props: AuthFormProps) {
       <form
         className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto"
         onSubmit={handleSubmit(async (data) => {
-          await sleep(5000);
-
-          return "";
+          await sources.userSource.login(data).then(() => {
+            console.log("successful");
+          });
         })}
       >
         <MyInput
