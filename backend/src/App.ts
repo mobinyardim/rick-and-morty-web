@@ -1,4 +1,5 @@
 import { router as CharactersRoute } from "./routes/Characters";
+import { router as UserRoute } from "./routes/User";
 import express, { NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
@@ -34,6 +35,7 @@ app.use(
   })
 );
 
+app.use("/api/v1/user", UserRoute);
 app.use("/api/v1/characters", CharactersRoute);
 
 app.use((req, res, next) => {
