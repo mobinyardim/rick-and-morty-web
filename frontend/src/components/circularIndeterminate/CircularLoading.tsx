@@ -7,7 +7,7 @@ export function CircularLoading({ className }: CircularLoadingProps) {
     <svg
       x="0px"
       y="0px"
-      className={`inline h-6 w-6 ${className}`}
+      className={`inline h-5 w-5 ${className}`}
       viewBox="0 0 50 50"
     >
       <path
