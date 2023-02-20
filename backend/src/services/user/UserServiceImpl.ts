@@ -4,6 +4,7 @@ import { UserService } from "./UserService";
 import UserDao from "../../persistence/UserEntity";
 import { SignUpBody } from "models/src/bodyModels/SignUpBody";
 import bcrypt from "bcrypt";
+import { userConverter } from "../../converters/UserConverter";
 
 export class UserServiceImpl extends UserService {
   getUser(userId: string): Promise<Result<User>> {
@@ -33,6 +34,6 @@ export class UserServiceImpl extends UserService {
       password: passwordHashed,
     });
 
-    return new Success("Successful", newUser);
+    return new Success("Successful", userConverter.toDomain(newUser));
   }
 }
