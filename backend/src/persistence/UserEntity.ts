@@ -10,4 +10,4 @@ export const UserSchema = new Schema({
 
 export type UserEntity = InferSchemaType<typeof UserSchema>;
 
-export default model<UserEntity>("character", UserSchema);
+export default model<UserEntity>("user", UserSchema);
