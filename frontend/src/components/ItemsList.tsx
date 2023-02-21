@@ -72,7 +72,7 @@ export function ItemsList({
       </div>
       <div className={`h-4 flex-shrink-0`} />
       <div
-        className={`grid h-fit w-fit max-w-[90vw] grid-flow-row grid-cols-const_40 justify-items-center gap-4 overflow-y-auto lg:grid-cols-const_96 sm:lg-max:grid-cols-const_44`}
+        className={`grid h-fit w-fit max-w-[90vw] grid-flow-row grid-cols-const_40 justify-items-center gap-4 lg:grid-cols-const_96 sm:lg-max:grid-cols-const_44`}
       >
         {items.map((item) => item)}
         <div ref={lastItem} />

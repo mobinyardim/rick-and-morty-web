@@ -1,5 +1,5 @@
 import { Character } from "models/src/Character";
-import { Typography } from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 
 export interface CharacterComponentProps {
   className?: string;
@@ -31,7 +31,7 @@ export function CharacterComponent({
   }
 
   return (
-    <div
+    <Card
       className={`lg-max:min-w-44 max-w-md:w-64 flex overflow-clip rounded-2xl bg-surface lg:w-96 lg:flex-row lg-max:h-full lg-max:w-56 lg-max:w-full lg-max:flex-col ${className}`}
     >
       <img
@@ -94,6 +94,6 @@ export function CharacterComponent({
           {character?.location.name ?? ""}
         </Typography>
       </div>
-    </div>
+    </Card>
   );
 }
