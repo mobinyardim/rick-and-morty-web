@@ -43,7 +43,7 @@ export const MyAlert = React.forwardRef<HTMLDivElement, MyAlertProps>(
   }
 );
 
-function useAlert(timout: number = 2000): {
+export function useAlert(timout: number = 2000): {
   isVisible: boolean;
   message: string;
   show: (message: string) => void;
