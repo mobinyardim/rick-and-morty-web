@@ -13,6 +13,8 @@ import { HomeScreen } from "./screens/main/home/HomeScreen";
 import { NotFound } from "./screens/404/NotFound";
 import { charactersLoader } from "./loaders/characters/CharactersLoader";
 import { CharactersScreen } from "./screens/main/characters/CharactersScreen";
+import { ThemeProvider } from "@material-tailwind/react/";
+import { alertStylesType } from "./components/MyAlert";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -36,7 +38,15 @@ export const appRouter = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={appRouter} />;
+  const theme = {
+    alert: alertStylesType,
+  };
+
+  return (
+    <ThemeProvider value={theme}>
+      <RouterProvider router={appRouter} />
+    </ThemeProvider>
+  );
 }
 
 export default App;
