@@ -55,7 +55,7 @@ function App() {
           <RouterProvider router={appRouter} />
           <MyAlert
             className={
-              "absolute top-10 mx-auto mx-auto w-full bg-error text-onError lg:right-20 lg:max-w-md lg-max:left-0 lg-max:right-0 lg-max:max-w-xs"
+              "absolute top-10 mx-auto mx-auto w-full lg:right-20 lg:max-w-md lg-max:left-0 lg-max:right-0 lg-max:max-w-xs"
             }
             color={alert.type}
             show={alert.isVisible}
