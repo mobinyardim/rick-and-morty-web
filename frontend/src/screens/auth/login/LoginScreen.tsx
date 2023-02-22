@@ -7,7 +7,8 @@ import { Typography } from "@material-tailwind/react";
 import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
 import { sources } from "../../../remoteSources/common/Sources";
 import { Success } from "models/src/Result";
-import { MyAlert, useAlert } from "../../../components/MyAlert";
+import { MyAlertContext } from "../../../components/MyAlert";
+import { useContext } from "react";
 
 function LoginScreen() {
   return (
@@ -33,7 +34,7 @@ function LoginForm(props: AuthFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<LoginBody>();
 
-  const { isVisible, message, show } = useAlert();
+  const { showAlert } = useContext(MyAlertContext);
   return (
     <div
       className={`inline-flex h-screen flex-col lg:w-full lg-max:justify-center ${className}`}
@@ -57,7 +58,7 @@ function LoginForm(props: AuthFormProps) {
           if (result instanceof Success) {
             console.log("success");
           } else {
-            show(result.message);
+            showAlert(result.message, "success");
             console.log("error");
           }
         })}
@@ -77,7 +78,6 @@ function LoginForm(props: AuthFormProps) {
           }}
         />
         <Typography
-          key={"usernameError"}
           variant={"small"}
           className={`w-full text-error ${
             errors.username?.type ? "" : "hidden"
@@ -104,7 +104,6 @@ function LoginForm(props: AuthFormProps) {
           }}
         />
         <Typography
-          key={"passwordError"}
           variant={"small"}
           className={`w-full text-error ${
             errors.password?.message ? "" : "hidden"
@@ -116,7 +115,6 @@ function LoginForm(props: AuthFormProps) {
         <div className="h-2" />
 
         <Typography
-          key={"passwordError"}
           variant={"small"}
           className={`w-full text-error ${
             errors.root?.message ? "" : "hidden"
@@ -141,18 +139,6 @@ function LoginForm(props: AuthFormProps) {
           {isSubmitting ? <CircularLoading className={"h-5 w-5"} /> : "Sign In"}
         </MyButton>
       </form>
-
-      <MyAlert
-        className={"fixed bottom-5 mx-auto w-96 bg-error text-onError"}
-        color={"error"}
-        show={isVisible}
-        animate={{
-          mount: { y: 0 },
-          unmount: { y: 100 },
-        }}
-      >
-        {message}
-      </MyAlert>
     </div>
   );
 }
