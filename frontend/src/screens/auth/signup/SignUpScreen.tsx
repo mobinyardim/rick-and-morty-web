@@ -3,6 +3,7 @@ import { MyInput } from "../../../components/MyInput";
 import { MyButton } from "../../../components/MyButton";
 import React from "react";
 import { Checkbox } from "@material-tailwind/react";
+import { Form } from "react-router-dom";
 
 function SignUpScreen() {
   return (
@@ -21,8 +22,7 @@ interface AuthFormProps {
   className: string;
 }
 
-function SignUpForm(props: AuthFormProps) {
-  const { className } = props;
+function SignUpForm({ className }: AuthFormProps) {
   return (
     <div
       className={`inline-flex h-screen max-w-full flex-col lg:w-full lg-max:justify-center ${className}`}
@@ -36,7 +36,7 @@ function SignUpForm(props: AuthFormProps) {
         </span>
       </div>
 
-      <div className="mx-5 flex max-w-[26rem] flex-col items-center justify-between lg:mx-auto lg:my-auto">
+      <Form className="mx-5 flex max-w-[26rem] flex-col items-center justify-between lg:mx-auto lg:my-auto">
         <div className="flex w-full flex-col justify-center gap-8 md:flex-row md:gap-2">
           <MyInput className={"grow"} label="Name" type="text" />
           <MyInput className={"grow"} label="Username" type="text" />
@@ -60,7 +60,7 @@ function SignUpForm(props: AuthFormProps) {
         <div className="mt-10 flex w-full  flex-col justify-start">
           <MyButton className="md-max:w-full md:w-[15rem]">Sign Up</MyButton>
         </div>
-      </div>
+      </Form>
     </div>
   );
 }
