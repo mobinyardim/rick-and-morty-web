@@ -10,7 +10,8 @@ export const userConverter: Converter<UserEntity & Document, unknown, User> = {
       user.username,
       user.email,
       user.isVerified,
-      user.avatar
+      user.avatar,
+      user.fullName
     );
   },
 
