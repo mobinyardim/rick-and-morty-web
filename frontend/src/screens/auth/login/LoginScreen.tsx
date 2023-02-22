@@ -24,9 +24,8 @@ interface AuthFormProps {
   className: string;
 }
 
-function LoginForm(props: AuthFormProps) {
+function LoginForm({ className }: AuthFormProps) {
   const navigate = useNavigate();
-  const { className } = props;
   const {
     register,
     handleSubmit,
