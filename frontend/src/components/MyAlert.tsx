@@ -56,10 +56,6 @@ interface MyAlertProps extends Omit<AlertProps, "color"> {
 
 export const MyAlert = React.forwardRef<HTMLDivElement, MyAlertProps>(
   (props, ref) => {
-    useEffect(() => {
-      console.log("color inside: " + props.color);
-    }, [props.color]);
-
     const { className, children, ...rest } = props;
     return (
       <Alert
