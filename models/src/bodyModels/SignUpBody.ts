@@ -1,5 +1,5 @@
 export interface SignUpBody {
-  fullName?: string;
+  fullName: string;
   username: string;
   email: string;
   password: string;
