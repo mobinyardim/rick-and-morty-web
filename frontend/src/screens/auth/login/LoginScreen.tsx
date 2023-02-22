@@ -7,8 +7,8 @@ import { Typography } from "@material-tailwind/react";
 import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
 import { sources } from "../../../remoteSources/common/Sources";
 import { MyAlertContext } from "../../../components/MyAlert";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Form, useNavigate } from "react-router-dom";
 
 function LoginScreen() {
   return (
@@ -51,7 +51,7 @@ function LoginForm({ className }: AuthFormProps) {
         </span>
       </div>
 
-      <form
+      <Form
         className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto"
         onSubmit={handleSubmit(async (data) => {
           const result = await sources.userSource.login(data);
@@ -138,7 +138,7 @@ function LoginForm({ className }: AuthFormProps) {
         >
           {isSubmitting ? <CircularLoading className={"h-5 w-5"} /> : "Sign In"}
         </MyButton>
-      </form>
+      </Form>
     </div>
   );
 }
