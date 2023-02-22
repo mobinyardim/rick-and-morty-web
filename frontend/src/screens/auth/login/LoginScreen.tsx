@@ -6,9 +6,9 @@ import { LoginBody } from "models/src/bodyModels/LoginBody";
 import { Typography } from "@material-tailwind/react";
 import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
 import { sources } from "../../../remoteSources/common/Sources";
-import { Success } from "models/src/Result";
 import { MyAlertContext } from "../../../components/MyAlert";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LoginScreen() {
   return (
@@ -25,6 +25,7 @@ interface AuthFormProps {
 }
 
 function LoginForm(props: AuthFormProps) {
+  const navigate = useNavigate();
   const { className } = props;
   const {
     register,
@@ -55,11 +56,11 @@ function LoginForm(props: AuthFormProps) {
         className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto"
         onSubmit={handleSubmit(async (data) => {
           const result = await sources.userSource.login(data);
-          if (result instanceof Success) {
-            console.log("success");
-          } else {
+          if ("data" in result) {
             showAlert(result.message, "success");
-            console.log("error");
+            navigate("/");
+          } else {
+            showAlert(result.message, "error");
           }
         })}
       >
