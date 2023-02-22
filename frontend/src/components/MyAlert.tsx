@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Alert, AlertProps } from "@material-tailwind/react";
 import { AlertStylesType } from "@material-tailwind/react/theme/components/alert";
 
@@ -43,13 +43,19 @@ export const MyAlert = React.forwardRef<HTMLDivElement, MyAlertProps>(
   }
 );
 
-export function useAlert(timout: number = 2000): {
+type AlertType = "error" | "success" | "warning" | "primary";
+
+interface MyAlertContextProps {
   isVisible: boolean;
   message: string;
-  show: (message: string) => void;
-} {
+  showAlert: (message: string, type: AlertType) => void;
+  type: AlertType;
+}
+
+export function useAlert(timout: number = 2000): MyAlertContextProps {
   const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(false);
+  const [type, setType] = useState<AlertType>("success");
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
@@ -69,9 +75,18 @@ export function useAlert(timout: number = 2000): {
   return {
     isVisible: visible,
     message: message,
-    show: (message) => {
+    showAlert: (message, type) => {
       setMessage(message);
+      setType(type);
       setVisible(true);
     },
+    type: type,
   };
 }
+
+export const MyAlertContext = createContext<MyAlertContextProps>({
+  isVisible: false,
+  message: "",
+  showAlert: () => {},
+  type: "success",
+});
