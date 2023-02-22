@@ -14,7 +14,12 @@ import { NotFound } from "./screens/404/NotFound";
 import { charactersLoader } from "./loaders/characters/CharactersLoader";
 import { CharactersScreen } from "./screens/main/characters/CharactersScreen";
 import { ThemeProvider } from "@material-tailwind/react/";
-import { alertStylesType } from "./components/MyAlert";
+import {
+  alertStylesType,
+  MyAlert,
+  MyAlertContext,
+  useAlert,
+} from "./components/MyAlert";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -41,11 +46,29 @@ function App() {
   const theme = {
     alert: alertStylesType,
   };
+  const alert = useAlert();
 
   return (
-    <ThemeProvider value={theme}>
-      <RouterProvider router={appRouter} />
-    </ThemeProvider>
+    <MyAlertContext.Provider value={alert}>
+      <ThemeProvider value={theme}>
+        <div>
+          <RouterProvider router={appRouter} />
+          <MyAlert
+            className={
+              "absolute top-10 mx-auto mx-auto w-full bg-error text-onError lg:right-20 lg:max-w-md lg-max:left-0 lg-max:right-0 lg-max:max-w-xs"
+            }
+            color={alert.type}
+            show={alert.isVisible}
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: -100 },
+            }}
+          >
+            {alert.message}
+          </MyAlert>
+        </div>
+      </ThemeProvider>
+    </MyAlertContext.Provider>
   );
 }
 
