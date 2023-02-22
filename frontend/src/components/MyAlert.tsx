@@ -4,7 +4,8 @@ import { AlertStylesType } from "@material-tailwind/react/theme/components/alert
 
 export const alertStylesType: AlertStylesType = {
   valid: {
-    variants: ["error"],
+    variants: ["gradient", "filled"],
+    colors: ["error", "success", "warning", "primary"],
   },
   styles: {
     variants: {
@@ -13,23 +14,52 @@ export const alertStylesType: AlertStylesType = {
           background: "bg-error",
           color: "text-onError",
         },
+        success: {
+          background: "bg-success",
+          color: "text-onSuccess",
+        },
+        warning: {
+          background: "bg-warning",
+          color: "text-onWarning",
+        },
+        primary: {
+          background: "bg-primary",
+          color: "text-onPrimary",
+        },
       },
       gradient: {
         error: {
           background: "bg-error",
           color: "text-onError",
         },
+        success: {
+          background: "bg-success",
+          color: "text-onSuccess",
+        },
+        warning: {
+          background: "bg-warning",
+          color: "bg-onWarning",
+        },
+        primary: {
+          background: "bg-primary",
+          color: "text-onPrimary",
+        },
       },
     },
   },
 };
 
+type AlertType = "error" | "success" | "warning" | "primary";
 interface MyAlertProps extends Omit<AlertProps, "color"> {
-  color?: "success" | "error" | "warning" | "primary";
+  color?: AlertType;
 }
 
 export const MyAlert = React.forwardRef<HTMLDivElement, MyAlertProps>(
   (props, ref) => {
+    useEffect(() => {
+      console.log("color inside: " + props.color);
+    }, [props.color]);
+
     const { className, children, ...rest } = props;
     return (
       <Alert
@@ -42,8 +72,6 @@ export const MyAlert = React.forwardRef<HTMLDivElement, MyAlertProps>(
     );
   }
 );
-
-type AlertType = "error" | "success" | "warning" | "primary";
 
 interface MyAlertContextProps {
   isVisible: boolean;
