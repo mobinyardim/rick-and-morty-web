@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { SignUpBody } from "models/src/bodyModels/SignUpBody";
 import { sources } from "../../../remoteSources/common/Sources";
 import { MyAlertContext } from "../../../components/MyAlert";
+import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
 
 function SignUpScreen() {
   return (
@@ -26,6 +27,10 @@ interface AuthFormProps {
   className: string;
 }
 
+interface SingUpBodyExtraFields {
+  isTermsAccepted: boolean;
+}
+
 function SignUpForm({ className }: AuthFormProps) {
   const navigate = useNavigate();
   const { showAlert } = useContext(MyAlertContext);
@@ -35,7 +40,7 @@ function SignUpForm({ className }: AuthFormProps) {
     clearErrors,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpBody>();
+  } = useForm<SignUpBody & SingUpBodyExtraFields>();
 
   return (
     <div
@@ -73,6 +78,10 @@ function SignUpForm({ className }: AuthFormProps) {
               type="text"
               disabled={isSubmitting}
               error={errors.fullName?.message !== undefined}
+              onClick={() => {
+                clearErrors("fullName");
+                setError("fullName", { message: undefined });
+              }}
             />
 
             <Typography
@@ -93,6 +102,10 @@ function SignUpForm({ className }: AuthFormProps) {
               label="Username"
               type="text"
               error={errors.username?.message !== undefined}
+              onClick={() => {
+                clearErrors("username");
+                setError("username", { message: undefined });
+              }}
             />
 
             <Typography
@@ -120,6 +133,10 @@ function SignUpForm({ className }: AuthFormProps) {
           label="Email"
           type="email"
           error={errors.email?.message !== undefined}
+          onClick={() => {
+            clearErrors("email");
+            setError("email", { message: undefined });
+          }}
         />
         <Typography
           variant={"small"}
@@ -138,6 +155,10 @@ function SignUpForm({ className }: AuthFormProps) {
           label="Password"
           type="password"
           error={errors.password?.message !== undefined}
+          onClick={() => {
+            clearErrors("password");
+            setError("password", { message: undefined });
+          }}
         />
         <Typography
           variant={"small"}
@@ -151,13 +172,28 @@ function SignUpForm({ className }: AuthFormProps) {
         <div className="h-5" />
 
         <Checkbox
+          {...register("isTermsAccepted", {
+            required: "Terms must be accepted for sign up!",
+          })}
+          type={"checkbox"}
+          onClick={() => {
+            clearErrors("isTermsAccepted");
+            setError("isTermsAccepted", { message: undefined });
+          }}
+          labelProps={{
+            className: `${errors.isTermsAccepted?.message ? "text-error" : ""}`,
+          }}
           label="Creating an account means you’re okay with our Terms of Service and
             Privacy Policy."
         />
 
         <div className="mt-10 flex w-full  flex-col justify-start">
           <MyButton className="md-max:w-full md:w-[15rem]" type={"submit"}>
-            Sign Up
+            {isSubmitting ? (
+              <CircularLoading className={"h-5 w-5"} />
+            ) : (
+              "Sign Up"
+            )}
           </MyButton>
         </div>
       </Form>
