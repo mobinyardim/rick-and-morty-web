@@ -40,10 +40,6 @@ export function Navbar({
 
   const toggleSidebarViewState = () => setSidebar(!sidebar);
 
-  useEffect(() => {
-    console.log(`isLoading ${isLoading}`);
-  }, [isLoading]);
-
   return (
     <div className={""}>
       <div
