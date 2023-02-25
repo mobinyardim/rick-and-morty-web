@@ -10,7 +10,7 @@ import { Pagination } from "models/src/Result";
 
 export function CharactersScreen() {
   const charactersFirstPage =
-    useRouteLoaderData<typeof charactersLoader>("root");
+    useRouteLoaderData<typeof charactersLoader>("main");
 
   const charactersStore = useCharactersStore();
   const [isLoading, setIsLoading] = useState(false);
