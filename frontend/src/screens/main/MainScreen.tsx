@@ -9,6 +9,13 @@ import { Character } from "models/src/Character";
 import { Pagination, Success } from "models/src/Result";
 import { userLoader } from "../../loaders/characters/UserLoader";
 import { User } from "models/src/User";
+import {
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+} from "@material-tailwind/react";
+import { MyButton } from "../../components/MyButton";
 
 interface Path {
   path: string;
@@ -49,6 +56,7 @@ function MainScreen() {
   const charactersFirstPage =
     useRouteLoaderData<typeof charactersLoader>("root");
   const charactersStore = useCharactersStore();
+  const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
 
   const addCharacters = useCallback(
     (characters: Character[], pagination?: Pagination) => {
@@ -100,9 +108,6 @@ function MainScreen() {
                 })?.path ?? "";
               navigate(path);
             }}
-            onLoginOrSignUpClick={() => {
-              navigate("/login");
-            }}
           />
         }
       >
@@ -123,12 +128,36 @@ function MainScreen() {
               onLoginOrSignUpClick={() => {
                 navigate("/login");
               }}
+              onLogout={() => {
+                setIsLogoutDialogVisible(true);
+              }}
             />
           )}
         </Await>
       </Suspense>
 
       <Outlet />
+
+      <Dialog open={isLogoutDialogVisible} handler={setIsLogoutDialogVisible}>
+        <DialogHeader>{"Logout from account!"}</DialogHeader>
+        <DialogBody>
+          {"Are you sure that want to logout from your account?"}
+        </DialogBody>
+        <DialogFooter className={"gap-4"}>
+          <MyButton
+            variant={"outlined"}
+            color={"gray"}
+            onClick={() => {
+              setIsLogoutDialogVisible(false);
+            }}
+          >
+            Cancel
+          </MyButton>
+          <MyButton variant={"filled"} color={"red"} onClick={() => {}}>
+            Logout
+          </MyButton>
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 }
