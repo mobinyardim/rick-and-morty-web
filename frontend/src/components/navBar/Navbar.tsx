@@ -3,9 +3,10 @@ import * as FaIcons from "react-icons/fa";
 import * as MdIcon from "react-icons/md";
 import { IconBaseProps } from "react-icons/lib/esm/iconBase";
 import { User } from "models/src/User";
-import { Avatar } from "@material-tailwind/react";
+import { Avatar, Typography } from "@material-tailwind/react";
 import { CircularUserPlaceHolder } from "../CircularUserPlaceHolder";
 import { MyButton } from "../MyButton";
+import * as IoIcon from "react-icons/io5";
 
 export interface NavItem {
   title: string;
@@ -21,6 +22,7 @@ export interface NavBarProps {
 
   selected?: NavItem;
   onLoginOrSignUpClick?: VoidFunction;
+  onLogout?: VoidFunction;
 }
 
 export function Navbar({
@@ -30,6 +32,7 @@ export function Navbar({
   onSelect,
   selected,
   onLoginOrSignUpClick,
+  onLogout,
 }: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
 
@@ -68,27 +71,50 @@ export function Navbar({
           </div>
         </div>
 
-        <MyButton
-          variant="text"
-          fullWidth={false}
-          onClick={onLoginOrSignUpClick}
-          className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-onBackgroundMedium ring-transparent hover:bg-transparent`}
-        >
-          {
-            (user?.avatar ? (
-              <Avatar
-                src={user?.avatar}
-                variant={"circular"}
-                className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
-              />
-            ) : (
-              <CircularUserPlaceHolder
-                className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
-              />
-            )) as JSX.Element
-          }
-          {sidebar ? "Login/SignUp" : ""}
-        </MyButton>
+        {user && (
+          <div
+            className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-onBackgroundMedium ring-transparent hover:bg-transparent`}
+          >
+            {
+              (user?.avatar ? (
+                <Avatar
+                  src={user?.avatar}
+                  variant={"circular"}
+                  className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
+                />
+              ) : (
+                <CircularUserPlaceHolder
+                  className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
+                />
+              )) as JSX.Element
+            }
+            <div className={"flex flex-col"}>
+              <Typography variant={"small"}>
+                {" "}
+                {sidebar ? user.username : ""}
+              </Typography>
+              <Typography variant={"small"}>
+                {" "}
+                {sidebar ? user.email : ""}
+              </Typography>
+            </div>
+          </div>
+        )}
+
+        {!user && (
+          <MyButton
+            variant="text"
+            fullWidth={false}
+            onClick={onLoginOrSignUpClick}
+            className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-onBackgroundMedium ring-transparent hover:bg-transparent`}
+          >
+            <CircularUserPlaceHolder
+              className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
+            />
+
+            {"Login/SignUp"}
+          </MyButton>
+        )}
 
         <NavItems
           className={"mt-20"}
@@ -97,6 +123,21 @@ export function Navbar({
           onSelect={onSelect}
           isFull={sidebar}
         />
+
+        {user && (
+          <MyButton
+            variant="text"
+            fullWidth={false}
+            onClick={onLogout}
+            className={`z-10 mx-4 mt-auto mb-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-error ring-transparent hover:bg-transparent`}
+          >
+            <IoIcon.IoExitOutline
+              className={"h-16 w-16 shrink-0 p-4 text-error"}
+            />
+
+            {"Logout"}
+          </MyButton>
+        )}
       </nav>
     </div>
   );
