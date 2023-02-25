@@ -1,6 +1,14 @@
 import AuthBannerComponent from "../componenets/AuthBannerComponent";
 import { MyInput } from "../../../components/MyInput";
 import { MyButton } from "../../../components/MyButton";
+import { useForm } from "react-hook-form";
+import { LoginBody } from "models/src/bodyModels/LoginBody";
+import { Typography } from "@material-tailwind/react";
+import { CircularLoading } from "../../../components/circularIndeterminate/CircularLoading";
+import { sources } from "../../../remoteSources/common/Sources";
+import { MyAlertContext } from "../../../components/MyAlert";
+import React, { useContext } from "react";
+import { Form, useNavigate } from "react-router-dom";
 
 function LoginScreen() {
   return (
@@ -16,8 +24,17 @@ interface AuthFormProps {
   className: string;
 }
 
-function LoginForm(props: AuthFormProps) {
-  const { className } = props;
+function LoginForm({ className }: AuthFormProps) {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginBody>();
+
+  const { showAlert } = useContext(MyAlertContext);
   return (
     <div
       className={`inline-flex h-screen flex-col lg:w-full lg-max:justify-center ${className}`}
@@ -34,14 +51,77 @@ function LoginForm(props: AuthFormProps) {
         </span>
       </div>
 
-      <div className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto">
-        <MyInput className={"inline w-80"} label="Email" type="email" />
+      <Form
+        className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto"
+        onSubmit={handleSubmit(async (data) => {
+          const result = await sources.userSource.login(data);
+          if ("data" in result) {
+            showAlert(result.message, "success");
+            navigate("/");
+          } else {
+            showAlert(result.message, "error");
+          }
+        })}
+      >
+        <MyInput
+          {...register("username", {
+            required: "You must enter your username",
+          })}
+          disabled={isSubmitting}
+          error={errors.username?.message !== undefined}
+          className={"inline w-80"}
+          label="Username"
+          type="text"
+          onClick={() => {
+            clearErrors("username");
+            setError("username", { message: undefined });
+          }}
+        />
+        <Typography
+          variant={"small"}
+          className={`w-full text-error ${
+            errors.username?.type ? "" : "hidden"
+          }`}
+        >
+          {errors.username?.message ?? ""}
+        </Typography>
 
         <div className="h-5" />
 
-        <MyInput className={"w-80"} label="Password" type="password" />
+        <MyInput
+          {...register("password", {
+            required: "You must enter your password",
+            minLength: { value: 4, message: "Minimum length of password is 4" },
+          })}
+          disabled={isSubmitting}
+          className={"w-80"}
+          label="Password"
+          type="password"
+          error={errors.password?.message !== undefined}
+          onClick={() => {
+            clearErrors("password");
+            setError("password", { message: undefined });
+          }}
+        />
+        <Typography
+          variant={"small"}
+          className={`w-full text-error ${
+            errors.password?.message ? "" : "hidden"
+          }`}
+        >
+          {errors.password?.message ?? ""}
+        </Typography>
 
         <div className="h-2" />
+
+        <Typography
+          variant={"small"}
+          className={`w-full text-error ${
+            errors.root?.message ? "" : "hidden"
+          }`}
+        >
+          {errors.root?.message ?? ""}
+        </Typography>
 
         <div className="flex w-full flex-row justify-end text-primary">
           <a className="font-sans text-xs font-thin" href="/forgot-password">
@@ -51,8 +131,14 @@ function LoginForm(props: AuthFormProps) {
 
         <div className="h-5" />
 
-        <MyButton className="w-80 font-sans normal-case">Sign In</MyButton>
-      </div>
+        <MyButton
+          disabled={isSubmitting}
+          className="w-80 font-sans normal-case"
+          type={"submit"}
+        >
+          {isSubmitting ? <CircularLoading className={"h-5 w-5"} /> : "Sign In"}
+        </MyButton>
+      </Form>
     </div>
   );
 }

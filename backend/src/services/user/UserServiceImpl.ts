@@ -37,7 +37,7 @@ export class UserServiceImpl extends UserService {
   }
 
   async signUp(signUpBody: SignUpBody): Promise<Result<User>> {
-    const { username, password, email } = signUpBody;
+    const { username, password, email, fullName } = signUpBody;
 
     if (await UserDao.findOne({ username: username }).exec()) {
       return new Fail("This username is taken before!", 400, "BAD_REQUEST");
@@ -50,6 +50,7 @@ export class UserServiceImpl extends UserService {
     const passwordHashed = await bcrypt.hash(password, 10);
 
     const newUser = await UserDao.create({
+      fullName: fullName,
       username: username,
       email: email,
       password: passwordHashed,
