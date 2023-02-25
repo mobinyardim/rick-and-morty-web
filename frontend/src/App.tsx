@@ -20,24 +20,27 @@ import {
   MyAlertContext,
   useAlert,
 } from "./components/MyAlert";
+import { userLoader } from "./loaders/characters/UserLoader";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <Fragment>
-      <Route
-        path="/"
-        element={<MainScreen />}
-        loader={charactersLoader}
-        errorElement={<MainScreen />}
-        id="root"
-      >
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/characters" element={<CharactersScreen />} />
-        <Route path="/locations" element={<NotFound />} />
-        <Route path="/episodes" element={<NotFound />} />
+      <Route loader={userLoader} id={"root"}>
+        <Route
+          path="/"
+          element={<MainScreen />}
+          loader={charactersLoader}
+          errorElement={<MainScreen />}
+          id="main"
+        >
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/characters" element={<CharactersScreen />} />
+          <Route path="/locations" element={<NotFound />} />
+          <Route path="/episodes" element={<NotFound />} />
+        </Route>
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/signup" element={<SignUpScreen />} />
       </Route>
-      <Route path="/login" element={<LoginScreen />} />
-      <Route path="/signup" element={<SignUpScreen />} />
     </Fragment>
   )
 );
