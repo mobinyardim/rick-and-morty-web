@@ -114,7 +114,7 @@ export class CharacterServiceImpl implements CharacterService {
     for (let page = 1; ; page++) {
       const response = await this.getOutSourceCharacters(`${page}`);
       console.log("data fetched");
-      if (response && response instanceof Success) {
+      if (response && response.kind == "success") {
         console.log(typeof response.data);
         for (const item of response.data as Array<Character>) {
           try {
