@@ -55,7 +55,7 @@ function LoginForm({ className }: AuthFormProps) {
         className="flex w-fit flex-col items-center justify-center lg:mx-auto lg:my-auto"
         onSubmit={handleSubmit(async (data) => {
           const result = await sources.userSource.login(data);
-          if ("data" in result) {
+          if (result.kind === "success") {
             showAlert(result.message, "success");
             navigate("/");
           } else {

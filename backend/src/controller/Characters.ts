@@ -2,7 +2,6 @@ import { RequestHandler } from "express";
 import { characterConverter } from "../converters/CharacterConverter";
 import { CharacterBody } from "../../../models/src/bodyModels/CharacterBody";
 import { services } from "../services/Services";
-import { Success } from "../../../models/src/Result";
 import { handleFailResult } from "../utils/ControllerHelpers";
 import { PaginationQueries } from "../../../models/src/bodyModels/PaginationQueries";
 
@@ -17,7 +16,7 @@ export const getCharacters: RequestHandler<
 
   const result = await services.characterService.getCharacters(limit, offset);
 
-  if (result instanceof Success) {
+  if (result.kind == "success") {
     res.status(200).json(result);
   } else {
     handleFailResult(res, result);
@@ -37,7 +36,7 @@ export const getCharacter: RequestHandler<
   const id = req.params.id;
   const result = await services.characterService.getCharacter(id);
 
-  if (result instanceof Success) {
+  if (result.kind == "success") {
     res.status(200).json(result);
   } else {
     handleFailResult(res, result);
@@ -54,7 +53,7 @@ export const createCharacter: RequestHandler<
     characterConverter.bodyToEntity(req.body)
   );
 
-  if (result instanceof Success) {
+  if (result.kind == "success") {
     res.status(200).json(result);
   } else {
     handleFailResult(res, result);
@@ -69,7 +68,7 @@ export const populateDatabase: RequestHandler<
 > = async (req, res) => {
   const populateResponse =
     await services.characterService.populateDatabaseWithOutSource();
-  if (populateResponse instanceof Success) {
+  if (populateResponse.kind == "success") {
     res.status(200).json(populateResponse);
   } else {
     handleFailResult(res, populateResponse);

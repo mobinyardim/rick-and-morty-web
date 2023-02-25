@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { SignUpBody } from "models/src/bodyModels/SignUpBody";
 import { LoginBody } from "models/src/bodyModels/LoginBody";
-import { Fail, Success } from "models/src/Result";
+import { Fail } from "models/src/Result";
 import { services } from "../services/Services";
 import { handleFailResult } from "../utils/ControllerHelpers";
 
@@ -13,7 +13,7 @@ export const signUp: RequestHandler<
 > = async (req, res) => {
   const result = await services.userService.signUp(req.body);
 
-  if (result instanceof Success) {
+  if (result.kind == "success") {
     req.session.user = result.data;
     res.status(200).json(result);
   } else {
@@ -29,7 +29,7 @@ export const login: RequestHandler<
 > = async (req, res) => {
   const result = await services.userService.login(req.body);
 
-  if (result instanceof Success) {
+  if (result.kind == "success") {
     req.session.user = result.data;
     res.status(200).json(result);
   } else {
@@ -51,7 +51,7 @@ export const getUser: RequestHandler<
 
   if (userId) {
     const result = await services.userService.getUser(userId);
-    if (result instanceof Success) {
+    if (result.kind == "success") {
       res.status(200).json(result);
     } else {
       handleFailResult(res, result);

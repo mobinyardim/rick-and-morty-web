@@ -1,4 +1,5 @@
 export class Success<Data> {
+  kind: "success" = "success";
   message: string;
   data: Data;
   pagination?: Pagination;
@@ -29,6 +30,8 @@ export type ErrorType =
   | "UNKNOWN";
 
 export class Fail {
+  kind: "fail" = "fail";
+
   message: string;
 
   type: ErrorType;
