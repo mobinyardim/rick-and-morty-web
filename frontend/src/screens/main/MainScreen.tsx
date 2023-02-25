@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
+import { Await, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as IoIcon from "react-icons/io5";
 import { useRouteLoaderData } from "../../utils/ReactRouterUtils";
 import { charactersLoader } from "../../loaders/characters/CharactersLoader";
 import { useCharactersStore } from "../../stores/CharctersStore";
 import { Character } from "models/src/Character";
-import { Pagination } from "models/src/Result";
+import { Pagination, Success } from "models/src/Result";
+import { userLoader } from "../../loaders/characters/UserLoader";
+import { User } from "models/src/User";
 
 interface Path {
   path: string;
@@ -43,6 +45,7 @@ function MainScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
+  const user = useRouteLoaderData<typeof userLoader>("root");
   const charactersFirstPage =
     useRouteLoaderData<typeof charactersLoader>("main");
   const charactersStore = useCharactersStore();
@@ -83,21 +86,47 @@ function MainScreen() {
   // @ts-ignore
   return (
     <div>
-      <Navbar
-        items={menuItems}
-        selected={selectedTab}
-        onSelect={(navItem) => {
-          setSelectedTab(navItem);
-          const path =
-            menuItems.find((item) => {
-              return item.title === navItem.title;
-            })?.path ?? "";
-          navigate(path);
-        }}
-        onLoginOrSignUpClick={() => {
-          navigate("/login");
-        }}
-      />
+      <Suspense
+        fallback={
+          <Navbar
+            items={menuItems}
+            selected={selectedTab}
+            onSelect={(navItem) => {
+              setSelectedTab(navItem);
+              const path =
+                menuItems.find((item) => {
+                  return item.title === navItem.title;
+                })?.path ?? "";
+              navigate(path);
+            }}
+            onLoginOrSignUpClick={() => {
+              navigate("/login");
+            }}
+          />
+        }
+      >
+        <Await resolve={user.metrics}>
+          {(user: Awaited<Success<User>>) => (
+            <Navbar
+              user={user.data}
+              items={menuItems}
+              selected={selectedTab}
+              onSelect={(navItem) => {
+                setSelectedTab(navItem);
+                const path =
+                  menuItems.find((item) => {
+                    return item.title === navItem.title;
+                  })?.path ?? "";
+                navigate(path);
+              }}
+              onLoginOrSignUpClick={() => {
+                navigate("/login");
+              }}
+            />
+          )}
+        </Await>
+      </Suspense>
+
       <Outlet />
     </div>
   );
