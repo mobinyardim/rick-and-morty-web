@@ -10,14 +10,15 @@ import { convertAxiosFailToFailResult } from "../common/Utils";
 export class UserRemoteSourceImpl extends UserRemoteSource {
   getUser(userId?: string): Promise<Result<User>> {
     const options: AxiosRequestConfig = {
-      method: "POST",
+      method: "GET",
       params: {
         userId: userId,
       },
+      withCredentials: true,
     };
 
     return axios
-      .post<Result<User>>(`${LOCAL_BASE_URL}/user/:userId`, options)
+      .get<Result<User>>(`${LOCAL_BASE_URL}/user/${userId ?? ""}`, options)
       .then((result) => {
         return result.data;
       })
