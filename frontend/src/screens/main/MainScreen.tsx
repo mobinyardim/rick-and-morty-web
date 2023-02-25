@@ -45,9 +45,9 @@ function MainScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
-  const user = useRouteLoaderData<typeof userLoader>("root");
+  const user = useRouteLoaderData<typeof userLoader>("main");
   const charactersFirstPage =
-    useRouteLoaderData<typeof charactersLoader>("main");
+    useRouteLoaderData<typeof charactersLoader>("root");
   const charactersStore = useCharactersStore();
 
   const addCharacters = useCallback(

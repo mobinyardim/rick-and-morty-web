@@ -9,7 +9,7 @@ import { Success } from "models/src/Result";
 
 export function HomeScreen() {
   const navigate = useNavigate();
-  const characters = useRouteLoaderData<typeof charactersLoader>("main");
+  const characters = useRouteLoaderData<typeof charactersLoader>("root");
 
   return (
     <div className={`h-fit w-full overflow-x-clip`}>

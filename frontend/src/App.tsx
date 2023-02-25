@@ -25,11 +25,11 @@ import { userLoader } from "./loaders/characters/UserLoader";
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
     <Fragment>
-      <Route loader={userLoader} id={"root"}>
+      <Route loader={charactersLoader} id={"root"}>
         <Route
           path="/"
           element={<MainScreen />}
-          loader={charactersLoader}
+          loader={userLoader}
           errorElement={<MainScreen />}
           id="main"
         >
