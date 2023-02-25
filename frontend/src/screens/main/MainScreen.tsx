@@ -94,6 +94,9 @@ function MainScreen() {
             })?.path ?? "";
           navigate(path);
         }}
+        onLoginOrSignUpClick={() => {
+          navigate("/login");
+        }}
       />
       <Outlet />
     </div>

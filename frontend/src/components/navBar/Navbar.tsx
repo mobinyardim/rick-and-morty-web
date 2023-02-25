@@ -20,6 +20,7 @@ export interface NavBarProps {
   onSelect?: (navItem: NavItem) => void;
 
   selected?: NavItem;
+  onLoginOrSignUpClick?: VoidFunction;
 }
 
 export function Navbar({
@@ -28,6 +29,7 @@ export function Navbar({
   items,
   onSelect,
   selected,
+  onLoginOrSignUpClick,
 }: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
 
@@ -69,6 +71,7 @@ export function Navbar({
         <MyButton
           variant="text"
           fullWidth={false}
+          onClick={onLoginOrSignUpClick}
           className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-onBackgroundMedium ring-transparent hover:bg-transparent`}
         >
           {
