@@ -89,6 +89,7 @@ function MainScreen() {
       <Suspense
         fallback={
           <Navbar
+            isLoading={true}
             items={menuItems}
             selected={selectedTab}
             onSelect={(navItem) => {

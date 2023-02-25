@@ -23,6 +23,7 @@ export interface NavBarProps {
   selected?: NavItem;
   onLoginOrSignUpClick?: VoidFunction;
   onLogout?: VoidFunction;
+  isLoading?: boolean;
 }
 
 export function Navbar({
@@ -33,10 +34,15 @@ export function Navbar({
   selected,
   onLoginOrSignUpClick,
   onLogout,
+  isLoading,
 }: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
 
   const toggleSidebarViewState = () => setSidebar(!sidebar);
+
+  useEffect(() => {
+    console.log(`isLoading ${isLoading}`);
+  }, [isLoading]);
 
   return (
     <div className={""}>
@@ -52,7 +58,7 @@ export function Navbar({
       <nav
         className={`max-lg:w-72 fixed top-0 z-10 flex h-screen w-72 ${
           sidebar ? "lg:w-72" : "lg:w-24"
-        } transform-gpu flex-col rounded-r-2xl bg-background drop-shadow-md duration-500 ${
+        } transform-gpu flex-col rounded-r-2xl bg-surface drop-shadow-md duration-500 ${
           sidebar ? "left-0" : "lg-max:-left-full"
         }`}
       >
@@ -101,7 +107,7 @@ export function Navbar({
           </div>
         )}
 
-        {!user && (
+        {!user && !isLoading && (
           <MyButton
             variant="text"
             fullWidth={false}
@@ -115,6 +121,7 @@ export function Navbar({
             {"Login/SignUp"}
           </MyButton>
         )}
+        {isLoading && <div className={`shimmer mx-4 mt-5 h-16 rounded`} />}
 
         <NavItems
           className={"mt-20"}
@@ -137,6 +144,10 @@ export function Navbar({
 
             {"Logout"}
           </MyButton>
+        )}
+
+        {isLoading && (
+          <div className={`shimmer z-10 mx-4 mt-auto mb-5 h-16 rounded`} />
         )}
       </nav>
     </div>
