@@ -1,5 +1,17 @@
-import React, { Suspense, useCallback, useEffect, useState } from "react";
-import { Await, Outlet, useLocation, useNavigate } from "react-router-dom";
+import React, {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Await,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useRevalidator,
+} from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as IoIcon from "react-icons/io5";
 import { useRouteLoaderData } from "../../utils/ReactRouterUtils";
@@ -16,6 +28,8 @@ import {
   DialogHeader,
 } from "@material-tailwind/react";
 import { MyButton } from "../../components/MyButton";
+import { sources } from "../../remoteSources/common/Sources";
+import { MyAlertContext } from "../../components/MyAlert";
 
 interface Path {
   path: string;
@@ -49,14 +63,20 @@ const menuItems: Array<NavItem & Path> = [
 ];
 
 function MainScreen() {
+  const { showAlert } = useContext(MyAlertContext);
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
+  const revalidator = useRevalidator();
+
   const user = useRouteLoaderData<typeof userLoader>("main");
   const charactersFirstPage =
     useRouteLoaderData<typeof charactersLoader>("root");
   const charactersStore = useCharactersStore();
+
+  const [selectedTab, setSelectedTab] = useState<NavItem>(menuItems[0]);
   const [isLogoutDialogVisible, setIsLogoutDialogVisible] = useState(false);
+  const [isLogoutButtonLoading, setIsLogoutButtonLoading] = useState(false);
 
   const addCharacters = useCallback(
     (characters: Character[], pagination?: Pagination) => {
@@ -153,7 +173,24 @@ function MainScreen() {
           >
             Cancel
           </MyButton>
-          <MyButton variant={"filled"} color={"red"} onClick={() => {}}>
+          <MyButton
+            variant={"filled"}
+            color={"red"}
+            onClick={async () => {
+              setIsLogoutButtonLoading(true);
+              const result = await sources.userSource.logout();
+              if (result.kind === "success") {
+                revalidator.revalidate();
+                setIsLogoutButtonLoading(false);
+                setIsLogoutDialogVisible(false);
+                showAlert(result.message, "success");
+              } else {
+                setIsLogoutButtonLoading(false);
+                setIsLogoutDialogVisible(false);
+                showAlert(result.message, "error");
+              }
+            }}
+          >
             Logout
           </MyButton>
         </DialogFooter>
