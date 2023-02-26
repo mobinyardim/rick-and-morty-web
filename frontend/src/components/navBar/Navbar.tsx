@@ -114,7 +114,7 @@ export function Navbar({
               className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
             />
 
-            {"Login/SignUp"}
+            {sidebar && "Login/SignUp"}
           </MyButton>
         )}
         {isLoading && <div className={`shimmer mx-4 mt-5 h-16 rounded`} />}
@@ -231,6 +231,7 @@ export function NavMenuItem({ name, isFull, Icon, onClick }: NavMenuItemProps) {
       <MyButton
         variant={"text"}
         ripple={false}
+        fullWidth={true}
         className={`mr-4 flex h-16 min-w-0 flex-shrink shrink grow flex-row items-center p-0 text-onBackgroundMedium`}
       >
         <Icon className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"} />
