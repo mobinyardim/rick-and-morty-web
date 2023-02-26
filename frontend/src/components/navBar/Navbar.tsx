@@ -40,8 +40,21 @@ export function Navbar({
 
   const toggleSidebarViewState = () => setSidebar(!sidebar);
 
+  useEffect(() => {
+    if (sidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "scroll";
+    }
+  }, [sidebar]);
+
   return (
-    <div className={""}>
+    <div
+      className={""}
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+    >
       <div
         className={`flex h-16 items-center justify-start lg:hidden ${className}`}
       >
@@ -132,7 +145,7 @@ export function Navbar({
             variant="text"
             fullWidth={false}
             onClick={onLogout}
-            className={`z-10 mx-4 mt-auto mb-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-error ring-transparent hover:bg-transparent`}
+            className={`z-10 mx-4 mt-auto mb-20 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-error ring-transparent hover:bg-transparent`}
           >
             <IoIcon.IoExitOutline
               className={"h-16 w-16 shrink-0 p-4 text-error"}
@@ -143,7 +156,7 @@ export function Navbar({
         )}
 
         {isLoading && (
-          <div className={`shimmer z-10 mx-4 mt-auto mb-5 h-16 rounded`} />
+          <div className={`shimmer z-10 mx-4 mt-auto mb-20 h-16 rounded`} />
         )}
       </nav>
     </div>
