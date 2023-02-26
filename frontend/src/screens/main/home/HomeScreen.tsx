@@ -13,8 +13,8 @@ export function HomeScreen() {
   const characters = useRouteLoaderData<typeof charactersLoader>("root");
 
   return (
-    <div className={`h-fit w-full overflow-x-clip`}>
-      <div className="mx-auto flex h-screen w-max flex-shrink-0 flex-col gap-12 pt-5 lg:p-32 ">
+    <div className={`h-fit w-full`}>
+      <div className="mx-auto flex h-screen w-max flex-shrink-0 flex-col gap-12 pt-5 lg:p-32">
         <Suspense
           fallback={
             <ItemsList
