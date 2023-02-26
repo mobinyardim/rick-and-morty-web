@@ -165,7 +165,7 @@ function MainScreen() {
       <Dialog
         open={isLogoutDialogVisible}
         handler={setIsLogoutDialogVisible}
-        size={"xl"}
+        size={"lg"}
       >
         <DialogHeader>{"Logout from account!"}</DialogHeader>
         <DialogBody>
