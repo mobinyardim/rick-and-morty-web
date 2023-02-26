@@ -9,4 +9,6 @@ export abstract class UserRemoteSource {
   abstract signUp(signUpBody: SignUpBody): Promise<Result<User>>;
 
   abstract getUser(userId?: string): Promise<Result<User>>;
+
+  abstract logout(): Promise<Result<null>>;
 }

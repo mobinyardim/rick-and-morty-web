@@ -57,4 +57,20 @@ export class UserRemoteSourceImpl extends UserRemoteSource {
         return convertAxiosFailToFailResult(reason);
       });
   }
+
+  logout(): Promise<Result<null>> {
+    const options: AxiosRequestConfig = {
+      method: "DELETE",
+      withCredentials: true,
+    };
+
+    return axios
+      .delete<Result<null>>(`${LOCAL_BASE_URL}/user/logout`, options)
+      .then((result) => {
+        return result.data;
+      })
+      .catch((reason) => {
+        return convertAxiosFailToFailResult(reason);
+      });
+  }
 }
