@@ -10,27 +10,24 @@ export const MyButton = React.forwardRef<
   HTMLButtonElement,
   ButtonProps & MyButtonProps
 >((props, ref) => {
-  const { className, children, isLoading, fullWidth, ...rest } = props;
+  const { className, children, isLoading, ...rest } = props;
   return (
-    <div className={`${fullWidth ? "block" : "inline"} relative`}>
-      <Button
-        {...rest}
-        fullWidth={fullWidth}
-        className={`font-sans normal-case  ${
-          isLoading ? "text-transparent" : ""
-        } ${className}`}
-        ref={ref}
-      >
-        {children}
-      </Button>
+    <Button
+      {...rest}
+      className={` font-sans normal-case ${
+        isLoading ? "text-transparent" : ""
+      } ${className}`}
+      ref={ref}
+    >
+      {children}
       {isLoading && (
         <CircularLoading
           className={
-            "absolute bottom-[50%] right-[50%] z-10 h-6  w-6 translate-y-2/4 translate-x-2/4 content-center items-center"
+            "absolute bottom-[50%] right-[50%] h-6  w-6 translate-y-2/4 translate-x-2/4 content-center items-center"
           }
         />
       )}
-    </div>
+    </Button>
   );
 });
 
