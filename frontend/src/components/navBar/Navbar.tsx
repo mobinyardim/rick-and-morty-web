@@ -7,6 +7,7 @@ import { Avatar, Typography } from "@material-tailwind/react";
 import { CircularUserPlaceHolder } from "../CircularUserPlaceHolder";
 import { MyButton } from "../MyButton";
 import * as IoIcon from "react-icons/io5";
+import { useWindowSize } from "../Utils";
 
 export interface NavItem {
   title: string;
@@ -37,24 +38,24 @@ export function Navbar({
   isLoading,
 }: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
+  const { height } = useWindowSize();
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--windowHeight", `${height}px`);
+  }, [height]);
 
   const toggleSidebarViewState = () => setSidebar(!sidebar);
 
   useEffect(() => {
     if (sidebar) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflow = "scroll";
+      document.body.style.overflowY = "scroll";
     }
   }, [sidebar]);
 
   return (
-    <div
-      className={""}
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-    >
+    <>
       <div
         className={`flex h-16 items-center justify-start lg:hidden ${className}`}
       >
@@ -65,7 +66,7 @@ export function Navbar({
       </div>
 
       <nav
-        className={`max-lg:w-72 fixed top-0 z-10 flex h-screen w-72 ${
+        className={`max-lg:w-72 fixed top-0 z-10 flex h-[var(--windowHeight)] w-72 ${
           sidebar ? "lg:w-72" : "lg:w-24"
         } transform-gpu flex-col rounded-r-2xl bg-surface drop-shadow-md duration-500 ${
           sidebar ? "left-0" : "lg-max:-left-full"
@@ -121,7 +122,7 @@ export function Navbar({
             variant="text"
             fullWidth={false}
             onClick={onLoginOrSignUpClick}
-            className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-onBackgroundMedium ring-transparent hover:bg-transparent`}
+            className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center p-0 text-onBackgroundMedium`}
           >
             <CircularUserPlaceHolder
               className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
@@ -140,12 +141,14 @@ export function Navbar({
           isFull={sidebar}
         />
 
+        <div className={"grow"} />
+
         {user && (
           <MyButton
             variant="text"
             fullWidth={false}
             onClick={onLogout}
-            className={`z-10 mx-4 mt-auto mb-20 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-error ring-transparent hover:bg-transparent`}
+            className={`z-10 mx-4 mb-5 flex h-16 flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-error`}
           >
             <IoIcon.IoExitOutline
               className={"h-16 w-16 shrink-0 p-4 text-error"}
@@ -156,10 +159,10 @@ export function Navbar({
         )}
 
         {isLoading && (
-          <div className={`shimmer z-10 mx-4 mt-auto mb-20 h-16 rounded`} />
+          <div className={`shimmer z-10 mx-4 mb-20 h-16 rounded`} />
         )}
       </nav>
-    </div>
+    </>
   );
 }
 
