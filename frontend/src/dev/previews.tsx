@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ComponentPreview, Previews } from "@react-buddy/ide-toolbox";
 import { PaletteTree } from "./palette";
 import App from "../App";
@@ -15,6 +15,7 @@ import { Character } from "models/src/Character";
 import { Origin } from "models/src/Origin";
 import { Location } from "models/src/Location";
 import { CircularLoading } from "../components/circularIndeterminate/CircularLoading";
+import { MyButton } from "../components/MyButton";
 
 const menuItems: Array<NavItem> = [
   {
@@ -108,50 +109,61 @@ const rick = new Character(
   "Human"
 );
 const ComponentPreviews = () => {
-  return (
-    <Previews palette={<PaletteTree />}>
-      <ComponentPreview path="/App">
-        <App />
-      </ComponentPreview>
-      <ComponentPreview path="/AuthBannerComponent">
-        <AuthBannerComponent />
-      </ComponentPreview>
-      <ComponentPreview path="/LoginScreen">
-        <LoginScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/MyInput">
-        <MyInput />
-      </ComponentPreview>
-      <ComponentPreview path="/SignUpScreen">
-        <SignUpScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/HomeScreen">
-        <HomeScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/NavBar">
-        <Navbar items={menuItems} />
-      </ComponentPreview>
-      <ComponentPreview path="/MainScreen">
-        <MainScreen />
-      </ComponentPreview>
-      <ComponentPreview path="/NavMenuItem">
-        <NavMenuItem
-          name={"Item"}
-          isFull={true}
-          Icon={MdIcon.MdOutlineKeyboardArrowRight}
-        />
-      </ComponentPreview>
-      <ComponentPreview path="/CharacterComponent">
-        <CharacterComponent character={rick} />
-      </ComponentPreview>
-      <ComponentPreview path="/ComponentPreviews">
-        <ComponentPreviews />
-      </ComponentPreview>
-      <ComponentPreview path="/CircularIndeterminate">
-        <CircularLoading />
-      </ComponentPreview>
-    </Previews>
-  );
+    const [isLoading, setIsLoading] = useState(false);
+    return (
+      <Previews palette={<PaletteTree />}>
+        <ComponentPreview path="/App">
+          <App />
+        </ComponentPreview>
+        <ComponentPreview path="/AuthBannerComponent">
+          <AuthBannerComponent />
+        </ComponentPreview>
+        <ComponentPreview path="/LoginScreen">
+          <LoginScreen />
+        </ComponentPreview>
+        <ComponentPreview path="/MyInput">
+          <MyInput />
+        </ComponentPreview>
+        <ComponentPreview path="/SignUpScreen">
+          <SignUpScreen />
+        </ComponentPreview>
+        <ComponentPreview path="/HomeScreen">
+          <HomeScreen />
+        </ComponentPreview>
+        <ComponentPreview path="/NavBar">
+          <Navbar items={menuItems} />
+        </ComponentPreview>
+        <ComponentPreview path="/MainScreen">
+          <MainScreen />
+        </ComponentPreview>
+        <ComponentPreview path="/NavMenuItem">
+          <NavMenuItem
+            name={"Item"}
+            isFull={true}
+            Icon={MdIcon.MdOutlineKeyboardArrowRight}
+          />
+        </ComponentPreview>
+        <ComponentPreview path="/CharacterComponent">
+          <CharacterComponent character={rick} />
+        </ComponentPreview>
+        <ComponentPreview path="/ComponentPreviews">
+          <ComponentPreviews />
+        </ComponentPreview>
+        <ComponentPreview path="/CircularIndeterminate">
+          <CircularLoading />
+        </ComponentPreview>
+        <ComponentPreview path="/MyButton">
+          <MyButton
+            isLoading={isLoading}
+            onClick={() => {
+              setIsLoading((draft) => !draft);
+            }}
+          >
+            Mobin yaardim
+          </MyButton>
+        </ComponentPreview>
+      </Previews>
+    );
 };
 
 export default ComponentPreviews;
