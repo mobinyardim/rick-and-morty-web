@@ -8,3 +8,5 @@ router.post("/signUp", UserController.signUp);
 router.post("/login", UserController.login);
 
 router.get("/:id?", UserController.getUser);
+
+router.delete("/logout", UserController.logout);
