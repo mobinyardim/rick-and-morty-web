@@ -176,6 +176,7 @@ function MainScreen() {
           <MyButton
             variant={"filled"}
             color={"red"}
+            isLoading={isLogoutButtonLoading}
             onClick={async () => {
               setIsLogoutButtonLoading(true);
               const result = await sources.userSource.logout();
