@@ -162,7 +162,11 @@ function MainScreen() {
 
       <Outlet />
 
-      <Dialog open={isLogoutDialogVisible} handler={setIsLogoutDialogVisible}>
+      <Dialog
+        open={isLogoutDialogVisible}
+        handler={setIsLogoutDialogVisible}
+        size={"xl"}
+      >
         <DialogHeader>{"Logout from account!"}</DialogHeader>
         <DialogBody>
           {"Are you sure that want to logout from your account?"}
