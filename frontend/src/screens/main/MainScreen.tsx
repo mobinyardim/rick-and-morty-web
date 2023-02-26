@@ -90,7 +90,11 @@ function MainScreen() {
 
     async function fetchData() {
       const firstPage = await charactersFirstPage.metrics;
-      if (!ignore && !charactersStore.characters.length) {
+      if (
+        !ignore &&
+        !charactersStore.characters.length &&
+        firstPage.kind === "success"
+      ) {
         addCharacters(firstPage.data, firstPage.pagination);
       }
     }
@@ -165,6 +169,7 @@ function MainScreen() {
         </DialogBody>
         <DialogFooter className={"gap-4"}>
           <MyButton
+            disabled={isLogoutButtonLoading}
             variant={"outlined"}
             color={"gray"}
             onClick={() => {
@@ -174,6 +179,7 @@ function MainScreen() {
             Cancel
           </MyButton>
           <MyButton
+            disabled={isLogoutButtonLoading}
             variant={"filled"}
             color={"red"}
             isLoading={isLogoutButtonLoading}

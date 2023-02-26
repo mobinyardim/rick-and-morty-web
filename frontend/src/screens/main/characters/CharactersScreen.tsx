@@ -49,7 +49,9 @@ export function CharactersScreen() {
         })
         .then((result) => {
           removePlaceHolders();
-          addCharacters(result.data, result.pagination);
+          if (result.kind === "success") {
+            addCharacters(result.data, result.pagination);
+          }
         });
       setIsLoading((_) => false);
     }

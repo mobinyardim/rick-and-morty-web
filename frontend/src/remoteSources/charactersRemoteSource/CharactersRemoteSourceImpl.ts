@@ -2,8 +2,9 @@ import CharactersRemoteSource from "./CharactersRemoteSource";
 import { Character } from "models/src/Character";
 import { BASE_URL, LOCAL_BASE_URL } from "../common/Consts";
 import axios, { AxiosRequestConfig } from "axios";
-import { Success } from "models/src/Result";
+import { Result, Success } from "models/src/Result";
 import { PaginationParams } from "../common/PaginationParams";
+import { convertAxiosFailToFailResult } from "../common/Utils";
 
 export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
   async addCharacter(character: Omit<Character, "id">): Promise<Character> {
@@ -22,7 +23,9 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
     throw Error();
   }
 
-  getCharacters(paginationParams: PaginationParams): Promise<Success<Character[]>> {
+  getCharacters(
+    paginationParams: PaginationParams
+  ): Promise<Result<Character[]>> {
     const options: AxiosRequestConfig = {
       method: "GET",
       params: {
@@ -32,7 +35,12 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
 
     return axios
       .get<Success<Character[]>>(`${LOCAL_BASE_URL}/characters`, options)
-      .then((result) => result.data);
+      .then((result) => {
+        return result.data;
+      })
+      .catch((reason) => {
+        return convertAxiosFailToFailResult(reason);
+      });
   }
 
   updateCharacter(
