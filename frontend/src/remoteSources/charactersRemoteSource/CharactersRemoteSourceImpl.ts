@@ -1,10 +1,10 @@
 import CharactersRemoteSource from "./CharactersRemoteSource";
 import { Character } from "models/src/Character";
-import { BASE_URL, LOCAL_BASE_URL } from "../common/Consts";
 import axios, { AxiosRequestConfig } from "axios";
 import { Result, Success } from "models/src/Result";
 import { PaginationParams } from "../common/PaginationParams";
 import { convertAxiosFailToFailResult } from "../common/Utils";
+import { API_BASE_URL } from "../common/Consts";
 
 export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
   async addCharacter(character: Omit<Character, "id">): Promise<Character> {
@@ -13,7 +13,7 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
     };
 
     return axios
-      .post<Character>(`${BASE_URL}/characters`, character, options)
+      .post<Character>(`${API_BASE_URL}/api/v1/characters`, character, options)
       .then((result) => {
         return result.data;
       });
@@ -34,7 +34,7 @@ export class CharactersRemoteSourceImpl implements CharactersRemoteSource {
     };
 
     return axios
-      .get<Success<Character[]>>(`${LOCAL_BASE_URL}/characters`, options)
+      .get<Success<Character[]>>(`${API_BASE_URL}/api/v1/characters`, options)
       .then((result) => {
         return result.data;
       })

@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:6969",
   "dependencies": {
     "@material-tailwind/react": "^1.2.5",
     "@react-buddy/ide-toolbox": "^2.3.1",
