@@ -1,2 +1,2 @@
-export const LOCAL_BASE_URL = "http://localhost:6969/api/v1";
-export const BASE_URL = "https://rickandmortyapi.com/api";
+export const API_BASE_URL =
+  process.env.NODE_ENV === "production" ? "https://api.mobinyardim.ir/" : "";

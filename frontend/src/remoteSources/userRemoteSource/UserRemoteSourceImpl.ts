@@ -4,20 +4,21 @@ import { SignUpBody } from "models/src/bodyModels/SignUpBody";
 import { Result } from "models/src/Result";
 import { User } from "models/src/User";
 import axios, { AxiosRequestConfig } from "axios";
-import { LOCAL_BASE_URL } from "../common/Consts";
+import { API_BASE_URL } from "../common/Consts";
 import { convertAxiosFailToFailResult } from "../common/Utils";
 
 export class UserRemoteSourceImpl extends UserRemoteSource {
   getUser(userId?: string): Promise<Result<User>> {
     const options: AxiosRequestConfig = {
-      method: "POST",
+      method: "GET",
       params: {
         userId: userId,
       },
+      withCredentials: true,
     };
 
     return axios
-      .post<Result<User>>(`${LOCAL_BASE_URL}/user/:userId`, options)
+      .get<Result<User>>(`${API_BASE_URL}/api/v1/user/${userId ?? ""}`, options)
       .then((result) => {
         return result.data;
       })
@@ -33,7 +34,11 @@ export class UserRemoteSourceImpl extends UserRemoteSource {
     };
 
     return axios
-      .post<Result<User>>(`${LOCAL_BASE_URL}/user/login`, loginBody, options)
+      .post<Result<User>>(
+        `${API_BASE_URL}/api/v1/user/login`,
+        loginBody,
+        options
+      )
       .then((result) => {
         return result.data;
       })
@@ -48,7 +53,27 @@ export class UserRemoteSourceImpl extends UserRemoteSource {
     };
 
     return axios
-      .post<Result<User>>(`${LOCAL_BASE_URL}/user/signUp`, signUpBody, options)
+      .post<Result<User>>(
+        `${API_BASE_URL}/api/v1/user/signUp`,
+        signUpBody,
+        options
+      )
+      .then((result) => {
+        return result.data;
+      })
+      .catch((reason) => {
+        return convertAxiosFailToFailResult(reason);
+      });
+  }
+
+  logout(): Promise<Result<null>> {
+    const options: AxiosRequestConfig = {
+      method: "DELETE",
+      withCredentials: true,
+    };
+
+    return axios
+      .delete<Result<null>>(`${API_BASE_URL}/api/v1/user/logout`, options)
       .then((result) => {
         return result.data;
       })

@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { SignUpBody } from "models/src/bodyModels/SignUpBody";
 import { LoginBody } from "models/src/bodyModels/LoginBody";
-import { Fail } from "models/src/Result";
+import { Fail, Success } from "models/src/Result";
 import { services } from "../services/Services";
 import { handleFailResult } from "../utils/ControllerHelpers";
 
@@ -58,5 +58,26 @@ export const getUser: RequestHandler<
     }
   } else {
     handleFailResult(res, new Fail("Not Authorized", 401, "NOT_AUTHORIZED"));
+  }
+};
+
+export const logout: RequestHandler<
+  unknown,
+  unknown,
+  unknown,
+  unknown
+> = async (req, res) => {
+  if (req.session.user) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(200).json(new Success<null>("logout successfully!", null));
+      } else {
+        console.error(err);
+        res.status(500).json(new Fail(`${err.message}`, 500, "UNKNOWN"));
+      }
+    });
+  } else {
+    console.error("unknown");
+    res.status(500).json(new Fail("unknown error happen!", 500, "UNKNOWN"));
   }
 };

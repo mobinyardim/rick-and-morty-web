@@ -2,6 +2,12 @@ import { ElementType, useCallback, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as MdIcon from "react-icons/md";
 import { IconBaseProps } from "react-icons/lib/esm/iconBase";
+import { User } from "models/src/User";
+import { Avatar, Typography } from "@material-tailwind/react";
+import { CircularUserPlaceHolder } from "../CircularUserPlaceHolder";
+import { MyButton } from "../MyButton";
+import * as IoIcon from "react-icons/io5";
+import { useWindowSize } from "../Utils";
 
 export interface NavItem {
   title: string;
@@ -11,19 +17,45 @@ export interface NavItem {
 
 export interface NavBarProps {
   className?: string;
+  user?: User;
   items?: Array<NavItem>;
   onSelect?: (navItem: NavItem) => void;
 
   selected?: NavItem;
+  onLoginOrSignUpClick?: VoidFunction;
+  onLogout?: VoidFunction;
+  isLoading?: boolean;
 }
 
-export function Navbar({ className, items, onSelect, selected }: NavBarProps) {
+export function Navbar({
+  className,
+  user,
+  items,
+  onSelect,
+  selected,
+  onLoginOrSignUpClick,
+  onLogout,
+  isLoading,
+}: NavBarProps) {
   const [sidebar, setSidebar] = useState(false);
+  const { height } = useWindowSize();
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--windowHeight", `${height}px`);
+  }, [height]);
 
   const toggleSidebarViewState = () => setSidebar(!sidebar);
 
+  useEffect(() => {
+    if (sidebar) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "scroll";
+    }
+  }, [sidebar]);
+
   return (
-    <div className={""}>
+    <>
       <div
         className={`flex h-16 items-center justify-start lg:hidden ${className}`}
       >
@@ -34,9 +66,9 @@ export function Navbar({ className, items, onSelect, selected }: NavBarProps) {
       </div>
 
       <nav
-        className={`max-lg:w-72 fixed top-0 z-10 flex h-screen w-72 ${
+        className={`max-lg:w-72 fixed top-0 z-10 flex h-[var(--windowHeight)] w-72 ${
           sidebar ? "lg:w-72" : "lg:w-24"
-        } transform-gpu flex-col rounded-r-2xl bg-background drop-shadow-md duration-500 ${
+        } transform-gpu flex-col rounded-r-2xl bg-surface drop-shadow-md duration-500 ${
           sidebar ? "left-0" : "lg-max:-left-full"
         }`}
       >
@@ -55,6 +87,52 @@ export function Navbar({ className, items, onSelect, selected }: NavBarProps) {
           </div>
         </div>
 
+        {user && (
+          <div
+            className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-onBackgroundMedium ring-transparent hover:bg-transparent`}
+          >
+            {
+              (user?.avatar ? (
+                <Avatar
+                  src={user?.avatar}
+                  variant={"circular"}
+                  className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
+                />
+              ) : (
+                <CircularUserPlaceHolder
+                  className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
+                />
+              )) as JSX.Element
+            }
+            <div className={"flex flex-col"}>
+              <Typography variant={"small"}>
+                {" "}
+                {sidebar ? user.username : ""}
+              </Typography>
+              <Typography variant={"small"}>
+                {" "}
+                {sidebar ? user.email : ""}
+              </Typography>
+            </div>
+          </div>
+        )}
+
+        {!user && !isLoading && (
+          <MyButton
+            variant="text"
+            fullWidth={false}
+            onClick={onLoginOrSignUpClick}
+            className={`z-10 mx-4 mt-5 flex h-16 cursor-pointer flex-row flex-nowrap items-center p-0 text-onBackgroundMedium`}
+          >
+            <CircularUserPlaceHolder
+              className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"}
+            />
+
+            {sidebar && "Login/SignUp"}
+          </MyButton>
+        )}
+        {isLoading && <div className={`shimmer mx-4 mt-5 h-16 rounded`} />}
+
         <NavItems
           className={"mt-20"}
           items={items}
@@ -62,8 +140,29 @@ export function Navbar({ className, items, onSelect, selected }: NavBarProps) {
           onSelect={onSelect}
           isFull={sidebar}
         />
+
+        <div className={"grow"} />
+
+        {user && (
+          <MyButton
+            variant="text"
+            fullWidth={false}
+            onClick={onLogout}
+            className={`z-10 mx-4 mb-5 flex h-16 flex-row flex-nowrap items-center overflow-clip bg-transparent p-0 text-error`}
+          >
+            <IoIcon.IoExitOutline
+              className={"h-16 w-16 shrink-0 p-4 text-error"}
+            />
+
+            {"Logout"}
+          </MyButton>
+        )}
+
+        {isLoading && (
+          <div className={`shimmer z-10 mx-4 mb-20 h-16 rounded`} />
+        )}
       </nav>
-    </div>
+    </>
   );
 }
 
@@ -145,16 +244,15 @@ export function NavMenuItem({ name, isFull, Icon, onClick }: NavMenuItemProps) {
     >
       <div className={`h-16 w-1 shrink-0`} />
       <div className={"w-4 shrink-0"} />
-      <div className={`flex h-16 min-w-0 flex-shrink shrink grow flex-row`}>
+      <MyButton
+        variant={"text"}
+        ripple={false}
+        fullWidth={true}
+        className={`mr-4 flex h-16 min-w-0 flex-shrink shrink grow flex-row items-center p-0 text-onBackgroundMedium`}
+      >
         <Icon className={"h-16 w-16 shrink-0 p-4 text-onBackgroundHigh"} />
-        <span
-          className={`my-auto w-fit min-w-0 justify-center whitespace-nowrap text-onBackgroundHigh ${
-            isFull ? "lg:visible lg:w-fit" : "lg:invisible lg:w-0"
-          } overflow-clip transition delay-500 ease-in-out`}
-        >
-          {name}
-        </span>
-      </div>
+        {isFull ? name : ""}
+      </MyButton>
     </div>
   );
 }

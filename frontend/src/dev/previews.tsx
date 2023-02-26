@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ComponentPreview, Previews } from "@react-buddy/ide-toolbox";
 import { PaletteTree } from "./palette";
 import App from "../App";
@@ -15,6 +15,7 @@ import { Character } from "models/src/Character";
 import { Origin } from "models/src/Origin";
 import { Location } from "models/src/Location";
 import { CircularLoading } from "../components/circularIndeterminate/CircularLoading";
+import { MyButton } from "../components/MyButton";
 
 const menuItems: Array<NavItem> = [
   {
@@ -108,6 +109,7 @@ const rick = new Character(
   "Human"
 );
 const ComponentPreviews = () => {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <Previews palette={<PaletteTree />}>
       <ComponentPreview path="/App">
@@ -149,6 +151,16 @@ const ComponentPreviews = () => {
       </ComponentPreview>
       <ComponentPreview path="/CircularIndeterminate">
         <CircularLoading />
+      </ComponentPreview>
+      <ComponentPreview path="/MyButton">
+        <MyButton
+          isLoading={isLoading}
+          onClick={() => {
+            setIsLoading((draft) => !draft);
+          }}
+        >
+          Mobin yaardim
+        </MyButton>
       </ComponentPreview>
     </Previews>
   );
