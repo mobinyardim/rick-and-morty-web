@@ -1,0 +1,20 @@
+version: "3.9"  # optional since v1.27.0
+
+services:
+  backend:
+    build: ./
+    command: sh -c "npm start"
+    ports:
+      - "6969:6969"
+    working_dir: /rick-and-morty-web/backend/
+    env_file:
+      - ./backend/.env
+  frontend:
+    build: ./
+    working_dir: /rick-and-morty-web/frontend/
+    command: sh -c "npx serve -s build"
+    depends_on: [ backend ]
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "3000:3000"
