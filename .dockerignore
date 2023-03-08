@@ -6,3 +6,6 @@
 docker-compose.yml
 .dockerignore
 Dockerfile
+
+*.env
+*.env.*

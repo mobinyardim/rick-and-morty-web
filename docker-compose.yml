@@ -2,7 +2,9 @@ version: "3.9"  # optional since v1.27.0
 
 services:
   backend:
-    build: ./
+    build:
+      context: ./
+      dockerfile: Dockerfile
     command: sh -c "npm start"
     ports:
       - "6969:6969"
@@ -10,11 +12,13 @@ services:
     env_file:
       - ./backend/.env
   frontend:
-    build: ./
+    env_file:
+      - ./frontend/.env
+    build:
+      context: ./
+      dockerfile: Dockerfile
     working_dir: /rick-and-morty-web/frontend/
     command: sh -c "npx serve -s build"
     depends_on: [ backend ]
-    env_file:
-      - ./frontend/.env
     ports:
       - "3000:3000"
