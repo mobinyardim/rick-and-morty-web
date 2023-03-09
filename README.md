@@ -13,8 +13,8 @@ https://user-images.githubusercontent.com/31635962/223976359-6fd22780-5207-4246-
 - TypeScript
 - Express
 - MongoDB
-    - <a href="https://github.com/Automattic/mongoose">mongoose</a> for object modeling and connecting to mongo
-    - <a>connect-mongo</a> for saving user session in mongoDB
+  - <a href="https://github.com/Automattic/mongoose">mongoose</a> for object modeling and connecting to mongo
+  - <a href="https://github.com/jdesboeufs/connect-mongo">connect-mongo</a> for saving user session in mongoDB
 
 ### Features
 
@@ -36,13 +36,13 @@ https://user-images.githubusercontent.com/31635962/223976359-6fd22780-5207-4246-
 
 - TypeScript
 - React.js
-- React-Router
-- Immer
-- React hook form - Form Validation
-- Zustand
-- Tailwind - CSS Utility classes
-- Material Tailwind - Component library
-- React Buddy - Preview components in IDE
+- <a href="https://reactrouter.com/en/main">React-Router</a>
+- <a href="https://immerjs.github.io/immer/">Immer</a>
+- <a href="https://react-hook-form.com/">React hook form</a> - Form Validation
+- <a href="https://docs.pmnd.rs/zustand">Zustand</a>
+- <a href="https://tailwindcss.com/">Tailwind</a> - CSS Utility classes
+- <a href="https://www.material-tailwind.com/">Material Tailwind</a> - Component library
+- <a href="https://react-buddy.com/">React Buddy</a> - Preview components in IDE
 
 ### Features
 
