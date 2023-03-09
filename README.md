@@ -70,3 +70,46 @@ https://user-images.githubusercontent.com/31635962/223976359-6fd22780-5207-4246-
 ## Models
 
 <p>A pure typescript module that holds domain models of backend and frontend packages</p>
+
+# Build Project
+
+Create a .env file in backend directory with this format:
+
+```dotenv
+PORT=BACKEND_APIS_PORT
+DATABASE_URL=URL_TO_MONGO_DB
+SESSION_SECRET=SECRET_KEY_FOR_SESSION
+```
+
+you can use <a href="https://cloud.mongodb.com/">https://cloud.mongodb.com</a> for create a mongoDB in cloud or just
+create a local mongoDB it's up to you.
+
+then create another .env inside frontend with this format:
+
+```dotenv
+BASE_URL=BACKEND_HOST_NAME:PORT
+```
+
+finally you can use docker compose:
+
+```shell
+docker compose up -d
+```
+
+or if you don't want to use docker.
+run backend app:
+
+```shell
+cd backend
+npm install
+npm run start
+```
+
+run frontend app:
+
+```shell 
+cd frontend
+npm install 
+npm install -g serve
+serve -s build
+```
