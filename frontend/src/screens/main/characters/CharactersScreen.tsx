@@ -1,4 +1,4 @@
-import { Await, useRouteLoaderData } from "../../../utils/ReactRouterUtils";
+import { Await, useRouteLoaderData } from "../../../loaders/ReactRouterUtils";
 import { charactersLoader } from "../../../loaders/characters/CharactersLoader";
 import React, { Suspense, useCallback, useState } from "react";
 import { ItemsList } from "../../../components/ItemsList";

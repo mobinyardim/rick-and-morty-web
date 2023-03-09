@@ -1,4 +1,4 @@
-import { deferredLoader } from "../../utils/ReactRouterUtils";
+import { deferredLoader } from "../ReactRouterUtils";
 import { sources } from "../../remoteSources/common/Sources";
 
 export const charactersLoader = deferredLoader((args) => ({
