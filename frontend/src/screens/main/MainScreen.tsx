@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 import { Navbar, NavItem } from "../../components/navBar/Navbar";
 import * as IoIcon from "react-icons/io5";
-import { useRouteLoaderData } from "../../utils/ReactRouterUtils";
+import { useRouteLoaderData } from "../../loaders/ReactRouterUtils";
 import { charactersLoader } from "../../loaders/characters/CharactersLoader";
 import { useCharactersStore } from "../../stores/CharctersStore";
 import { Character } from "models/src/Character";
