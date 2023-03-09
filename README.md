@@ -41,28 +41,29 @@ Rick and Morty web is a web application that allows users to browse and search f
 - Tailwind - CSS Utility classes
 - Material Tailwind - Component library
 - React Buddy - Preview components in IDE
--
 
 ### Features
 
 - ### Screens
-    - Sign Up
-    - Login
-    - Main (Navigation rail + Current Session + Logout + nested routes)
-        - Home (Shows first page of characters + Shimmer Loading)
-        - Characters (Shows all characters with infinite scroll + Shimmer Loading)
-        - Locations (TODO)
-        - Episodes (TODO)
+  - Sign Up
+  - Login
+  - Main (Navigation rail + Current Session + Logout + nested routes)
+    - Home (Shows first page of characters + Shimmer Loading)
+    - Characters (Shows all characters with infinite scroll + Shimmer Loading)
+    - Locations (TODO)
+    - Episodes (TODO)
 - ### Custom Components
-    - NavBar (Responsive Side Navigation)
+  - NavBar (Responsive Side Navigation)
 
-- ### Loaders - hold react router loaders types
-    - React Router Utils - utility functions to deffer type to useLoaderData hook
-    - CharactersLoader - hold charactersLoader type
-    - UserLoader - hold userLoader type
-- ### RemoteSource - interface and implementation of them for getting data from api
-    - Sources - hold the singleton instance of remote sources
-- ### Stores - Zustand stores
+- ### Loaders
+  - React Router Utils - utility functions to deffer type to useLoaderData hook
+  - CharactersLoader - hold charactersLoader type
+  - UserLoader - hold userLoader type
+
+- ### RemoteSource
+  - Sources - hold the singleton instance of remote sources
+  - CharactersRemoteSource - An interface and implementation of it for CRUD operations on characters with api
+  - UserRemoteSource - An interface and implementation of it for user operations with api
 
 ## Models
 
