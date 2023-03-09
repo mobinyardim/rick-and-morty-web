@@ -19,7 +19,7 @@ import { charactersLoader } from "../../loaders/characters/CharactersLoader";
 import { useCharactersStore } from "../../stores/CharctersStore";
 import { Character } from "models/src/Character";
 import { Pagination, Success } from "models/src/Result";
-import { userLoader } from "../../loaders/characters/UserLoader";
+import { userLoader } from "../../loaders/user/UserLoader";
 import { User } from "models/src/User";
 import {
   Dialog,

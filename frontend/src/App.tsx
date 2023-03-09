@@ -20,7 +20,7 @@ import {
   MyAlertContext,
   useAlert,
 } from "./components/MyAlert";
-import { userLoader } from "./loaders/characters/UserLoader";
+import { userLoader } from "./loaders/user/UserLoader";
 
 export const appRouter = createBrowserRouter(
   createRoutesFromElements(
