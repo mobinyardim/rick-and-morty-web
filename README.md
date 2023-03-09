@@ -4,6 +4,8 @@
 Rick and Morty web is a web application that allows users to browse and search for information about characters, locations, and episodes from the popular animated television series <a href="https://www.imdb.com/title/tt2861424/">"Rick and Morty"</a>.
 </p>
 
+https://user-images.githubusercontent.com/31635962/223976359-6fd22780-5207-4246-bb8a-bf6e296fd930.mp4
+
 # Tech Stack
 
 ## Backend
