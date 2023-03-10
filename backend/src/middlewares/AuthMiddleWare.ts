@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import { Fail } from "models/src/Result";
 
-const userAuthMiddleWare: RequestHandler = (req, res, next) => {
+export const userAuthMiddleWare: RequestHandler = (req, res, next) => {
   if (req.session.user) {
     next();
   } else {
