@@ -6,6 +6,6 @@ export class User {
     public isVerified: boolean,
     public avatar?: string,
     public fullName?: string,
-    public isAdmin: boolean = true
+    public isAdmin: boolean = false
   ) {}
 }
