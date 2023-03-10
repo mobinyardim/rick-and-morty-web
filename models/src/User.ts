@@ -5,6 +5,7 @@ export class User {
     public email: string,
     public isVerified: boolean,
     public avatar?: string,
-    public fullName?: string
+    public fullName?: string,
+    public isAdmin: boolean = true
   ) {}
 }
