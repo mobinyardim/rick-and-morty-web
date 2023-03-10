@@ -18,6 +18,7 @@ export type ErrorType =
   | "NOT_VALID_INPUT"
   | "READ_ERROR"
   | "NOT_FOUND"
+  | "PERMISSION_DENIED"
   | "UNKNOWN";
 
 export class Fail {
