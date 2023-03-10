@@ -57,7 +57,7 @@ export const getUser: RequestHandler<
       handleFailResult(res, result);
     }
   } else {
-    handleFailResult(res, new Fail("Not Authorized", 401, "NOT_AUTHORIZED"));
+    res.status(500).json(new Fail("unknown error happen!", 500, "UNKNOWN"));
   }
 };
 
