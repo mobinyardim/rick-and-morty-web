@@ -1,24 +1,15 @@
 export class Success<Data> {
   kind: "success" = "success";
-  message: string;
-  data: Data;
-  pagination?: Pagination;
 
-  constructor(message: string, data: Data, pagination?: Pagination) {
-    this.message = message;
-    this.data = data;
-    this.pagination = pagination;
-  }
+  constructor(
+    public message: string,
+    public data: Data,
+    public pagination?: Pagination
+  ) {}
 }
 
 export class Pagination {
-  totalPages: number;
-  totalCount: number;
-
-  constructor(totalPages: number, totalCount: number) {
-    this.totalPages = totalPages;
-    this.totalCount = totalCount;
-  }
+  constructor(public totalPages: number, public totalCount: number) {}
 }
 
 export type ErrorType =
@@ -27,22 +18,17 @@ export type ErrorType =
   | "NOT_VALID_INPUT"
   | "READ_ERROR"
   | "NOT_FOUND"
+  | "PERMISSION_DENIED"
   | "UNKNOWN";
 
 export class Fail {
   kind: "fail" = "fail";
 
-  message: string;
-
-  type: ErrorType;
-
-  statusCode: number;
-
-  constructor(message: string, code: number, type: ErrorType) {
-    this.message = message;
-    this.statusCode = code;
-    this.type = type;
-  }
+  constructor(
+    public message: string,
+    public statusCode: number,
+    public type: ErrorType
+  ) {}
 }
 
 export type Result<T> = Success<T> | Fail;

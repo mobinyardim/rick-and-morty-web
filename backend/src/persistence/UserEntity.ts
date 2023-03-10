@@ -7,6 +7,7 @@ export const UserSchema = new Schema({
   password: { type: String, required: true },
   isVerified: { type: Boolean, required: true, default: false },
   avatar: { type: String, required: false },
+  isAdmin: { type: Boolean, default: false },
 });
 
 export type UserEntity = InferSchemaType<typeof UserSchema>;
